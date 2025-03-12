@@ -1,0 +1,11 @@
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\bin\Debug\netstandard2.0\MyTeamMeetingApp.Server.deps.json
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\bin\Debug\netstandard2.0\MyTeamMeetingApp.Server.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\bin\Debug\netstandard2.0\MyTeamMeetingApp.Server.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.csproj.AssemblyReference.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.AssemblyInfoInputs.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.AssemblyInfo.cs
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.csproj.CoreCompileInputs.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.sourcelink.json
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\.NET\TeamTrack.Server\obj\Debug\netstandard2.0\MyTeamMeetingApp.Server.pdb
