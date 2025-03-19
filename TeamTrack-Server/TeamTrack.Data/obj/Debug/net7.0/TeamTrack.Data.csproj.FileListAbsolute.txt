@@ -1,0 +1,15 @@
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.csproj.AssemblyReference.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.AssemblyInfoInputs.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.AssemblyInfo.cs
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.csproj.CoreCompileInputs.cache
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net7.0\TeamTrack.Data.deps.json
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net7.0\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net7.0\TeamTrack.Data.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net7.0\TeamTrack.Core.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net7.0\TeamTrack.Core.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\refint\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\ref\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net7.0\TeamTrack.Data.csproj.CopyComplete

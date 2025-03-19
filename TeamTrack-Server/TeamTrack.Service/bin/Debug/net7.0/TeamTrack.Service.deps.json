@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "TeamTrack.Service/1.0.0": {
+        "dependencies": {
+          "TeamTrack.Core": "1.0.0"
+        },
+        "runtime": {
+          "TeamTrack.Service.dll": {}
+        }
+      },
+      "TeamTrack.Core/1.0.0": {
+        "runtime": {
+          "TeamTrack.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TeamTrack.Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TeamTrack.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

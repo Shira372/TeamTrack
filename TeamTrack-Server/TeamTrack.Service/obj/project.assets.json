@@ -1,0 +1,91 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "TeamTrack.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/TeamTrack.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TeamTrack.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TeamTrack.Core/1.0.0": {
+      "type": "project",
+      "path": "../TeamTrack.Core/TeamTrack.Core.csproj",
+      "msbuildProject": "../TeamTrack.Core/TeamTrack.Core.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "TeamTrack.Core >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\user1\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\TeamTrack.Service.csproj",
+      "projectName": "TeamTrack.Service",
+      "projectPath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\TeamTrack.Service.csproj",
+      "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\TeamTrack.Core.csproj": {
+              "projectPath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\TeamTrack.Core.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
