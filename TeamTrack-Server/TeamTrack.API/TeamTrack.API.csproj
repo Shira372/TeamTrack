@@ -1,29 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>56a8a6b8-e8a9-4b6a-8e75-97551edf33b2</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="global.json" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Content Remove="Properties\appsettings.Production.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
-  </ItemGroup>
+	<ItemGroup>
+	  <None Include="Properties\appsettings.Production.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\TeamTrack.Core\TeamTrack.Core.csproj" />
-    <ProjectReference Include="..\TeamTrack.Data\TeamTrack.Data.csproj" />
-    <ProjectReference Include="..\TeamTrack.Service\TeamTrack.Service.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<!-- עדכון לגרסה שתומכת ב-.NET 9.0 -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\TeamTrack.Core\TeamTrack.Core.csproj" />
+		<ProjectReference Include="..\TeamTrack.Data\TeamTrack.Data.csproj" />
+		<ProjectReference Include="..\TeamTrack.Service\TeamTrack.Service.csproj" />
+	</ItemGroup>
 
 </Project>

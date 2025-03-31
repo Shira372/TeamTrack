@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\TeamTrack.API",
-    "\\TeamTrack.API\\Controllers"
+    "\\TeamTrack.Core",
+    "\\TeamTrack.Core\\IRepositories",
+    "\\TeamTrack.Core\\IServices"
   ],
-  "SelectedNode": "\\TeamTrack.API\\Controllers\\UserController.cs",
+  "SelectedNode": "\\TeamTrack.Core\\Mapping.cs",
   "PreviewInSolutionExplorer": false
 }

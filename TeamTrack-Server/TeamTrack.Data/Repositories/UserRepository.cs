@@ -2,6 +2,7 @@
 using TeamTrack.Core.IRepositories;
 using TeamTrack.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 public class UserRepository : IUserRepository
 {
@@ -22,25 +23,22 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetById(int id)
     {
         return await _context.Users
-            .AsNoTracking() // הוספת AsNoTracking לקריאה בלבד
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<User> Add(User user)
     {
-        // בדוק אם המשתמש כבר קיים (למשל, עם אותו מזהה)
         var existingUser = await _context.Users
-            .AsNoTracking() // הוספת AsNoTracking לקריאה בלבד
+            .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == user.Id);
 
         if (existingUser != null)
         {
-            // אם הוא כבר קיים, עדכן את המשתמש במקום להוסיף חדש
             _context.Users.Update(user);
         }
         else
         {
-            // אם הוא לא קיים, הוסף את המשתמש כחדש
             await _context.Users.AddAsync(user);
         }
 
@@ -59,6 +57,34 @@ public class UserRepository : IUserRepository
         if (user != null)
         {
             _context.Users.Remove(user);
+            return user;
+        }
+        return null;
+    }
+
+    public async Task<User?> GetByUserName(string userName)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.UserName == userName);
+    }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Email == email);
+    }
+
+    // פונקציה חדשה לאימות משתמש לפי שם משתמש וסיסמה
+    public async Task<User?> AuthenticateUser(string userName, string password)
+    {
+        var user = await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.UserName == userName);
+
+        if (user != null && user.PasswordHash == password)
+        {
             return user;
         }
         return null;

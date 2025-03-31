@@ -1,6 +1,7 @@
 ﻿using TeamTrack.Core.Entities;
 using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
+using System.Threading.Tasks;
 
 public class UserService : IUserService
 {
@@ -37,5 +38,21 @@ public class UserService : IUserService
     {
         var deletedUser = await _repositoryManager.UserRepository.Delete(id);
         return deletedUser;
+    }
+
+    // פונקציה לאימות משתמש
+    public async Task<User?> AuthenticateUser(string userName, string password)
+    {
+        return await _repositoryManager.UserRepository.AuthenticateUser(userName, password);
+    }
+
+    public async Task<User?> GetByUserName(string userName)
+    {
+        return await _repositoryManager.UserRepository.GetByUserName(userName);
+    }
+
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _repositoryManager.UserRepository.GetByEmail(email);
     }
 }

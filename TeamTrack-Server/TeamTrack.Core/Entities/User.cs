@@ -11,7 +11,7 @@ namespace TeamTrack.Core.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // מספור אוטומטי
         public int Id { get; set; } // מזהה משתמש
 
-        public string? Username { get; set; } // שם משתמש
+        public string? UserName { get; set; } // שם משתמש
 
         public string? PasswordHash { get; set; } // סיסמה (מוצפנת)
 
