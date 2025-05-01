@@ -11,7 +11,7 @@ public class UserRepository : IUserRepository
     public UserRepository(DataContext context)
     {
         _context = context;
-    }
+    } 
 
     public async Task<List<User>> GetAll()
     {

@@ -8,16 +8,18 @@ using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
 using TeamTrack.Core;
 using TeamTrack.Data;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// הוספת שירותים
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
+// הוספת API Documentation ו-Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -46,17 +48,15 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// הוספת DataContext עם Sensitive Data Logging
+// חיבור ל-MySQL
 builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .EnableSensitiveDataLogging();
-});
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 41))));
 
-// הוספת Mapping
+// הוספת AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// הוספת Jwt 
+// הוספת Authentication עם JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,14 +75,12 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 
-    // הוספת טיפול במקרה של טעות באימות
     options.Events = new JwtBearerEvents
     {
         OnAuthenticationFailed = context =>
         {
             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
             {
-                // אם ה-token פג תוקף
                 context.Response.Headers.Add("Token-Expired", "true");
             }
             return Task.CompletedTask;
@@ -90,7 +88,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// הוספת IRepositoryManager
+// הוספת Repositories
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
 // הוספת Services
@@ -100,35 +98,38 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 // הוספת Controllers
 builder.Services.AddControllers();
 
-// הוספת הגדרת CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("http://localhost:3001")  // הכתובת של הלקוח שלך
-               .AllowAnyMethod()                    // אפשר כל שיטה (GET, POST וכו')
-               .AllowAnyHeader();                   // אפשר כל כותרת
+        builder.WithOrigins("http://localhost:3000")  // ודא שזו הכתובת של ה-React Client
+               .AllowAnyMethod()                   // תומך בכל המתודות
+               .AllowAnyHeader()                   // תומך בכל ה-Headers
+               .AllowCredentials();                // תומך ב-Credentials אם יש צורך (כמו cookies או tokens)
     });
 });
 
 var app = builder.Build();
 
-// הפעלת CORS לפני ה-UseRouting
-app.UseCors("AllowSpecificOrigin");
+// Middleware
+app.UseCors("AllowSpecificOrigin"); // השתמש במדיניות ה-CORS
+app.UseHttpsRedirection();          // כוונה ל-HTTPS
+app.UseRouting();                    // Routing של הבקשות
 
-// רק אם אתה עובד עם פרודקשן, כדאי להוסיף
-app.UseHttpsRedirection();
-
-// אפשר Swagger רק בסביבת פיתוח
+// הפעלת Swagger רק בסביבה של פיתוח
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseRouting();
-app.UseAuthentication(); // הפעלת אימות JWT
-app.UseAuthorization();  // הפעלת הרשאות
+// Authentication ו-Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+// הפעלת Controllers
 app.MapControllers();
 
+// הרצת היישום
 app.Run();

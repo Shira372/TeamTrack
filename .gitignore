@@ -5,3 +5,7 @@ node_modules/
 .idea/
 Thumbs.db
 .env
+.vs/
+bin/
+obj/
+

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TeamTrack.Core.Entities;
+using TeamTrack.Core.Entities; 
 
 namespace TeamTrack.Data
 {
@@ -12,14 +12,6 @@ namespace TeamTrack.Data
         // בנאי חדש שמקבל DbContextOptions<DataContext> 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=invitation_db");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
