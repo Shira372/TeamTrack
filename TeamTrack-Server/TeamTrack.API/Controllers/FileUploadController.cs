@@ -2,31 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using TeamTrack.API.Models;
 
 namespace TeamTrack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilesController : ControllerBase
+    public class FileUploadController : ControllerBase
     {
-        // API שמקבל את הקובץ
+
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadFile([FromForm] FileUploadRequest request)
         {
-            if (file == null || file.Length == 0)
+            if (request.File == null || request.File.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", file.FileName);
-
-            // ודא שהתרחיב של ה-Directory קיים
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", request.File.FileName);
             Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(stream);
+                await request.File.CopyToAsync(stream);
             }
 
             return Ok(new { FilePath = filePath });
         }
+
     }
 }

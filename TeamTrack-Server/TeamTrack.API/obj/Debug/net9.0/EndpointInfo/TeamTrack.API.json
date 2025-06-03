@@ -36,15 +36,18 @@
         }
       }
     },
-    "/api/Files/upload": {
+    "/api/FileUpload/upload": {
       "post": {
         "tags": [
-          "Files"
+          "FileUpload"
         ],
         "requestBody": {
           "content": {
             "multipart/form-data": {
               "schema": {
+                "required": [
+                  "file"
+                ],
                 "type": "object",
                 "properties": {
                   "file": {
@@ -52,10 +55,35 @@
                     "format": "binary"
                   }
                 }
-              },
-              "encoding": {
-                "file": {
-                  "style": "form"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/keypoints/extract": {
+      "post": {
+        "tags": [
+          "KeyPoints"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
                 }
               }
             }

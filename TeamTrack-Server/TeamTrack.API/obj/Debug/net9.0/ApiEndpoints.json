@@ -16,15 +16,31 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "TeamTrack.API.Controllers.FilesController",
+    "ContainingType": "TeamTrack.API.Controllers.FileUploadController",
     "Method": "UploadFile",
-    "RelativePath": "api/Files/upload",
+    "RelativePath": "api/FileUpload/upload",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "file",
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TeamTrack.API.Controllers.KeyPointsController",
+    "Method": "ExtractKeyPoints",
+    "RelativePath": "api/keypoints/extract",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "File",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       }

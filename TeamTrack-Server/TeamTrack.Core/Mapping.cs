@@ -7,7 +7,7 @@ namespace TeamTrack.Core
     {
         public UserDTO MapToUserDTO(User user)
         {
-            return new UserDTO { Id=user.Id, UserName = user.UserName, PasswordHash = user.PasswordHash, Company = user.Company, Email = user.Email };
+            return new UserDTO { Id=user.Id, UserName = user.UserName, Company = user.Company, Email = user.Email };
         }
         public MeetingDTO MapToMeetingDTO(Meeting meeting)
         {

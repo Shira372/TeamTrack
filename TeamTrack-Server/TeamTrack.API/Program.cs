@@ -8,18 +8,20 @@ using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
 using TeamTrack.Core;
 using TeamTrack.Data;
-using Microsoft.Extensions.Options;
+using TeamTrack.Service;
+using Swashbuckle.AspNetCore.SwaggerGen; // חשוב לייבא
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// הוספת שירותים
+// JSON Options
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
-// הוספת API Documentation ו-Swagger
+// Swagger עם הגדרת JWT Authentication + FileUploadOperationFilter
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -46,17 +48,21 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>()
         }
     });
+
+    // הוספת הפילטר לטיפול בקבצים ב־Swagger
+    options.OperationFilter<TeamTrack.API.Swagger.FileUploadOperationFilter>();
+
 });
 
-// חיבור ל-MySQL
+// DB Context MySQL
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 41))));
 
-// הוספת AutoMapper
+// AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// הוספת Authentication עם JWT
+// JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -88,48 +94,45 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// הוספת Repositories
+// Repositories
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-// הוספת Services
+// Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
+builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 
-// הוספת Controllers
-builder.Services.AddControllers();
+// HTTP Client
+builder.Services.AddHttpClient();
 
 // CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
+    options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        builder.WithOrigins("http://localhost:3000")  // ודא שזו הכתובת של ה-React Client
-               .AllowAnyMethod()                   // תומך בכל המתודות
-               .AllowAnyHeader()                   // תומך בכל ה-Headers
-               .AllowCredentials();                // תומך ב-Credentials אם יש צורך (כמו cookies או tokens)
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
 var app = builder.Build();
 
 // Middleware
-app.UseCors("AllowSpecificOrigin"); // השתמש במדיניות ה-CORS
-app.UseHttpsRedirection();          // כוונה ל-HTTPS
-app.UseRouting();                    // Routing של הבקשות
+app.UseCors("AllowSpecificOrigin");
 
-// הפעלת Swagger רק בסביבה של פיתוח
+app.UseHttpsRedirection();
+app.UseRouting();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Authentication ו-Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// הפעלת Controllers
 app.MapControllers();
 
-// הרצת היישום
 app.Run();

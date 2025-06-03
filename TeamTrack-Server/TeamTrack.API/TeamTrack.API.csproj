@@ -5,35 +5,35 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>56a8a6b8-e8a9-4b6a-8e75-97551edf33b2</UserSecretsId>
-		
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="Properties\appsettings.Production.json" />
+		<Content Remove="Properties\appsettings.Production.json" />
+		<None Include="Properties\appsettings.Production.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="Properties\appsettings.Production.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-		
-		
-		
-		<!-- עדכון לגרסה שתומכת ב-.NET 9.0 -->
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.13">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="8.1.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
+		<PackageReference Include="OpenAI" Version="2.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\TeamTrack.Core\TeamTrack.Core.csproj" />
 		<ProjectReference Include="..\TeamTrack.Data\TeamTrack.Data.csproj" />
 		<ProjectReference Include="..\TeamTrack.Service\TeamTrack.Service.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
 </Project>

@@ -1,13 +1,31 @@
 {
   "version": 2,
-  "dgSpecHash": "KoAfpPW9u5U=",
+  "dgSpecHash": "7EL/HTLumZk=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\TeamTrack.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user1\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0-preview.3.24172.9\\microsoft.extensions.configuration.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.0-preview.3.24172.9\\microsoft.extensions.configuration.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.configuration.binder\\9.0.0-preview.3.24172.9\\microsoft.extensions.configuration.binder.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\9.0.0-preview.3.24172.9\\microsoft.extensions.configuration.fileextensions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.0-preview.3.24172.9\\microsoft.extensions.configuration.json.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0-preview.3.24172.9\\microsoft.extensions.dependencyinjection.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0-preview.3.24172.9\\microsoft.extensions.dependencyinjection.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.diagnostics\\9.0.0-preview.3.24172.9\\microsoft.extensions.diagnostics.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\9.0.0-preview.3.24172.9\\microsoft.extensions.diagnostics.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0-preview.3.24172.9\\microsoft.extensions.fileproviders.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.0-preview.3.24172.9\\microsoft.extensions.fileproviders.physical.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.0-preview.3.24172.9\\microsoft.extensions.filesystemglobbing.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.http\\9.0.0-preview.3.24172.9\\microsoft.extensions.http.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0-preview.3.24172.9\\microsoft.extensions.logging.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0-preview.3.24172.9\\microsoft.extensions.logging.abstractions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.options\\9.0.0-preview.3.24172.9\\microsoft.extensions.options.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\9.0.0-preview.3.24172.9\\microsoft.extensions.options.configurationextensions.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.0-preview.3.24172.9\\microsoft.extensions.primitives.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\system.diagnostics.diagnosticsource\\9.0.0-preview.3.24172.9\\system.diagnostics.diagnosticsource.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\system.text.encodings.web\\9.0.0-preview.3.24172.9\\system.text.encodings.web.9.0.0-preview.3.24172.9.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\system.text.json\\9.0.0-preview.3.24172.9\\system.text.json.9.0.0-preview.3.24172.9.nupkg.sha512"
   ],
   "logs": []
 }

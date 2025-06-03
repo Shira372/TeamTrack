@@ -40,7 +40,7 @@
           "buildTransitive/net8.0/Microsoft.EntityFrameworkCore.props": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Abstractions/9.0.3": {
+      "Microsoft.EntityFrameworkCore.Abstractions/8.0.13": {
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
@@ -331,10 +331,10 @@
         "microsoft.entityframeworkcore.nuspec"
       ]
     },
-    "Microsoft.EntityFrameworkCore.Abstractions/9.0.3": {
-      "sha512": "HQH7HgwTl6IyasW7t6F2+ihuHLDmf9+8XaS41v8VHN5Z7x5ZMQIiHCbwxme4P5ICAjBG6VsWcjMCoh4fHbEwJg==",
+    "Microsoft.EntityFrameworkCore.Abstractions/8.0.13": {
+      "sha512": "a6O+v8CMStumpVoQyN0aUpx5P3/qYZP+5791sGrzJhIM+QsniQdSaJVdUSneL40M+FpBgtiC8ggqzNo2x/gVlw==",
       "type": "package",
-      "path": "microsoft.entityframeworkcore.abstractions/9.0.3",
+      "path": "microsoft.entityframeworkcore.abstractions/8.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -342,7 +342,7 @@
         "PACKAGE.md",
         "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
         "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
-        "microsoft.entityframeworkcore.abstractions.9.0.3.nupkg.sha512",
+        "microsoft.entityframeworkcore.abstractions.8.0.13.nupkg.sha512",
         "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
     },
@@ -765,7 +765,7 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "Microsoft.EntityFrameworkCore >= 8.0.13",
-      "Microsoft.EntityFrameworkCore.Abstractions >= 9.0.3",
+      "Microsoft.EntityFrameworkCore.Abstractions >= 8.0.13",
       "Pomelo.EntityFrameworkCore.MySql >= 8.0.3",
       "TeamTrack.Core >= 1.0.0"
     ]
@@ -830,7 +830,7 @@
           },
           "Microsoft.EntityFrameworkCore.Abstractions": {
             "target": "Package",
-            "version": "[9.0.3, )"
+            "version": "[8.0.13, )"
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",

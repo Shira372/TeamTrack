@@ -11,7 +11,7 @@ public class UserRepository : IUserRepository
     public UserRepository(DataContext context)
     {
         _context = context;
-    } 
+    }
 
     public async Task<List<User>> GetAll()
     {
@@ -35,14 +35,14 @@ public class UserRepository : IUserRepository
 
         if (existingUser != null)
         {
-            _context.Users.Update(user);
+            _context.Users.Update(user); // עדכון אם כבר קיים
         }
         else
         {
-            await _context.Users.AddAsync(user);
+            await _context.Users.AddAsync(user); // הוספה אם לא קיים
         }
 
-        return user;
+        return user; // לא שומרים פה, רק מבצעים את הפעולה
     }
 
     public async Task<User> Update(User user)

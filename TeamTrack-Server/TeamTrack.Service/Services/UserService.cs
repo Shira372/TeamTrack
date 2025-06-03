@@ -25,18 +25,21 @@ public class UserService : IUserService
     public async Task<User> Add(User user)
     {
         var addedUser = await _repositoryManager.UserRepository.Add(user);
+        await _repositoryManager.SaveAsync(); // שמירה על השינויים אחרי הוספת המשתמש
         return addedUser;
     }
 
     public async Task<User> Update(User user)
     {
         var updatedUser = await _repositoryManager.UserRepository.Update(user);
+        await _repositoryManager.SaveAsync(); // שמירה על השינויים אחרי עדכון המשתמש
         return updatedUser;
     }
 
     public async Task<User?> Delete(int id)
     {
         var deletedUser = await _repositoryManager.UserRepository.Delete(id);
+        await _repositoryManager.SaveAsync(); // שמירה על השינויים אחרי מחיקת המשתמש
         return deletedUser;
     }
 

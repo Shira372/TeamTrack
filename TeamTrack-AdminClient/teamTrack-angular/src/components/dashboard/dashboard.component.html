@@ -1,0 +1,11 @@
+<h2>נתונים כלליים</h2>
+
+<div *ngIf="stats; else loading">
+  <p>משתמשים רשומים: {{ stats.totalUsers }}</p>
+  <p>מספר פגישות: {{ stats.totalMeetings }}</p>
+  <p>המשתמש הכי פעיל: {{ stats.topUser }}</p>
+</div>
+
+<ng-template #loading>
+  <p>טוען נתונים...</p>
+</ng-template>

@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using TeamTrack.Core.DTOs;
 using TeamTrack.Core.Entities;
-using AutoMapper; // חשוב להוסיף את ה-namespace של AutoMapper
+using AutoMapper;
 
 namespace TeamTrack.Web.Controllers
 {
@@ -20,61 +20,91 @@ namespace TeamTrack.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper; // הגדרת ה-Mapper
+        private readonly IMapper _mapper;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserService userService, IConfiguration configuration, IMapper mapper)
+        // ✅ זה הקונסטרקטור התקין היחיד שצריך
+        public UsersController(IUserService userService, IConfiguration configuration, IMapper mapper, ILogger<UsersController> logger)
         {
             _userService = userService;
             _configuration = configuration;
             _mapper = mapper;
+            _logger = logger;
         }
 
-        // פונקציה להרשמה (Signup)
         [HttpPost("signup")]
         public async Task<ActionResult> Signup([FromBody] UserPostModel user)
         {
-            var existingUser = await _userService.GetByUserName(user.UserName);
-            if (existingUser != null)
+            try
             {
-                return BadRequest("שם המשתמש כבר קיים.");
+                _logger.LogInformation($"הרשמה: {user.UserName}, {user.Email}, {user.Company}");
+
+                var existingUser = await _userService.GetByUserName(user.UserName);
+                if (existingUser != null)
+                    return BadRequest("שם המשתמש כבר קיים.");
+
+                var existingEmail = await _userService.GetByEmail(user.Email);
+                if (existingEmail != null)
+                    return BadRequest("האימייל כבר נמצא במערכת.");
+
+                var newUser = new User()
+                {
+                    UserName = user.UserName,
+                    PasswordHash = user.PasswordHash,
+                    Company = user.Company,
+                    Email = user.Email,
+                    Role = "User"
+                };
+
+                var createdUser = await _userService.Add(newUser);
+
+                return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
             }
-
-            var existingEmail = await _userService.GetByEmail(user.Email);
-            if (existingEmail != null)
+            catch (Exception ex)
             {
-                return BadRequest("האימייל כבר נמצא במערכת.");
+                _logger.LogError(ex, "שגיאה בהרשמה");
+                return StatusCode(500, "שגיאה פנימית בשרת.");
             }
-
-            var newUser = new User()
-            {
-                UserName = user.UserName,
-                PasswordHash = user.PasswordHash, // שים לב, יש להחסין סיסמאות בצורה מאובטחת
-                Company = user.Company,
-                Email = user.Email,
-                Role = "User" // תפקיד ברירת מחדל
-            };
-
-            var createdUser = await _userService.Add(newUser);
-
-            return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
         }
 
-        // פונקציה לכניסת משתמש (Login)
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginModel login)
         {
-            var user = await _userService.AuthenticateUser(login.UserName, login.PasswordHash);
-            if (user == null)
+            try
             {
-                return Unauthorized("שם משתמש או סיסמה שגויים.");
+                _logger.LogInformation($"Login attempt: {login.UserName}");
+
+                var user = await _userService.AuthenticateUser(login.UserName, login.PasswordHash);
+                if (user == null)
+                {
+                    _logger.LogWarning("Login failed - invalid credentials");
+                    return Unauthorized("שם משתמש או סיסמה שגויים.");
+                }
+
+                var token = GenerateJwtToken(user);
+
+                var userDto = new UserDTO
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Company = user.Company,
+                    Role = user.Role
+                };
+
+                return Ok(new
+                {
+                    Token = token,
+                    User = userDto
+                });
             }
-
-            var token = GenerateJwtToken(user);
-
-            return Ok(new { Token = token });
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "שגיאה במהלך התחברות");
+                return StatusCode(500, "שגיאה פנימית בשרת.");
+            }
         }
 
-        // פונקציה ליצירת JWT Token
         private string GenerateJwtToken(User user)
         {
             var claims = new[]
@@ -85,7 +115,9 @@ namespace TeamTrack.Web.Controllers
                 new Claim(ClaimTypes.Role, user.Role)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
+
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 _configuration["Jwt:Issuer"],
@@ -98,29 +130,25 @@ namespace TeamTrack.Web.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // GET: api/<UsersController>
         [HttpGet]
         public async Task<ActionResult> Get()
         {
             var users = await _userService.GetList();
-            var usersDTO = _mapper.Map<IEnumerable<UserDTO>>(users); // שימוש ב-Mapper להמיר ל-DTO
+            var usersDTO = _mapper.Map<IEnumerable<UserDTO>>(users);
             return Ok(usersDTO);
         }
 
-        // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
             var user = await _userService.GetById(id);
-            var userDTO = _mapper.Map<UserDTO>(user); // שימוש ב-Mapper להמיר ל-DTO
             if (user == null)
-            {
                 return NotFound();
-            }
+
+            var userDTO = _mapper.Map<UserDTO>(user);
             return Ok(userDTO);
         }
 
-        // POST api/<UsersController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserPostModel user)
         {
@@ -135,39 +163,31 @@ namespace TeamTrack.Web.Controllers
 
             var existingUser = await _userService.GetById(userToAdd.Id);
             if (existingUser == null)
-            {
                 return BadRequest("המשתמש לא קיים במסד הנתונים.");
-            }
 
             var newUser = await _userService.Add(userToAdd);
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
         }
 
-        // PUT api/<UsersController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] User user)
         {
             var existingUser = await _userService.GetById(id);
             if (existingUser == null)
-            {
                 return NotFound("המשתמש לא קיים במסד הנתונים.");
-            }
 
             var updatedUser = await _userService.Update(user);
             return Ok(updatedUser);
         }
 
-        // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var existingUser = await _userService.GetById(id);
             if (existingUser == null)
-            {
                 return NotFound("המשתמש לא קיים במסד הנתונים.");
-            }
 
-            var result = await _userService.Delete(id);
+            await _userService.Delete(id);
             return Ok();
         }
     }
