@@ -22,19 +22,22 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 const Home = () => {
   const { user } = useUser();
-  const [showUploadFile, setShowUploadFile] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
+  // Consolidated user authentication check at the top
+  const isLoggedIn = user?.id !== undefined && user?.id !== 0;
+  
+  // State management
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const profileOpen = Boolean(profileAnchorEl);
-
-  // State for animations
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
   const [hoverStates, setHoverStates] = useState<Record<string, boolean>>({});
+  
   const heroRef = useRef<HTMLDivElement>(null);
+  const open = Boolean(anchorEl);
+  const profileOpen = Boolean(profileAnchorEl);
 
   // Set loaded state after component mount for animations
   useEffect(() => {
@@ -62,7 +65,7 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Enhanced callback functions
+  // Event handlers
   const handleClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
@@ -91,20 +94,14 @@ const Home = () => {
     setHoverStates(prev => ({ ...prev, [id]: isHovered }));
   }, []);
 
-  // Function to get user display name or initials for avatar
+  // Get user display text for avatar
   const getUserDisplayText = useCallback((name: string) => {
     if (!name) return 'U';
-    
-    // אם השם קצר (עד 2 תווים), נציג אותו במלואו
-    if (name.length <= 2) {
-      return name.toUpperCase();
-    }
-    
-    // אם השם ארוך יותר, נציג רק את האות הראשונה
+    if (name.length <= 2) return name.toUpperCase();
     return name[0].toUpperCase();
   }, []);
 
-  // Enhanced features with more detail and icons
+  // Features configuration
   const features = useMemo(() => [
     {
       icon: <EventNoteIcon sx={{ fontSize: 50, color: '#3f51b5' }} />,
@@ -118,22 +115,16 @@ const Home = () => {
       description: "הפק דוחות מותאמים אישית וקבל תובנות על פעילות הצוות",
       bullets: ["ניתוח מגמות", "מעקב החלטות", "יצוא לפורמטים שונים"]
     },
-
   ], []);
 
-  // Statistics/metrics to showcase
+  // Metrics configuration
   const metrics = useMemo(() => [
     { value: "87%", label: "חיסכון בזמן", icon: <AccessTimeIcon /> },
     { value: "1000+", label: "לקוחות מרוצים", icon: <EmojiPeopleIcon /> },
     { value: "3X", label: "שיפור בתפוקה", icon: <SpeedIcon /> }
   ], []);
 
-  // Advanced useEffect with precise dependencies
-  useEffect(() => {
-    setShowUploadFile(user?.Id !== undefined && user?.Id !== 0);
-  }, [user?.Id]);
-
-  // Enhanced styles with animations and effects
+  // Optimized styles
   const styles = useMemo(() => ({
     gradientText: {
       background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
@@ -149,27 +140,12 @@ const Home = () => {
       fontWeight: 600,
       background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
       boxShadow: '0 4px 20px rgba(63, 81, 181, 0.3)',
-      position: 'relative',
-      overflow: 'hidden',
       transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       '&:hover': {
         background: 'linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)',
         boxShadow: '0 6px 25px rgba(63, 81, 181, 0.5)',
         transform: 'translateY(-3px) scale(1.02)',
       },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        top: 0,
-        left: '-100%',
-        width: '100%',
-        height: '100%',
-        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-        transition: 'all 0.6s',
-      },
-      '&:hover::after': {
-        left: '100%',
-      }
     },
     featureBox: (isActive: boolean) => ({
       width: { xs: '100%', sm: '48%', md: '30%' },
@@ -197,25 +173,22 @@ const Home = () => {
     iconCircle: (isActive: boolean) => ({
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       mb: 2,
       bgcolor: isActive ? 'rgba(63, 81, 181, 0.1)' : 'rgba(63, 81, 181, 0.05)',
       borderRadius: '50%',
       width: '80px',
       height: '80px',
-      alignItems: 'center',
       transition: 'all 0.3s ease',
       transform: isActive ? 'scale(1.1)' : 'scale(1)',
     }),
     heroContainer: {
-      backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(63, 81, 181, 0.03) 0%, rgba(63, 81, 181, 0) 70%)',
-      backgroundSize: '120% 120%',
-      backgroundPosition: 'center center',
-      transition: 'all 0.5s ease',
-      position: 'relative',
       p: { xs: 3, md: 5 },
       borderRadius: 3,
       background: 'linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%)',
       border: '1px solid #e8eaf6',
+      textAlign: 'center',
+      position: 'relative',
       overflow: 'hidden',
     },
     floatingElement: {
@@ -225,6 +198,12 @@ const Home = () => {
       background: 'linear-gradient(45deg, #3f51b5, #5c6bc0)',
       animation: 'float 8s infinite ease-in-out',
       zIndex: 0,
+      '@keyframes float': {
+        '0%': { transform: 'translate(0, 0) rotate(0deg)' },
+        '33%': { transform: 'translate(10px, -15px) rotate(5deg)' },
+        '66%': { transform: 'translate(-10px, 10px) rotate(-5deg)' },
+        '100%': { transform: 'translate(0, 0) rotate(0deg)' }
+      }
     },
     metricCard: {
       p: 3,
@@ -247,123 +226,11 @@ const Home = () => {
     }
   }), []);
 
-  // Custom render functions
+  // Navigation buttons render function
   const renderNavButtons = useCallback(() => {
-    if (user?.Id) {
-      // User is logged in - show profile menu and add meeting button
-      return (
-        <>
-          {showUploadFile && (
-            <Button
-              component={Link}
-              to="showUploadFile"
-              variant="contained"
-              startIcon={<AddCircleOutlineIcon />}
-              onMouseEnter={() => handleButtonHover('add', true)}
-              onMouseLeave={() => handleButtonHover('add', false)}
-              sx={styles.primaryButton}
-            >
-              הוסף ישיבה חדשה
-            </Button>
-          )}
-          
-          <IconButton
-            onClick={handleProfileClick}
-            sx={{ 
-              p: 0,
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'scale(1.1)',
-              }
-            }}
-          >
-            <Avatar 
-              sx={{ 
-                bgcolor: '#3f51b5',
-                width: 40,
-                height: 40,
-                fontSize: '1.1rem',
-                fontWeight: 600
-              }}
-            >
-              {getUserDisplayText(user.UserName || '')}
-            </Avatar>
-          </IconButton>
-          
-          <Menu
-            anchorEl={profileAnchorEl}
-            open={profileOpen}
-            onClose={handleProfileClose}
-            onClick={handleProfileClose}
-            PaperProps={{
-              elevation: 3,
-              sx: {
-                overflow: 'visible',
-                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.15))',
-                mt: 1.5,
-                minWidth: 200,
-                '&:before': {
-                  content: '""',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: 'background.paper',
-                  transform: 'translateY(-50%) rotate(45deg)',
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          >
-            <MenuItem sx={{ py: 1.5, px: 2 }}>
-              <Avatar 
-                sx={{ 
-                  bgcolor: '#3f51b5', 
-                  width: 32, 
-                  height: 32, 
-                  mr: 2,
-                  fontSize: '0.9rem'
-                }}
-              >
-                {getUserDisplayText(user.UserName || '')}
-              </Avatar>
-              <Box>
-                <Typography variant="subtitle2" fontWeight={600}>
-                  {user.UserName || 'משתמש'}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {user.Email || ''}
-                </Typography>
-              </Box>
-            </MenuItem>
-            
-            <Divider />
-            
-            <MenuItem component={Link} to="/profile" sx={{ py: 1, px: 2 }}>
-              <AccountCircleIcon fontSize="small" sx={{ mr: 2, color: '#3f51b5' }} />
-              פרופיל אישי
-            </MenuItem>
-            
-            <MenuItem component={Link} to="/settings" sx={{ py: 1, px: 2 }}>
-              <SettingsIcon fontSize="small" sx={{ mr: 2, color: '#3f51b5' }} />
-              הגדרות
-            </MenuItem>
-            
-            <Divider />
-            
-            <MenuItem component={Link} to="/logout" sx={{ py: 1, px: 2 }}>
-              <LogoutIcon fontSize="small" sx={{ mr: 2, color: '#f44336' }} />
-              <Typography color="#f44336">התנתק</Typography>
-            </MenuItem>
-          </Menu>
-        </>
-      );
+    if (isLoggedIn) {
+      return null; // Don't show anything when logged in
     } else {
-      // User is not logged in - show login/signup buttons
       return (
         <>
           <Button
@@ -407,9 +274,9 @@ const Home = () => {
         </>
       );
     }
-  }, [hoverStates, showUploadFile, styles.primaryButton, handleButtonHover, user, getUserDisplayText, handleProfileClick, profileOpen, profileAnchorEl, handleProfileClose]);
+  }, [isLoggedIn, hoverStates, handleButtonHover]);
 
-  // Floating bubbles for hero section
+  // Floating bubbles for hero section (enhanced with 6 bubbles and animation delay)
   const floatingBubbles = useMemo(() => {
     return Array.from({ length: 6 }).map((_, i) => ({
       size: 100 + Math.random() * 150,
@@ -457,52 +324,24 @@ const Home = () => {
                 <IconButton
                   color="primary"
                   aria-label="menu"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
                   onClick={handleClick}
                 >
                   <MenuIcon />
                 </IconButton>
                 <Menu
-                  id="menu-appbar"
                   anchorEl={anchorEl}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  keepMounted
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                   open={open}
                   onClose={handleClose}
                   TransitionComponent={Fade}
                 >
-                  {user?.Id ? (
+                  {isLoggedIn ? (
                     <>
-                      <MenuItem sx={{ py: 1.5, px: 2 }}>
-                        <Avatar 
-                          sx={{ 
-                            bgcolor: '#3f51b5', 
-                            width: 32, 
-                            height: 32, 
-                            mr: 2,
-                            fontSize: '0.9rem'
-                          }}
-                        >
-                          {getUserDisplayText(user.UserName || '')}
-                        </Avatar>
-                        <Box>
-                          <Typography variant="subtitle2" fontWeight={600}>
-                            {user.UserName || 'משתמש'}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary">
-                            {user.Email || ''}
-                          </Typography>
-                        </Box>
+                      <MenuItem onClick={handleClose} component={Link} to="/showUploadFile">
+                        <AddCircleOutlineIcon fontSize="small" sx={{ mr: 1 }} />
+                        הוסף ישיבה חדשה
                       </MenuItem>
-                      <Divider />
-                      {showUploadFile && (
-                        <MenuItem onClick={handleClose} component={Link} to="/showUploadFile">
-                          <AddCircleOutlineIcon fontSize="small" sx={{ mr: 1 }} />
-                          הוסף ישיבה חדשה
-                        </MenuItem>
-                      )}
                       <MenuItem onClick={handleClose} component={Link} to="/profile">
                         <AccountCircleIcon fontSize="small" sx={{ mr: 1 }} />
                         פרופיל אישי
@@ -532,7 +371,7 @@ const Home = () => {
                 </Menu>
               </>
             ) : (
-              <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                 {renderNavButtons()}
               </Box>
             )}
@@ -540,15 +379,11 @@ const Home = () => {
         </Container>
       </AppBar>
 
-      {/* Hero Section with enhanced animations */}
+      {/* Hero Section */}
       <Container maxWidth="lg" sx={{ mt: 6, mb: 8 }}>
         <Zoom in={isLoaded} style={{ transitionDelay: '100ms' }}>
-          <Paper
-            elevation={0}
-            ref={heroRef}
-            sx={styles.heroContainer}
-          >
-            {/* Floating background elements */}
+          <Paper elevation={0} ref={heroRef} sx={styles.heroContainer}>
+            {/* Enhanced floating background elements with 6 bubbles and animation delay */}
             {floatingBubbles.map((bubble, i) => (
               <Box
                 key={i}
@@ -560,17 +395,11 @@ const Home = () => {
                   left: bubble.left,
                   animationDuration: bubble.animationDuration,
                   animationDelay: bubble.animationDelay,
-                  '@keyframes float': {
-                    '0%': { transform: 'translate(0, 0) rotate(0deg)' },
-                    '33%': { transform: 'translate(10px, -15px) rotate(5deg)' },
-                    '66%': { transform: 'translate(-10px, 10px) rotate(-5deg)' },
-                    '100%': { transform: 'translate(0, 0) rotate(0deg)' }
-                  }
                 }}
               />
             ))}
 
-            <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            <Box sx={{ position: 'relative', zIndex: 1 }}>
               <Typography
                 component="h1"
                 variant="h3"
@@ -611,15 +440,19 @@ const Home = () => {
               >
                 האפליקציה המתקדמת לתיעוד, ניהול ומעקב אחר ישיבות צוות. חסכו זמן יקר, שפרו את התקשורת הפנים-ארגונית וקבלו החלטות טובות יותר.
               </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                component={Link}
-                to="/signup"
-                sx={styles.primaryButton}
-              >
-                הירשם עכשיו חינם
-              </Button>
+              
+              {/* Show signup button only if user is not logged in */}
+              {!isLoggedIn && (
+                <Button
+                  variant="contained"
+                  size="large"
+                  component={Link}
+                  to="/signup"
+                  sx={styles.primaryButton}
+                >
+                  הירשם עכשיו חינם
+                </Button>
+              )}
             </Box>
           </Paper>
         </Zoom>
@@ -654,8 +487,7 @@ const Home = () => {
         </Container>
       </Box>
 
-
-      {/* Features Section with enhanced animations */}
+      {/* Features Section */}
       <Box sx={{ py: 6, bgcolor: '#ffffff' }}>
         <Container maxWidth="lg">
           <Typography
@@ -699,24 +531,17 @@ const Home = () => {
                   onMouseLeave={handleFeatureLeave}
                   sx={styles.featureBox(activeFeature === index)}
                 >
-                  <Box
-                    sx={styles.iconCircle(activeFeature === index)}
-                  >
+                  <Box sx={styles.iconCircle(activeFeature === index)}>
                     {feature.icon}
                   </Box>
-                  <Typography
-                    variant="h6"
-                    component="h3"
-                    fontWeight="600"
-                    gutterBottom
-                  >
+                  <Typography variant="h6" component="h3" fontWeight="600" gutterBottom>
                     {feature.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     {feature.description}
                   </Typography>
 
-                  <Collapse in={activeFeature === index || hoverStates[`feature-${index}`]}>
+                  <Collapse in={activeFeature === index}>
                     <Box sx={{ mt: 2 }}>
                       {feature.bullets.map((bullet, i) => (
                         <Box key={i} sx={styles.bullet}>

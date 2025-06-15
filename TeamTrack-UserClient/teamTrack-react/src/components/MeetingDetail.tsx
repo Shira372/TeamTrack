@@ -115,7 +115,7 @@ const MeetingDetail = () => {
               <EventIcon sx={{ fontSize: 40, color: '#3f51b5' }} />
             </Box>
             <Typography component="h1" variant="h4" fontWeight="bold" sx={{ mb: 2, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '0px 2px 5px rgba(0,0,0,0.05)' }} align="center">
-              {meeting.MeetingName}
+              {meeting.meetingName}
             </Typography>
           </Box>
 
@@ -126,7 +126,7 @@ const MeetingDetail = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, dir: 'rtl' }}>
               <CalendarTodayIcon sx={{ mr: 1, color: '#3f51b5' }} />
               <Typography variant="body1" sx={{ fontWeight: 500, ml: 1, color: '#546e7a' }}>
-                תאריך יצירה: {new Date(meeting.CreatedAt).toLocaleDateString('he-IL', { 
+                תאריך יצירה: {new Date(meeting.createdAt).toLocaleDateString('he-IL', { 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric',
@@ -137,7 +137,7 @@ const MeetingDetail = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <PersonIcon sx={{ mr: 1, color: '#3f51b5' }} />
               <Typography variant="body1" sx={{ fontWeight: 500, ml: 1, color: '#546e7a' }}>
-                נוצר על ידי: {meeting.CreatedByUserId}
+                נוצר על ידי: {meeting.createdByUserId}
               </Typography>
             </Box>
           </Box>
@@ -146,15 +146,15 @@ const MeetingDetail = () => {
 
           {/* Links */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {meeting.TranscriptionLink && (
-              <Link href={meeting.TranscriptionLink} target="_blank" rel="noopener" sx={{ display: 'flex', alignItems: 'center' }}>
+            {meeting.transcriptionLink && (
+              <Link href={meeting.transcriptionLink} target="_blank" rel="noopener" sx={{ display: 'flex', alignItems: 'center' }}>
                 <ArticleIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לתמלול</Typography>
               </Link>
             )}
 
-            {meeting.SummaryLink && (
-              <Link href={meeting.SummaryLink} target="_blank" rel="noopener" sx={{ display: 'flex', alignItems: 'center' }}>
+            {meeting.summaryLink && (
+              <Link href={meeting.summaryLink} target="_blank" rel="noopener" sx={{ display: 'flex', alignItems: 'center' }}>
                 <SummarizeIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לסיכום</Typography>
               </Link>

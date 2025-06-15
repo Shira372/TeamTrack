@@ -1,15 +1,16 @@
-// app.component.ts
+import { Component } from "@angular/core"
+import { RouterOutlet } from "@angular/router"
+import { CommonModule } from "@angular/common"
+
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [
-    RouterModule, RouterOutlet,
-    LoginComponent,
-    DashboardComponent,
-    UsersComponent,
-    // הוסיפי כל קומפוננטה רלוונטית כאן
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  imports: [RouterOutlet, CommonModule],
+  template: `
+    <router-outlet></router-outlet>
+  `,
+  styles: [],
 })
-export class AppComponent { }
+export class AppComponent {
+  title = "TeamTrack"
+}

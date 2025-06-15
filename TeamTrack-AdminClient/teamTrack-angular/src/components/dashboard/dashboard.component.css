@@ -1,0 +1,120 @@
+.dashboard-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffebee 100%);
+  }
+  
+  .dashboard-toolbar {
+    background: white;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toolbar-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .welcome-text {
+    margin-left: 16px;
+    color: #666;
+  }
+  
+  .dashboard-content {
+    padding: 32px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .welcome-section {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  
+  .welcome-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #d32f2f;
+    margin-bottom: 16px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  .dashboard-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-content {
+    padding: 32px 24px 16px 24px;
+    text-align: center;
+  }
+  
+  .card-icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+  }
+  
+  .card-icon {
+    font-size: 40px;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  
+  .card-description {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  
+  .card-actions {
+    padding: 0 24px 24px 24px;
+    justify-content: center;
+  }
+  
+  .card-button {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .welcome-title {
+      font-size: 2rem;
+    }
+  
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

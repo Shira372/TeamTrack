@@ -7,7 +7,6 @@ const Footer = () => {
 
   return (
     <>
-      {/* פס דק מעל הפוטר */}
       <Divider sx={{ borderColor: '#e0e0e0', width: '100%', mb: 3 }} />
       
       <Container maxWidth="lg">

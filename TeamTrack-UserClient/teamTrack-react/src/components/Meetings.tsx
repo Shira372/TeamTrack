@@ -4,7 +4,8 @@ import {
   Button,
   Paper,
   Typography,
-  CircularProgress
+  CircularProgress,
+  Slide
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,6 +24,7 @@ const Meetings = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showButton, setShowButton] = useState(false); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +37,7 @@ const Meetings = () => {
         setErrorMessage("לא הצלחנו להטעין את הפגישות, אנא נסה מאוחר יותר");
       } finally {
         setLoading(false);
+        setTimeout(() => setShowButton(true), 300); 
       }
     };
     fetchMeetings();
@@ -81,22 +84,28 @@ const Meetings = () => {
         </Paper>
       )}
 
-      {meetings.length === 0 && !errorMessage ? (
-        <Box sx={{ textAlign: "center", py: 8 }}>
-          <Typography variant="h6" color="text.secondary">
-            אין פגישות להצגה
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            לא נמצאו פגישות במערכת. צור פגישה חדשה כדי להתחיל.
-          </Typography>
+      <Slide direction="down" in={showButton} mountOnEnter unmountOnExit>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
             onClick={handleCreateNewMeeting}
+            sx={{ fontWeight: "bold", borderRadius: 2 }}
           >
-            צור פגישה חדשה
+            פגישה חדשה
           </Button>
+        </Box>
+      </Slide>
+
+      {meetings.length === 0 && !errorMessage ? (
+        <Box sx={{ textAlign: "center", py: 8 }}>
+          <Typography variant="h6" color="text.secondary">
+            אין פגישות להצגה
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            לא נמצאו פגישות במערכת.
+          </Typography>
         </Box>
       ) : (
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: "center" }}>

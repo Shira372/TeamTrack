@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from "../use-Context/userProvider";
-import { User } from '../moduls/user';
+import type { User } from '../moduls/user';
 
 import {
     TextField,
@@ -66,7 +66,11 @@ const Login = () => {
     };
 
     const onSubmit = (data: UserForLogin) => {
-        loginUser(data);
+        const cleanedData: UserForLogin = {
+            userName: data.userName.trim().toLowerCase(),
+            password: data.password.trim(),
+        };
+        loginUser(cleanedData);
     };
 
     const loginUser = async (data: UserForLogin) => {
@@ -74,22 +78,40 @@ const Login = () => {
             setIsLoading(true);
             setErrorMessage(null);
             const apiUrl = process.env.REACT_APP_API_URL;
+
+            if (process.env.NODE_ENV !== 'production') {
+                console.log("🔐 login attempt:", data);
+            }
+
             const response = await axios.post(`${apiUrl}/api/users/login`, {
                 UserName: data.userName,
                 PasswordHash: data.password
             });
-    
-            // חילוץ הטוקן והמשתמש מתוך התגובה
-            const { Token, User } = response.data;
-    
-            // שמירה ב־localStorage
-            localStorage.setItem('token', Token);
-            localStorage.setItem('user', JSON.stringify(User));
-    
-            // עדכון ה־Context
-            setUser(User);
-    
+
+            if (process.env.NODE_ENV !== 'production') {
+                console.log("✅ login response full:", response.data);
+            }
+
+            // בודקים אם השדות מגיעים בגדלים שונים
+            const token = response.data.Token || response.data.token;
+            const user = response.data.User || response.data.user;
+
+            if (!token || !user) {
+                console.error("🚨 Missing token or user in login response:", response.data);
+                setErrorMessage("שגיאה בתשובת השרת. אנא נסה שוב או פנה למנהל המערכת.");
+                return;
+            }
+
+            localStorage.setItem('tt_token', token);
+            localStorage.setItem('tt_user', JSON.stringify(user));
+
+            if (process.env.NODE_ENV !== 'production') {
+                console.log("✅ login success:", user);
+            }
+
+            setUser(user);
             navigate('/home');
+
         } catch (error: any) {
             if (error.response) {
                 setErrorMessage("שם המשתמש או הסיסמה שגויים");
@@ -98,18 +120,21 @@ const Login = () => {
             } else {
                 setErrorMessage("שגיאה לא צפויה, אנא נסה שוב מאוחר יותר");
             }
+
+            if (process.env.NODE_ENV !== 'production') {
+                console.error("❌ login error:", error);
+            }
         } finally {
             setIsLoading(false);
         }
     };
-    
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
     return (
         <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh' }}>
-            {/* Header/Navigation Bar */}
             <AppBar
                 position="static"
                 color="default"
@@ -283,16 +308,18 @@ const Login = () => {
                                     ),
                                 }}
                                 dir="rtl"
+                                autoComplete="username"
+                                disabled={isLoading}
                             />
                         </Box>
 
-                        <Box sx={{ mb: 3 }}>
+                        <Box sx={{ mb: 4 }}>
                             <TextField
                                 id="password"
                                 label="סיסמה"
-                                type={showPassword ? "text" : "password"}
                                 variant="outlined"
                                 fullWidth
+                                type={showPassword ? 'text' : 'password'}
                                 {...register("password")}
                                 error={!!errors.password}
                                 helperText={errors.password?.message}
@@ -308,52 +335,51 @@ const Login = () => {
                                                 aria-label="toggle password visibility"
                                                 onClick={togglePasswordVisibility}
                                                 edge="end"
+                                                tabIndex={-1}
                                             >
                                                 {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                             </IconButton>
                                         </InputAdornment>
-                                    ),
+                                    )
                                 }}
                                 dir="rtl"
+                                autoComplete="current-password"
+                                disabled={isLoading}
                             />
                         </Box>
 
-                        <Box sx={{ mb: 3 }}>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                size="large"
-                                disabled={isLoading}
-                                sx={{
-                                    mt: 2,
-                                    py: 1.5,
-                                    borderRadius: 2,
-                                    background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-                                    boxShadow: '0 3px 5px 2px rgba(63, 81, 181, .3)',
-                                    '&:hover': {
-                                        background: 'linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)',
-                                        boxShadow: '0 4px 12px rgba(63, 81, 181, 0.4)',
-                                        transform: 'translateY(-2px)',
-                                        transition: 'all 0.3s',
-                                    }
-                                }}
-                            >
-                                {isLoading ? 'מתחבר...' : 'התחבר'}
-                            </Button>
-                        </Box>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth
+                            size="large"
+                            disabled={isLoading}
+                            sx={{
+                                borderRadius: 3,
+                                fontWeight: 600,
+                                boxShadow: '0 4px 10px rgba(63,81,181,0.3)',
+                                textTransform: 'none',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    boxShadow: '0 6px 16px rgba(63,81,181,0.6)',
+                                    transform: 'translateY(-2px)'
+                                }
+                            }}
+                        >
+                            {isLoading ? 'טוען...' : 'התחבר'}
+                        </Button>
                     </form>
 
                     <Typography
                         variant="body2"
-                        align="center"
                         color="text.secondary"
-                        sx={{ mt: 2 }}
+                        align="center"
+                        sx={{ mt: 3, fontWeight: 400 }}
                     >
                         אין לך חשבון?{' '}
-                        <Link to="/signup" style={{ color: '#3f51b5', fontWeight: 'bold' }}>
-                            הרשמה
+                        <Link to="/signup" style={{ color: '#3f51b5', fontWeight: 600 }}>
+                            הרשם כאן
                         </Link>
                     </Typography>
                 </Paper>

@@ -1,3 +1,4 @@
+// context/UserProvider.tsx
 import React, {
   createContext,
   useContext,
@@ -19,22 +20,24 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUserState] = useState<User | null>(null);
 
-  // Load user from localStorage when app starts
+  // Load user from localStorage on app load
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser) as User;
+        console.log('[UserProvider] Loaded user from localStorage:', parsedUser);
         setUserState(parsedUser);
       }
     } catch (error) {
-      console.error('Failed to parse user from localStorage', error);
+      console.error('[UserProvider] Failed to parse user from localStorage', error);
       localStorage.removeItem('user');
     }
   }, []);
 
-  // Update localStorage when user changes
+  // Save user to localStorage when updated
   const setUser = (newUser: User | null) => {
+    console.log('[UserProvider] Setting user:', newUser);
     setUserState(newUser);
     if (newUser) {
       localStorage.setItem('user', JSON.stringify(newUser));
@@ -43,8 +46,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Clear user
   const logout = () => {
+    console.log('[UserProvider] Logging out...');
     setUser(null);
   };
 
@@ -57,7 +60,6 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to use the user context
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {

@@ -14,8 +14,7 @@ const Navbar = () => {
 
   if (!user) return null; // מונע הצגת Navbar אם אין משתמש עדיין
 
-  const displayName = user.UserName || 'משתמש';
-  const firstLetter = user.UserName?.charAt(0)?.toUpperCase() || '?';
+  const firstLetter = user.userName?.charAt(0)?.toUpperCase() || '?';
 
   return (
     <AppBar position="sticky">
@@ -38,10 +37,6 @@ const Navbar = () => {
           >
             {firstLetter}
           </Avatar>
-
-          <Typography variant="subtitle1" component="div">
-            {displayName}
-          </Typography>
         </Box>
 
         <Box>

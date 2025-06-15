@@ -1,0 +1,273 @@
+.home-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .header-toolbar {
+    background: white;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .toolbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .logo-icon {
+    color: #d32f2f;
+    font-size: 28px;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .nav-button {
+    border-color: #d32f2f;
+    color: #d32f2f;
+  }
+  
+  .user-button {
+    color: #d32f2f;
+  }
+  
+  .hero-section {
+    padding: 48px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .hero-card {
+    padding: 48px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+    letter-spacing: 1px;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    color: #666;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  
+  .hero-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+  
+  .hero-cta {
+    font-size: 1.1rem;
+    padding: 16px 32px;
+  }
+  
+  .logged-in-actions {
+    margin-top: 24px;
+  }
+  
+  .metrics-section {
+    padding: 32px 16px;
+    background: #ffebee;
+  }
+  
+  .metrics-container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  
+  .metric-card {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+  }
+  
+  .metric-content {
+    text-align: center;
+    padding: 24px;
+  }
+  
+  .metric-icon {
+    color: #d32f2f;
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  
+  .metric-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d32f2f;
+    margin-bottom: 8px;
+  }
+  
+  .metric-label {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .features-section {
+    padding: 48px 16px;
+    background: white;
+  }
+  
+  .features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #d32f2f;
+    margin-bottom: 8px;
+  }
+  
+  .section-divider {
+    width: 60px;
+    margin: 0 auto 40px auto;
+    border-color: #d32f2f;
+    border-width: 2px;
+  }
+  
+  .features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  
+  .feature-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    cursor: pointer;
+  }
+  
+  .feature-content {
+    text-align: center;
+    padding: 32px 24px;
+  }
+  
+  .feature-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(211, 47, 47, 0.05);
+    margin: 0 auto 24px auto;
+    transition: all 0.3s ease;
+  }
+  
+  .feature-icon-container.active {
+    background-color: rgba(211, 47, 47, 0.1);
+    transform: scale(1.1);
+  }
+  
+  .feature-icon {
+    font-size: 40px;
+    color: #d32f2f;
+  }
+  
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  
+  .feature-description {
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  .feature-bullets {
+    margin-top: 16px;
+  }
+  
+  .bullet-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  
+  .bullet-icon {
+    color: #d32f2f;
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .toolbar-content {
+      padding: 0 8px;
+    }
+  
+    .nav-buttons {
+      gap: 8px;
+    }
+  
+    .hero-title {
+      font-size: 2rem;
+    }
+  
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+  
+    .metrics-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .features-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  

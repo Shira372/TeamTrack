@@ -1,4 +1,115 @@
-/* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --primary-color: #d32f2f;
+  --primary-light: #ff6659;
+  --primary-dark: #9a0007;
+  --accent-color: #ff5722;
+  --warn-color: #f44336;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+.mat-mdc-button.mat-primary {
+  --mdc-filled-button-container-color: var(--primary-color);
+  --mdc-filled-button-label-text-color: white;
+}
+
+.mat-mdc-button.mat-primary:hover {
+  --mdc-filled-button-container-color: var(--primary-dark);
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #d32f2f 30%, #ff5722 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.primary-button {
+  background: linear-gradient(45deg, #d32f2f 30%, #ff5722 90%) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px 32px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.3) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.primary-button:hover {
+  background: linear-gradient(45deg, #b71c1c 30%, #d32f2f 90%) !important;
+  box-shadow: 0 6px 25px rgba(211, 47, 47, 0.5) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+}
+
+.feature-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid #ffebee;
+  border-radius: 12px;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(211, 47, 47, 0.15);
+  background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
+}
+
+.metric-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(10px, -15px) rotate(5deg);
+  }
+  66% {
+    transform: translate(-10px, 10px) rotate(-5deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  background: linear-gradient(45deg, #d32f2f, #ff5722);
+  animation: float 8s infinite ease-in-out;
+  z-index: 0;
+}
+
+.hero-container {
+  background: linear-gradient(135deg, #ffffff 0%, #ffebee 100%);
+  border: 1px solid #ffcdd2;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}

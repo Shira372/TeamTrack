@@ -17,11 +17,23 @@ const App = () => {
   const { user } = useUser();
   const location = useLocation();
 
-  const isAuthRoute = ["/login", "/signup"].includes(location.pathname.toLowerCase());
+  const path = location.pathname.toLowerCase();
+  const isAuthRoute = ["/login", "/signup"].includes(path);
 
+  // אם מדובר בעמוד התחברות/הרשמה, נציג רק את הטופס עצמו בלי עטיפות כלליות
+  if (isAuthRoute) {
+    return (
+      <Routes>
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
+        <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/home" />} />
+      </Routes>
+    );
+  }
+
+  // עטיפה כללית לכל שאר המסכים
   return (
     <div className="flex flex-col min-h-screen" dir="rtl">
-      {user && <Navbar />} {/* רק כשיש משתמש נטען את הניווט */}
+      {user && <Navbar />}
 
       <div className="flex-grow">
         <Routes>
@@ -32,13 +44,11 @@ const App = () => {
           <Route path="/newMeeting" element={user ? <NewMeeting /> : <Navigate to="/login" />} />
           <Route path="/uploadFile" element={user ? <UploadFile /> : <Navigate to="/login" />} />
           <Route path="/keypoints" element={user ? <KeyPointsProcessing /> : <Navigate to="/login" />} />
-          <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
-          <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/home" />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
 
-      {!isAuthRoute && <Footer />}
+      <Footer />
     </div>
   );
 };

@@ -1,10 +1,48 @@
-<form [formGroup]="form" (ngSubmit)="login()">
-    <label>Email:
-      <input formControlName="email" type="email">
-    </label>
-    <label>Password:
-      <input formControlName="password" type="password">
-    </label>
-    <button type="submit">התחבר</button>
-  </form>
-  
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="login-header">
+      <mat-card-title class="login-title gradient-text">התחברות</mat-card-title>
+      <mat-card-subtitle>היכנס לחשבון שלך</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>אימייל</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            אימייל נדרש
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            אימייל לא תקין
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>סיסמה</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            סיסמה נדרשת
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+            סיסמה חייבת להכיל לפחות 6 תווים
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" class="primary-button full-width" [disabled]="!loginForm.valid || isLoading">
+          <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+          <mat-icon *ngIf="!isLoading">login</mat-icon>
+          {{isLoading ? 'מתחבר...' : 'התחבר'}}
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="login-actions">
+      <p>אין לך חשבון? <a routerLink="/signup" class="signup-link">הירשם כאן</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>

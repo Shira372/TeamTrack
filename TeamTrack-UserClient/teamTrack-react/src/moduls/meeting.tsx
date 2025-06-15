@@ -1,10 +1,10 @@
 export type Meeting = {
-    Id:number,
-    MeetingName: string,
-    CreatedByUserId: number,
-    TranscriptionLink: string,
-    SummaryLink: string,
-    CreatedAt:Date,
-    UpdatedAt:Date
-};
-
+    id: number;
+    meetingName: string;
+    createdByUserId: number;
+    transcriptionLink: string;
+    summaryLink: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  

@@ -1,32 +1,62 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Component, inject } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { ReactiveFormsModule, FormBuilder, Validators } from "@angular/forms"
+import { Router, RouterModule } from "@angular/router"
+import { MatCardModule } from "@angular/material/card"
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatInputModule } from "@angular/material/input"
+import { MatButtonModule } from "@angular/material/button"
+import { MatIconModule } from "@angular/material/icon"
+import { ToastrService } from "ngx-toastr"
+import { AuthService } from "../../services/auth.service"
 
 @Component({
-  selector: 'app-login',
+  selector: "app-login",
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
-  private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private fb = inject(FormBuilder)
+  private authService = inject(AuthService)
+  private router = inject(Router)
+  private toastr = inject(ToastrService)
+  
+  loginForm = this.fb.group({
+    email: ["", [Validators.required, Validators.email]],
+    password: ["", [Validators.required, Validators.minLength(6)]],
+  })
+  
+  isLoading = false
+  hidePassword = true
 
-  form: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
-  });
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      this.isLoading = true
+      this.authService.login(this.loginForm.value as any).subscribe({
+        next: () => {
+          this.toastr.success("התחברת בהצלחה!")
+          this.router.navigate(["/dashboard"])
+        },
+        error: () => {
+          this.toastr.error("שגיאה בהתחברות. אנא בדוק את הפרטים ונסה שוב.")
+          this.isLoading = false
+        },
+      })
+    }
+  }
 
-  login() {
-    if (this.form.invalid) return;
-
-    const { email, password } = this.form.value;
-    this.authService.login(email, password).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: err => console.error('Login failed', err)
-    });
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword
   }
 }

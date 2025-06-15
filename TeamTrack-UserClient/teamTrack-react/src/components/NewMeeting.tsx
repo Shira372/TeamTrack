@@ -54,7 +54,7 @@ const NewMeeting = () => {
         formData.append("file", file);
       }
       formData.append("MeetingName", data.MeetingName);
-      formData.append("CreatedByUserId", user.Id.toString());
+      formData.append("CreatedByUserId", user.id.toString());
       formData.append("SummaryLink", data.SummaryLink || "");
 
       await axios.post(`${apiUrl}/api/meetings`, formData);
