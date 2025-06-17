@@ -3,13 +3,13 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, type Observable, tap } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { environment } from "../environments/environment";
-import type { User, LoginRequest, SignupRequest, AuthResponse } from "../models/user.model";
+import type { User, LoginRequest, AuthResponse } from "../models/user.model";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/api/auth`; // ✅ הותאם לפי environment
+  private apiUrl = `${environment.apiUrl}/api/auth`;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
@@ -22,14 +22,6 @@ export class AuthService {
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response) => {
-        this.setCurrentUser(response.user, response.token);
-      }),
-    );
-  }
-
-  signup(userData: SignupRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, userData).pipe(
       tap((response) => {
         this.setCurrentUser(response.user, response.token);
       }),

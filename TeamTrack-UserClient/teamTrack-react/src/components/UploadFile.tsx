@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import AWS from "aws-sdk";
-import { 
+import React, { useState, useRef } from "react";
+import {
   Button, Box, Typography, Container, AppBar, Toolbar, IconButton,
-  Divider, Alert, useTheme, useMediaQuery, LinearProgress
+  Divider, Alert, useTheme, useMediaQuery, LinearProgress, Link as MuiLink
 } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LoginIcon from '@mui/icons-material/Login';
@@ -16,10 +15,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 const UploadFile = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadResponse, setUploadResponse] = useState<{ message: string; success: boolean } | null>(null);
+  const [uploadResponse, setUploadResponse] = useState<{ message: string; success: boolean; fileUrl?: string } | null>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [uploadProgress, setUploadProgress] = useState(0);
+  const xhrRef = useRef<XMLHttpRequest | null>(null);
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -29,46 +29,51 @@ const UploadFile = () => {
     }
   };
 
-  const fileUploadHandler = async () => {
+  const fileUploadHandler = () => {
     if (!selectedFile) return;
 
     setUploading(true);
     setUploadProgress(0);
+    setUploadResponse(null);
 
-    AWS.config.update({
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY!,
-      region: "us-east-1",
-    });
+    const formData = new FormData();
+    formData.append("file", selectedFile);
 
-    const s3 = new AWS.S3();
-    const params = {
-      Bucket: "your-bucket-name", // שנה לשם הדלי שלך
-      Key: selectedFile.name,
-      Body: selectedFile,
-      ACL: "public-read",
+    const xhr = new XMLHttpRequest();
+    xhrRef.current = xhr;
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentComplete = Math.round((event.loaded / event.total) * 100);
+        setUploadProgress(percentComplete);
+      }
     };
 
-    try {
-      const upload = s3.upload(params);
-
-      upload.on('httpUploadProgress', (evt) => {
-        if (evt.total) {
-          const progress = Math.round((evt.loaded / evt.total) * 100);
-          setUploadProgress(progress);
-        }
-      });
-
-      const data = await upload.promise();
-
-      setUploadProgress(100);
-      setUploadResponse({ message: `הקובץ הועלה בהצלחה: ${data.Location}`, success: true });
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      setUploadResponse({ message: "שגיאה בהעלאת הקובץ", success: false });
-    } finally {
+    xhr.onload = () => {
       setUploading(false);
-    }
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          setUploadResponse({
+            message: "הקובץ הועלה בהצלחה!",
+            success: true,
+            fileUrl: data.fileUrl // מניחים שהשרת מחזיר את זה
+          });
+        } catch {
+          setUploadResponse({ message: "העלאה הצליחה אך לא ניתן לקבל קישור לקובץ.", success: true });
+        }
+      } else {
+        setUploadResponse({ message: `שגיאה בהעלאה: ${xhr.statusText || xhr.status}`, success: false });
+      }
+    };
+
+    xhr.onerror = () => {
+      setUploading(false);
+      setUploadResponse({ message: "שגיאה ברשת בהעלאת הקובץ.", success: false });
+    };
+
+    xhr.open("POST", "https://teamtrack-server.onrender.com/api/fileupload/upload");
+    xhr.send(formData);
   };
 
   return (
@@ -78,13 +83,18 @@ const UploadFile = () => {
           <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <GroupsIcon sx={{ mr: 1, color: '#3f51b5' }} />
-              <Typography variant="h6" sx={{ fontWeight: 700, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <Typography variant="h6" sx={{
+                fontWeight: 700,
+                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
                 TeamTrack
               </Typography>
             </Box>
 
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu" onClick={() => {}}>
+              <IconButton color="primary" aria-label="menu" onClick={() => { }}>
                 <MenuIcon />
               </IconButton>
             ) : (
@@ -99,13 +109,34 @@ const UploadFile = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{ p: 4, borderRadius: 3, background: 'linear-gradient(to bottom right, #fff, #f5f5f5)', border: '1px solid #e8eaf6', boxShadow: '0 8px 20px rgba(0,0,0,0.05)' }}>
+        <Box sx={{
+          p: 4,
+          borderRadius: 3,
+          background: 'linear-gradient(to bottom right, #fff, #f5f5f5)',
+          border: '1px solid #e8eaf6',
+          boxShadow: '0 8px 20px rgba(0,0,0,0.05)'
+        }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2, bgcolor: 'rgba(63, 81, 181, 0.05)', borderRadius: '50%', width: 80, height: 80, alignItems: 'center' }}>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mb: 2,
+              bgcolor: 'rgba(63, 81, 181, 0.05)',
+              borderRadius: '50%',
+              width: 80,
+              height: 80,
+              alignItems: 'center'
+            }}>
               <CloudUploadIcon sx={{ fontSize: 40, color: '#3f51b5' }} />
             </Box>
 
-            <Typography component="h1" variant="h4" fontWeight="bold" sx={{ mb: 2, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '0px 2px 5px rgba(0,0,0,0.05)' }} align="center">
+            <Typography component="h1" variant="h4" fontWeight="bold" sx={{
+              mb: 2,
+              background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0px 2px 5px rgba(0,0,0,0.05)'
+            }} align="center">
               TeamTrack
             </Typography>
 
@@ -128,7 +159,10 @@ const UploadFile = () => {
               textAlign: 'center',
               bgcolor: 'rgba(63, 81, 181, 0.03)',
               cursor: 'pointer',
-              '&:hover': { bgcolor: 'rgba(63, 81, 181, 0.05)', boxShadow: '0 2px 8px rgba(63, 81, 181, 0.15)' }
+              '&:hover': {
+                bgcolor: 'rgba(63, 81, 181, 0.05)',
+                boxShadow: '0 2px 8px rgba(63, 81, 181, 0.15)'
+              }
             }}
             onClick={() => document.getElementById('file-input')?.click()}
           >
@@ -178,10 +212,16 @@ const UploadFile = () => {
           )}
 
           {uploadResponse && (
-            <Box sx={{ mt: 3 }}>
-              <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2 }}>
+            <Box sx={{ mt: 3, textAlign: 'center' }}>
+              <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2, mb: 2 }}>
                 {uploadResponse.message}
               </Alert>
+
+              {uploadResponse.success && uploadResponse.fileUrl && (
+                <MuiLink href={uploadResponse.fileUrl} target="_blank" rel="noopener noreferrer" underline="hover" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
+                  לחץ כאן לפתיחת הקובץ שהועלה
+                </MuiLink>
+              )}
             </Box>
           )}
         </Box>

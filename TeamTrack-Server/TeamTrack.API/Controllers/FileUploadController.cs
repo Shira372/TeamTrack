@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using System.Threading.Tasks;
 using TeamTrack.API.Models;
+using TeamTrack.Core.IServices;
 
 namespace TeamTrack.API.Controllers
 {
@@ -10,6 +10,12 @@ namespace TeamTrack.API.Controllers
     [ApiController]
     public class FileUploadController : ControllerBase
     {
+        private readonly IS3Service _s3Service;
+
+        public FileUploadController(IS3Service s3Service)
+        {
+            _s3Service = s3Service;
+        }
 
         [HttpPost("upload")]
         [Consumes("multipart/form-data")]
@@ -18,16 +24,9 @@ namespace TeamTrack.API.Controllers
             if (request.File == null || request.File.Length == 0)
                 return BadRequest("No file uploaded.");
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", request.File.FileName);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            var s3Url = await _s3Service.UploadFileAsync(request.File);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await request.File.CopyToAsync(stream);
-            }
-
-            return Ok(new { FilePath = filePath });
+            return Ok(new { FileUrl = s3Url });
         }
-
     }
 }

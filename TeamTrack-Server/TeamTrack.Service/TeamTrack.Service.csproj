@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -11,12 +10,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- הוספת תמיכה ב־HttpClientFactory -->
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.3.24172.9" />
-
-		<!-- הוספת IConfiguration -->
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
-	</ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
 
+		<!-- AWS SDK -->
+		<PackageReference Include="AWSSDK.S3" Version="3.7.100.13" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.2" />
+	</ItemGroup>
 </Project>
+
+

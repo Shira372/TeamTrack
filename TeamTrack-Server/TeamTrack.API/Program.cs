@@ -9,7 +9,7 @@ using TeamTrack.Core.IServices;
 using TeamTrack.Core;
 using TeamTrack.Data;
 using TeamTrack.Service;
-using Swashbuckle.AspNetCore.SwaggerGen; // חשוב לייבא
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +21,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
-// Swagger עם הגדרת JWT Authentication + FileUploadOperationFilter
+// Swagger עם JWT + File Upload Filter
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -34,6 +34,7 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Bearer Authentication with JWT Token",
         Type = SecuritySchemeType.Http
     });
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -49,15 +50,15 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // הוספת הפילטר לטיפול בקבצים ב־Swagger
     options.OperationFilter<TeamTrack.API.Swagger.FileUploadOperationFilter>();
-
 });
 
-// DB Context MySQL
+// DB Context - MySQL
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 41))));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 41))
+    ));
 
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -78,7 +79,9 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["JWT:Issuer"],
         ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])
+        )
     };
 
     options.Events = new JwtBearerEvents
@@ -101,6 +104,7 @@ builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
+builder.Services.AddScoped<IS3Service, S3Service>(); 
 
 // HTTP Client
 builder.Services.AddHttpClient();
@@ -110,9 +114,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://localhost:3000",
+            "https://teamtrack-userclient.onrender.com"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 

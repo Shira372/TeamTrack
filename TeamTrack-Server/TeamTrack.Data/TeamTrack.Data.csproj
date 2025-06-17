@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -16,5 +15,4 @@
 	<ItemGroup>
 		<ProjectReference Include="..\TeamTrack.Core\TeamTrack.Core.csproj" />
 	</ItemGroup>
-
 </Project>

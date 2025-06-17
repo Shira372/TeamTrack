@@ -7,7 +7,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Divider,
   Alert,
   useTheme,
   useMediaQuery,
@@ -20,7 +19,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
 const KeyPointsProcessing = () => {
-  const [inputText, setInputText] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +27,8 @@ const KeyPointsProcessing = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleProcess = async () => {
+    if (!selectedFile) return;
+
     setProcessing(true);
     setResult(null);
     setError(null);
@@ -36,13 +37,15 @@ const KeyPointsProcessing = () => {
       const token = localStorage.getItem("jwt_token");
       if (!token) throw new Error("לא נמצא טוקן התחברות, יש להתחבר מחדש");
 
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
       const response = await fetch("/api/keypoints", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ text: inputText })
+        body: formData
       });
 
       if (response.status === 401) {
@@ -81,9 +84,9 @@ const KeyPointsProcessing = () => {
               </IconButton>
             ) : (
               <Box sx={{ display: 'flex', gap: '10px' }}>
-                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>התחברות</Button>
-                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>הרשמה</Button>
-                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>דף הבית</Button>
+                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>התחברות</Button>
+                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>הרשמה</Button>
+                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>דף הבית</Button>
               </Box>
             )}
           </Toolbar>
@@ -96,22 +99,16 @@ const KeyPointsProcessing = () => {
             עיבוד נקודות מפתח
           </Typography>
 
-          <textarea
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            rows={6}
-            placeholder="הדביקי כאן טקסט לעיבוד"
-            style={{
-              width: '100%',
-              padding: '12px',
-              fontSize: '16px',
-              borderRadius: '8px',
-              border: '1px solid #ccc',
-              resize: 'vertical',
-              marginBottom: '20px',
-              fontFamily: 'inherit',
+          <input
+            type="file"
+            accept=".txt"
+            onChange={(e) => {
+              if (e.target.files?.length) {
+                setSelectedFile(e.target.files[0]);
+              }
             }}
             disabled={processing}
+            style={{ marginBottom: '20px' }}
           />
 
           <Button
@@ -120,18 +117,18 @@ const KeyPointsProcessing = () => {
             fullWidth
             size="large"
             onClick={handleProcess}
-            disabled={!inputText.trim() || processing}
-            sx={{ py: 1.5, borderRadius: 2, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', boxShadow: '0 3px 5px 2px rgba(63, 81, 181, .3)', '&:hover': { background: 'linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)', boxShadow: '0 4px 12px rgba(63, 81, 181, 0.4)', transform: 'translateY(-2px)', transition: 'all 0.3s' } }}
+            disabled={!selectedFile || processing}
+            sx={{ py: 1.5, borderRadius: 2 }}
           >
-            {processing ? 'מעבד...' : 'עבד טקסט'}
+            {processing ? 'מעבד...' : 'שלחי קובץ'}
           </Button>
 
           {processing && (
             <Box sx={{ width: '100%', mt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
-                מעבד את הטקסט...
+                מעבד את הקובץ...
               </Typography>
-              <LinearProgress sx={{ height: 8, borderRadius: 4, bgcolor: 'rgba(63, 81, 181, 0.1)' }} />
+              <LinearProgress sx={{ height: 8, borderRadius: 4 }} />
             </Box>
           )}
 

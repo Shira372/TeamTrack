@@ -1,13 +1,14 @@
 <div class="user-management-container">
-    <mat-toolbar class="page-toolbar">
-      <mat-icon class="toolbar-icon">people</mat-icon>
-      <span class="toolbar-title gradient-text">ניהול משתמשים</span>
-      <span class="spacer"></span>
-      <button mat-raised-button class="primary-button">
-        <mat-icon>person_add</mat-icon>
-        הוסף משתמש
-      </button>
-    </mat-toolbar>
+  <mat-toolbar class="page-toolbar">
+    <mat-icon class="toolbar-icon">people</mat-icon>
+    <span class="toolbar-title gradient-text">ניהול משתמשים</span>
+    <span class="spacer"></span>
+    <button mat-raised-button class="primary-button" routerLink="/create-user">
+      <mat-icon>person_add</mat-icon>
+      הוסף משתמש
+    </button>
+  </mat-toolbar>
+  
   
     <div class="content-container">
       <mat-card class="users-card">

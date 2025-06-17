@@ -1,0 +1,35 @@
+<h2>עריכת משתמש</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label>שם מלא:</label>
+    <input formControlName="fullName" />
+    <div *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched">
+      חובה להזין שם מלא (לפחות 2 תווים).
+    </div>
+  </div>
+
+  <div>
+    <label>אימייל:</label>
+    <input formControlName="email" />
+    <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+      אימייל לא תקין.
+    </div>
+  </div>
+
+  <div>
+    <label>תפקיד:</label>
+    <select formControlName="role">
+      <option value="">בחר תפקיד</option>
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+    </select>
+    <div *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
+      חובה לבחור תפקיד.
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">עדכן</button>
+
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+</form>

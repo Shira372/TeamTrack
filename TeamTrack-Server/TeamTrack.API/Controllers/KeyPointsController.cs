@@ -21,7 +21,7 @@ namespace TeamTrack.API.Controllers
             _openAiService = openAiService;
         }
 
-        [HttpPost("extract")]
+        [HttpPost] // שונה כדי שיתאים לקריאה מ-React
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> ExtractKeyPoints([FromForm] KeyPointsRequest request)
         {
