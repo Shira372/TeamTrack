@@ -126,8 +126,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Middleware
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowSpecificOrigin"); // ?? תוקן המיקום
 
 app.UseHttpsRedirection();
 app.UseRouting();
@@ -142,5 +141,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.Run();
 
 app.Run();
