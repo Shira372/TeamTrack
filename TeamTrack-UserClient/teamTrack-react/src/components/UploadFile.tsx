@@ -16,9 +16,9 @@ const UploadFile = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadResponse, setUploadResponse] = useState<{ message: string; success: boolean; fileUrl?: string } | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [uploadProgress, setUploadProgress] = useState(0);
   const xhrRef = useRef<XMLHttpRequest | null>(null);
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,13 +57,19 @@ const UploadFile = () => {
           setUploadResponse({
             message: "הקובץ הועלה בהצלחה!",
             success: true,
-            fileUrl: data.fileUrl // מניחים שהשרת מחזיר את זה
+            fileUrl: data.fileUrl
           });
         } catch {
-          setUploadResponse({ message: "העלאה הצליחה אך לא ניתן לקבל קישור לקובץ.", success: true });
+          setUploadResponse({
+            message: "העלאה הצליחה אך לא ניתן לקבל קישור לקובץ.",
+            success: true
+          });
         }
       } else {
-        setUploadResponse({ message: `שגיאה בהעלאה: ${xhr.statusText || xhr.status}`, success: false });
+        setUploadResponse({
+          message: `שגיאה בהעלאה: ${xhr.statusText || xhr.status}`,
+          success: false
+        });
       }
     };
 
@@ -83,12 +89,14 @@ const UploadFile = () => {
           <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <GroupsIcon sx={{ mr: 1, color: '#3f51b5' }} />
-              <Typography variant="h6" sx={{
-                fontWeight: 700,
-                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}>
                 TeamTrack
               </Typography>
             </Box>
@@ -109,34 +117,44 @@ const UploadFile = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{
-          p: 4,
-          borderRadius: 3,
-          background: 'linear-gradient(to bottom right, #fff, #f5f5f5)',
-          border: '1px solid #e8eaf6',
-          boxShadow: '0 8px 20px rgba(0,0,0,0.05)'
-        }}>
+        <Box
+          sx={{
+            p: 4,
+            borderRadius: 3,
+            background: 'linear-gradient(to bottom right, #fff, #f5f5f5)',
+            border: '1px solid #e8eaf6',
+            boxShadow: '0 8px 20px rgba(0,0,0,0.05)'
+          }}
+        >
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <Box sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              mb: 2,
-              bgcolor: 'rgba(63, 81, 181, 0.05)',
-              borderRadius: '50%',
-              width: 80,
-              height: 80,
-              alignItems: 'center'
-            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                mb: 2,
+                bgcolor: 'rgba(63, 81, 181, 0.05)',
+                borderRadius: '50%',
+                width: 80,
+                height: 80,
+                alignItems: 'center'
+              }}
+            >
               <CloudUploadIcon sx={{ fontSize: 40, color: '#3f51b5' }} />
             </Box>
 
-            <Typography component="h1" variant="h4" fontWeight="bold" sx={{
-              mb: 2,
-              background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              textShadow: '0px 2px 5px rgba(0,0,0,0.05)'
-            }} align="center">
+            <Typography
+              component="h1"
+              variant="h4"
+              fontWeight="bold"
+              sx={{
+                mb: 2,
+                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0px 2px 5px rgba(0,0,0,0.05)'
+              }}
+              align="center"
+            >
               TeamTrack
             </Typography>
 
@@ -207,18 +225,32 @@ const UploadFile = () => {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
                 {`מעלה... ${uploadProgress}%`}
               </Typography>
-              <LinearProgress variant="determinate" value={uploadProgress} sx={{ height: 8, borderRadius: 4, bgcolor: 'rgba(63, 81, 181, 0.1)' }} />
+              <LinearProgress
+                variant="determinate"
+                value={uploadProgress}
+                sx={{ height: 8, borderRadius: 4, bgcolor: 'rgba(63, 81, 181, 0.1)' }}
+              />
             </Box>
           )}
 
           {uploadResponse && (
             <Box sx={{ mt: 3, textAlign: 'center' }}>
-              <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2, mb: 2 }}>
+              <Alert
+                severity={uploadResponse.success ? "success" : "error"}
+                icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />}
+                sx={{ borderRadius: 2, mb: 2 }}
+              >
                 {uploadResponse.message}
               </Alert>
 
               {uploadResponse.success && uploadResponse.fileUrl && (
-                <MuiLink href={uploadResponse.fileUrl} target="_blank" rel="noopener noreferrer" underline="hover" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
+                <MuiLink
+                  href={uploadResponse.fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="hover"
+                  sx={{ fontWeight: 'bold', color: '#3f51b5' }}
+                >
                   לחץ כאן לפתיחת הקובץ שהועלה
                 </MuiLink>
               )}

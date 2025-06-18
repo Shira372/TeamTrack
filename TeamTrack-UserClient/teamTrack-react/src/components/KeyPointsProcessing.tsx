@@ -43,7 +43,8 @@ const KeyPointsProcessing = () => {
       const response = await fetch("/api/keypoints", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          // שימי לב: לא צריך להוסיף "Content-Type" כשיש FormData - הדפדפן מטפל בזה.
         },
         body: formData
       });
@@ -53,14 +54,21 @@ const KeyPointsProcessing = () => {
       }
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || "שגיאה בשרת בעיבוד נקודות מפתח");
+        // נסה לקרוא JSON, אם לא מצליח, תזרוק שגיאה כללית
+        let errorMsg = "שגיאה בשרת בעיבוד נקודות מפתח";
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData?.error || errorData?.message || errorMsg;
+        } catch {
+          // אין JSON תקין
+        }
+        throw new Error(errorMsg);
       }
 
       const data = await response.json();
       setResult(data.keyPoints || "לא נמצאו נקודות מפתח");
     } catch (e) {
-      setError((e as Error).message || "אירעה שגיאה לא ידועה");
+      setError(e instanceof Error ? e.message : "אירעה שגיאה לא ידועה");
     } finally {
       setProcessing(false);
     }
@@ -79,7 +87,7 @@ const KeyPointsProcessing = () => {
             </Box>
 
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu" onClick={() => {}}>
+              <IconButton color="primary" aria-label="menu" onClick={() => { }}>
                 <MenuIcon />
               </IconButton>
             ) : (
