@@ -3,10 +3,11 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using TeamTrack.Core.IServices;
-
 
 namespace TeamTrack.Service
 {
@@ -32,6 +33,7 @@ namespace TeamTrack.Service
 
             using var stream = file.OpenReadStream();
             var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
+
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = stream,
@@ -44,6 +46,26 @@ namespace TeamTrack.Service
             await fileTransferUtility.UploadAsync(uploadRequest);
 
             return $"https://{_bucketName}.s3.{_region}.amazonaws.com/{file.FileName}";
+        }
+
+        public async Task<List<string>> ListFilesAsync()
+        {
+            var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
+            var request = new ListObjectsV2Request
+            {
+                BucketName = _bucketName
+            };
+
+            var response = await client.ListObjectsV2Async(request);
+            var urls = new List<string>();
+
+            foreach (var entry in response.S3Objects)
+            {
+                var url = $"https://{_bucketName}.s3.{_region}.amazonaws.com/{entry.Key}";
+                urls.Add(url);
+            }
+
+            return urls;
         }
     }
 }
