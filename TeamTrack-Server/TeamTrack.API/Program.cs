@@ -126,21 +126,25 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Middleware
-app.UseCors("AllowSpecificOrigin");
-
-app.UseHttpsRedirection();
-app.UseRouting();
-
+// Swagger ב־Development בלבד
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
+app.UseRouting();
+
+// כאן חשוב שה-CORS יופעל אחרי UseRouting ולפני Auth
+app.UseCors("AllowSpecificOrigin");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Run();
 
 app.Run();
