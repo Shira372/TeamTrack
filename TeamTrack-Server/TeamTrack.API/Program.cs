@@ -137,7 +137,6 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-// כאן חשוב שה-CORS יופעל אחרי UseRouting ולפני Auth
 app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
