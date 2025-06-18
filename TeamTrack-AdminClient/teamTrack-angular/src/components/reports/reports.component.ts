@@ -1,16 +1,22 @@
-import { Component, OnInit, inject } from "@angular/core"
-import { CommonModule } from "@angular/common"
-import { MatCardModule } from "@angular/material/card"
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
-import { MatToolbarModule } from "@angular/material/toolbar"
-import { MatSelectModule } from "@angular/material/select"
-import { MatFormFieldModule } from "@angular/material/form-field"
-import { BaseChartDirective } from "ng2-charts"
-import { Chart, type ChartConfiguration, type ChartType, registerables } from "chart.js"
-import { ReportService } from "../../services/report.service"
+import { Component, OnInit, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatSelectModule } from "@angular/material/select";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { BaseChartDirective } from "ng2-charts";
+import {
+  Chart,
+  type ChartConfiguration,
+  type ChartType,
+  registerables,
+} from "chart.js";
+import { ReportService } from "../../services/report.service";
+import { ToastrService } from "ngx-toastr";
 
-Chart.register(...registerables)
+Chart.register(...registerables);
 
 @Component({
   selector: "app-reports",
@@ -29,57 +35,31 @@ Chart.register(...registerables)
   styleUrls: ["./reports.component.css"],
 })
 export class ReportsComponent implements OnInit {
-  selectedReportType = "users"
-  isLoading = false
-  private reportService = inject(ReportService)
+  selectedReportType = "users";
+  isLoading = false;
+  errorMessage = "";
 
-  // Chart configurations
-  public barChartType: ChartType = "bar"
-  public pieChartType: ChartType = "pie"
-  public lineChartType: ChartType = "line"
+  private reportService = inject(ReportService);
+  private toastr = inject(ToastrService);
 
-  // Users Report Data
+  public barChartType: ChartType = "bar";
+  public pieChartType: ChartType = "pie";
+  public lineChartType: ChartType = "line";
+
   public usersChartData: ChartConfiguration["data"] = {
-    labels: ["מנהלים", "עובדים", "אורחים"],
-    datasets: [
-      {
-        label: "מספר משתמשים",
-        data: [5, 25, 8],
-        backgroundColor: ["#d32f2f", "#ff5722", "#ff9800"],
-        borderColor: ["#b71c1c", "#d84315", "#f57c00"],
-        borderWidth: 2,
-      },
-    ],
-  }
+    labels: [],
+    datasets: [],
+  };
 
-  // Meetings Report Data
   public meetingsChartData: ChartConfiguration["data"] = {
-    labels: ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני"],
-    datasets: [
-      {
-        label: "מספר ישיבות",
-        data: [12, 19, 15, 25, 22, 30],
-        backgroundColor: "rgba(211, 47, 47, 0.2)",
-        borderColor: "#d32f2f",
-        borderWidth: 3,
-        fill: true,
-      },
-    ],
-  }
+    labels: [],
+    datasets: [],
+  };
 
-  // Activity Report Data
   public activityChartData: ChartConfiguration["data"] = {
-    labels: ["פעיל", "לא פעיל", "חדש"],
-    datasets: [
-      {
-        label: "סטטוס פעילות",
-        data: [28, 5, 5],
-        backgroundColor: ["#4caf50", "#f44336", "#ff9800"],
-        borderColor: ["#388e3c", "#d32f2f", "#f57c00"],
-        borderWidth: 2,
-      },
-    ],
-  }
+    labels: [],
+    datasets: [],
+  };
 
   public chartOptions: ChartConfiguration["options"] = {
     responsive: true,
@@ -112,26 +92,80 @@ export class ReportsComponent implements OnInit {
         },
       },
     },
-  }
+  };
 
   ngOnInit(): void {
-    this.loadReportData()
+    this.loadReportData();
   }
 
   loadReportData(): void {
-    this.isLoading = true
-    // Simulate API call
-    setTimeout(() => {
-      this.isLoading = false
-    }, 1000)
+    this.isLoading = true;
+    this.errorMessage = "";
+
+    this.reportService.getReportData(this.selectedReportType).subscribe({
+      next: (data) => {
+        switch (this.selectedReportType) {
+          case "users":
+            this.usersChartData = {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: data.label,
+                  data: data.values,
+                  backgroundColor: ["#d32f2f", "#ff5722", "#ff9800"],
+                  borderColor: ["#b71c1c", "#d84315", "#f57c00"],
+                  borderWidth: 2,
+                },
+              ],
+            };
+            break;
+
+          case "meetings":
+            this.meetingsChartData = {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: data.label,
+                  data: data.values,
+                  backgroundColor: "rgba(211, 47, 47, 0.2)",
+                  borderColor: "#d32f2f",
+                  borderWidth: 3,
+                  fill: true,
+                },
+              ],
+            };
+            break;
+
+          case "activity":
+            this.activityChartData = {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: data.label,
+                  data: data.values,
+                  backgroundColor: ["#4caf50", "#f44336", "#ff9800"],
+                  borderColor: ["#388e3c", "#d32f2f", "#f57c00"],
+                  borderWidth: 2,
+                },
+              ],
+            };
+            break;
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = "שגיאה בטעינת הדוח";
+        this.toastr.error(this.errorMessage);
+      },
+    });
   }
 
   onReportTypeChange(): void {
-    this.loadReportData()
+    this.loadReportData();
   }
 
   exportReport(): void {
-    // Implementation for exporting reports
-    console.log("Exporting report:", this.selectedReportType)
+    console.log("Exporting report:", this.selectedReportType);
   }
 }

@@ -8,80 +8,86 @@
       הוסף משתמש
     </button>
   </mat-toolbar>
-  
-  
-    <div class="content-container">
-      <mat-card class="users-card">
-        <mat-card-header>
-          <mat-card-title>רשימת משתמשים</mat-card-title>
-          <mat-card-subtitle>נהל את כל המשתמשים במערכת</mat-card-subtitle>
-        </mat-card-header>
-  
-        <mat-card-content>
-          <div *ngIf="isLoading" class="loading-container">
-            <mat-icon class="loading-icon">hourglass_empty</mat-icon>
-            <p>טוען נתונים...</p>
-          </div>
-  
-          <table mat-table [dataSource]="users" class="users-table" *ngIf="!isLoading">
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>שם</th>
-              <td mat-cell *matCellDef="let user">{{user.name}}</td>
-            </ng-container>
-  
-            <!-- Email Column -->
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef>אימייל</th>
-              <td mat-cell *matCellDef="let user">{{user.email}}</td>
-            </ng-container>
-  
-            <!-- Role Column -->
-            <ng-container matColumnDef="role">
-              <th mat-header-cell *matHeaderCellDef>תפקיד</th>
-              <td mat-cell *matCellDef="let user">
-                <mat-chip [style.background-color]="user.role === 'מנהל' ? '#d32f2f' : '#ff5722'"
-                          [style.color]="'white'">
-                  {{user.role}}
-                </mat-chip>
-              </td>
-            </ng-container>
-  
-            <!-- Status Column -->
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>סטטוס</th>
-              <td mat-cell *matCellDef="let user">
-                <mat-chip [style.background-color]="user.isActive ? '#4caf50' : '#f44336'"
-                          [style.color]="'white'">
-                  {{user.isActive ? 'פעיל' : 'לא פעיל'}}
-                </mat-chip>
-              </td>
-            </ng-container>
-  
-            <!-- Actions Column -->
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>פעולות</th>
-              <td mat-cell *matCellDef="let user">
-                <button mat-icon-button (click)="editUser(user)" matTooltip="עריכה">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button (click)="toggleUserStatus(user)" 
-                        [matTooltip]="user.isActive ? 'השבת' : 'הפעל'">
-                  <mat-icon [style.color]="user.isActive ? '#f44336' : '#4caf50'">
-                    {{user.isActive ? 'block' : 'check_circle'}}
-                  </mat-icon>
-                </button>
-                <button mat-icon-button (click)="deleteUser(user)" matTooltip="מחיקה">
-                  <mat-icon color="warn">delete</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-  
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
-    </div>
+
+  <div class="content-container">
+    <mat-card class="users-card">
+      <mat-card-header>
+        <mat-card-title>רשימת משתמשים</mat-card-title>
+        <mat-card-subtitle>נהל את כל המשתמשים במערכת</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- הודעת שגיאה אם קיימת -->
+        <div *ngIf="errorMessage" class="error-message">
+          <mat-icon color="warn">error</mat-icon>
+          {{ errorMessage }}
+        </div>
+
+        <!-- מצב טעינה -->
+        <div *ngIf="isLoading" class="loading-container">
+          <mat-icon class="loading-icon">hourglass_empty</mat-icon>
+          <p>טוען נתונים...</p>
+        </div>
+
+        <!-- טבלה של משתמשים -->
+        <table mat-table [dataSource]="users" class="users-table" *ngIf="!isLoading">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>שם</th>
+            <td mat-cell *matCellDef="let user">{{user.name}}</td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>אימייל</th>
+            <td mat-cell *matCellDef="let user">{{user.email}}</td>
+          </ng-container>
+
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>תפקיד</th>
+            <td mat-cell *matCellDef="let user">
+              <mat-chip [style.background-color]="user.role === 'מנהל' ? '#d32f2f' : '#ff5722'"
+                        [style.color]="'white'">
+                {{user.role}}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>סטטוס</th>
+            <td mat-cell *matCellDef="let user">
+              <mat-chip [style.background-color]="user.isActive ? '#4caf50' : '#f44336'"
+                        [style.color]="'white'">
+                {{user.isActive ? 'פעיל' : 'לא פעיל'}}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>פעולות</th>
+            <td mat-cell *matCellDef="let user">
+              <button mat-icon-button (click)="editUser(user)" matTooltip="עריכה">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="toggleUserStatus(user)" 
+                      [matTooltip]="user.isActive ? 'השבת' : 'הפעל'">
+                <mat-icon [style.color]="user.isActive ? '#f44336' : '#4caf50'">
+                  {{user.isActive ? 'block' : 'check_circle'}}
+                </mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteUser(user)" matTooltip="מחיקה">
+                <mat-icon color="warn">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
+</div>

@@ -34,7 +34,7 @@
   {
     "ContainingType": "TeamTrack.API.Controllers.KeyPointsController",
     "Method": "ExtractKeyPoints",
-    "RelativePath": "api/keypoints/extract",
+    "RelativePath": "api/keypoints",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

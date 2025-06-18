@@ -1,100 +1,109 @@
 <div class="reports-container">
-    <mat-toolbar class="page-toolbar">
-      <mat-icon class="toolbar-icon">bar_chart</mat-icon>
-      <span class="toolbar-title gradient-text">דוחות גרפיים</span>
-      <span class="spacer"></span>
-      <button mat-raised-button class="primary-button" (click)="exportReport()">
-        <mat-icon>download</mat-icon>
-        יצוא דוח
-      </button>
-    </mat-toolbar>
-  
-    <div class="content-container">
-      <!-- Report Type Selection -->
-      <mat-card class="selection-card">
-        <mat-card-content>
-          <mat-form-field appearance="outline" class="report-select">
-            <mat-label>בחר סוג דוח</mat-label>
-            <mat-select [(value)]="selectedReportType" (selectionChange)="onReportTypeChange()">
-              <mat-option value="users">דוח משתמשים</mat-option>
-              <mat-option value="meetings">דוח ישיבות</mat-option>
-              <mat-option value="activity">דוח פעילות</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-card-content>
-      </mat-card>
-  
-      <!-- Loading State -->
-      <div *ngIf="isLoading" class="loading-container">
+  <mat-toolbar class="page-toolbar">
+    <mat-icon class="toolbar-icon">bar_chart</mat-icon>
+    <span class="toolbar-title gradient-text">דוחות גרפיים</span>
+    <span class="spacer"></span>
+    <button mat-raised-button class="primary-button" (click)="exportReport()">
+      <mat-icon>download</mat-icon>
+      יצוא דוח
+    </button>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <!-- Select Report Type -->
+    <mat-card class="selection-card">
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="report-select">
+          <mat-label>בחר סוג דוח</mat-label>
+          <mat-select [(value)]="selectedReportType" (valueChange)="onReportTypeChange()">
+            <mat-option value="users">דוח משתמשים</mat-option>
+            <mat-option value="meetings">דוח ישיבות</mat-option>
+            <mat-option value="activity">דוח פעילות</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Loading Spinner -->
+    <ng-container [if]="isLoading">
+      <div class="loading-container">
         <mat-icon class="loading-icon">hourglass_empty</mat-icon>
         <p>טוען נתוני דוח...</p>
       </div>
-  
-      <!-- Charts Container -->
-      <div *ngIf="!isLoading" class="charts-container">
-        <!-- Users Report -->
-        <mat-card *ngIf="selectedReportType === 'users'" class="chart-card">
-          <mat-card-header>
-            <mat-card-title>
-              <mat-icon>people</mat-icon>
-              דוח משתמשים לפי תפקיד
-            </mat-card-title>
-            <mat-card-subtitle>התפלגות המשתמשים במערכת</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="chart-container">
-              <canvas baseChart
-                      [data]="usersChartData"
-                      [type]="barChartType"
-                      [options]="chartOptions">
-              </canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
-  
-        <!-- Meetings Report -->
-        <mat-card *ngIf="selectedReportType === 'meetings'" class="chart-card">
-          <mat-card-header>
-            <mat-card-title>
-              <mat-icon>event_note</mat-icon>
-              דוח ישיבות לפי חודש
-            </mat-card-title>
-            <mat-card-subtitle>מגמת הישיבות ברבעון האחרון</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="chart-container">
-              <canvas baseChart
-                      [data]="meetingsChartData"
-                      [type]="lineChartType"
-                      [options]="chartOptions">
-              </canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
-  
-        <!-- Activity Report -->
-        <mat-card *ngIf="selectedReportType === 'activity'" class="chart-card">
-          <mat-card-header>
-            <mat-card-title>
-              <mat-icon>timeline</mat-icon>
-              דוח פעילות משתמשים
-            </mat-card-title>
-            <mat-card-subtitle>סטטוס פעילות המשתמשים</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="chart-container">
-              <canvas baseChart
-                      [data]="activityChartData"
-                      [type]="pieChartType"
-                      [options]="chartOptions">
-              </canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
+    </ng-container>
+
+    <!-- Chart Display -->
+    <ng-container [if]="!isLoading">
+      <div class="charts-container">
+        <!-- Users Chart -->
+        <ng-container [if]="selectedReportType === 'users'">
+          <mat-card class="chart-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>people</mat-icon>
+                דוח משתמשים לפי תפקיד
+              </mat-card-title>
+              <mat-card-subtitle>התפלגות המשתמשים במערכת</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart
+                        [data]="usersChartData"
+                        [type]="barChartType"
+                        [options]="chartOptions">
+                </canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+
+        <!-- Meetings Chart -->
+        <ng-container [if]="selectedReportType === 'meetings'">
+          <mat-card class="chart-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>event_note</mat-icon>
+                דוח ישיבות לפי חודש
+              </mat-card-title>
+              <mat-card-subtitle>מגמת הישיבות ברבעון האחרון</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart
+                        [data]="meetingsChartData"
+                        [type]="lineChartType"
+                        [options]="chartOptions">
+                </canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+
+        <!-- Activity Chart -->
+        <ng-container [if]="selectedReportType === 'activity'">
+          <mat-card class="chart-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>timeline</mat-icon>
+                דוח פעילות משתמשים
+              </mat-card-title>
+              <mat-card-subtitle>סטטוס פעילות המשתמשים</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart
+                        [data]="activityChartData"
+                        [type]="pieChartType"
+                        [options]="chartOptions">
+                </canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
       </div>
-  
+
       <!-- Statistics Cards -->
-      <div class="stats-container" *ngIf="!isLoading">
+      <div class="stats-container">
         <mat-card class="stat-card">
           <mat-card-content>
             <div class="stat-icon">
@@ -104,7 +113,7 @@
             <div class="stat-label">סה"כ משתמשים</div>
           </mat-card-content>
         </mat-card>
-  
+
         <mat-card class="stat-card">
           <mat-card-content>
             <div class="stat-icon">
@@ -114,7 +123,7 @@
             <div class="stat-label">ישיבות השנה</div>
           </mat-card-content>
         </mat-card>
-  
+
         <mat-card class="stat-card">
           <mat-card-content>
             <div class="stat-icon">
@@ -125,6 +134,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-    </div>
+    </ng-container>
   </div>
-  
+</div>

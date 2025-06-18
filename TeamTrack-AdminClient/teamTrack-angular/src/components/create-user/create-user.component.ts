@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class CreateUserComponent {
   userForm: FormGroup;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
@@ -8,7 +9,7 @@ import { User } from '../../models/user.model';
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class EditUserComponent implements OnInit {
   userId!: number;

@@ -11,7 +11,6 @@ import { UserService } from "../../services/user.service"
 import type { User } from "../../models/user.model"
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
 @Component({
   selector: "app-user-management",
   standalone: true,
@@ -32,7 +31,8 @@ export class UserManagementComponent implements OnInit {
   users: User[] = []
   displayedColumns: string[] = ["name", "email", "role", "status", "actions"]
   isLoading = true
-  
+  errorMessage = ""
+
   private userService = inject(UserService)
   private toastr = inject(ToastrService)
 
@@ -41,12 +41,16 @@ export class UserManagementComponent implements OnInit {
   }
 
   loadUsers(): void {
+    this.isLoading = true
+    this.errorMessage = ""
+
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users
         this.isLoading = false
       },
       error: () => {
+        this.errorMessage = "אירעה שגיאה בעת טעינת המשתמשים. מוצגים נתונים לדוגמה."
         // Mock data for demonstration
         this.users = [
           {
@@ -111,4 +115,3 @@ export class UserManagementComponent implements OnInit {
     })
   }
 }
-
