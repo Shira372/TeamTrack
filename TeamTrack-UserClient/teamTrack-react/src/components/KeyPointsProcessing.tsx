@@ -32,6 +32,7 @@ type HistoryItem = {
 };
 
 const LOCAL_STORAGE_KEY = "keypoints_history";
+const API_URL = "https://teamtrack-server.onrender.com"; 
 
 const KeyPointsProcessing = () => {
   const [s3Key, setS3Key] = useState<string>("");
@@ -81,7 +82,7 @@ const KeyPointsProcessing = () => {
       const token = localStorage.getItem("jwt_token");
       if (!token) throw new Error("לא נמצא טוקן התחברות, יש להתחבר מחדש");
 
-      const response = await fetch("/api/keypoints", {
+      const response = await fetch(`${API_URL}/api/keypoints`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -229,10 +230,7 @@ const KeyPointsProcessing = () => {
             component={Paper}
             elevation={3}
           >
-            <Typography
-              variant="h6"
-              sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}
-            >
+            <Typography variant="h6" sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
               <HistoryIcon /> היסטוריית עיבודים אחרונים
             </Typography>
             <List dense sx={{ maxHeight: 300, overflowY: "auto" }}>
@@ -259,11 +257,7 @@ const KeyPointsProcessing = () => {
                         </>
                       }
                       secondary={
-                        <Typography
-                          sx={{ whiteSpace: "pre-line", mt: 0.5 }}
-                          variant="body2"
-                          color="text.primary"
-                        >
+                        <Typography sx={{ whiteSpace: "pre-line", mt: 0.5 }} variant="body2" color="text.primary">
                           {result}
                         </Typography>
                       }
