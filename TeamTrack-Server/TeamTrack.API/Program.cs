@@ -9,9 +9,6 @@ using TeamTrack.Core.IServices;
 using TeamTrack.Core;
 using TeamTrack.Data;
 using TeamTrack.Service;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +47,6 @@ builder.Services.AddSwaggerGen(options =>
             new List<string>()
         }
     });
-
 });
 
 // DB Context - MySQL
@@ -64,38 +60,34 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // JWT Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])
-        )
-    };
-
-    options.Events = new JwtBearerEvents
-    {
-        OnAuthenticationFailed = context =>
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])
+            )
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
             {
-                context.Response.Headers.Add("Token-Expired", "true");
+                if (context.Exception is SecurityTokenExpiredException)
+                {
+                    context.Response.Headers.Add("Token-Expired", "true");
+                }
+                return Task.CompletedTask;
             }
-            return Task.CompletedTask;
-        }
-    };
-});
+        };
+    });
 
 // Repositories
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
@@ -106,12 +98,10 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
 
-
-
 // HTTP Client
 builder.Services.AddHttpClient();
 
-// CORS
+// CORS - הגדרת מדיניות עם Origins מותרים
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -122,7 +112,8 @@ builder.Services.AddCors(options =>
             "https://teamtrack-userclient.onrender.com"
         )
         .AllowAnyHeader()
-        .AllowAnyMethod();
+        .AllowAnyMethod()
+        .AllowCredentials(); // אם נדרש (אפשר להסיר אם אין צורך)
     });
 });
 
@@ -147,4 +138,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
