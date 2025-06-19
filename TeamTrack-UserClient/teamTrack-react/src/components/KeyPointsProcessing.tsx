@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Box,
@@ -11,21 +11,54 @@ import {
   useTheme,
   useMediaQuery,
   LinearProgress,
-  TextField
+  TextField,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Tooltip,
 } from "@mui/material";
-import { Link } from 'react-router-dom';
-import GroupsIcon from '@mui/icons-material/Groups';
-import MenuIcon from '@mui/icons-material/Menu';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+import { Link } from "react-router-dom";
+import GroupsIcon from "@mui/icons-material/Groups";
+import MenuIcon from "@mui/icons-material/Menu";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
+import HistoryIcon from "@mui/icons-material/History";
+
+type HistoryItem = {
+  s3Key: string;
+  result: string;
+  timestamp: number;
+};
+
+const LOCAL_STORAGE_KEY = "keypoints_history";
 
 const KeyPointsProcessing = () => {
   const [s3Key, setS3Key] = useState<string>("");
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  useEffect(() => {
+    // טען היסטוריה מ-localStorage בעת טעינת הקומפוננטה
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (stored) {
+      try {
+        setHistory(JSON.parse(stored));
+      } catch {
+        // התעלם אם לא תקין
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // שמור היסטוריה ב-localStorage בכל שינוי
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
+  }, [history]);
 
   const handleProcess = async () => {
     if (!s3Key.trim()) return;
@@ -42,9 +75,9 @@ const KeyPointsProcessing = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ s3Key })
+        body: JSON.stringify({ s3Key }),
       });
 
       if (response.status === 401) {
@@ -63,7 +96,16 @@ const KeyPointsProcessing = () => {
       }
 
       const data = await response.json();
-      setResult(data.keyPoints || "לא נמצאו נקודות מפתח");
+      const keyPoints = data.keyPoints || "לא נמצאו נקודות מפתח";
+      setResult(keyPoints);
+
+      // הוסף לפרטי ההיסטוריה
+      const newItem: HistoryItem = {
+        s3Key: s3Key.trim(),
+        result: keyPoints,
+        timestamp: Date.now(),
+      };
+      setHistory((prev) => [newItem, ...prev]);
     } catch (e) {
       setError(e instanceof Error ? e.message : "אירעה שגיאה לא ידועה");
     } finally {
@@ -72,31 +114,63 @@ const KeyPointsProcessing = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh' }}>
-      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: 'white', borderBottom: '1px solid #e0e0e0' }}>
+    <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
+      <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
+      >
         <Container>
-          <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0, sm: 2 } }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <GroupsIcon sx={{ mr: 1, color: '#3f51b5' }} />
-              <Typography variant="h6" sx={{
-                fontWeight: 700,
-                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
+          <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <GroupsIcon sx={{ mr: 1, color: "#3f51b5" }} />
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
                 TeamTrack
               </Typography>
             </Box>
 
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu" onClick={() => { }}>
+              <IconButton color="primary" aria-label="menu" onClick={() => {}}>
                 <MenuIcon />
               </IconButton>
             ) : (
-              <Box sx={{ display: 'flex', gap: '10px' }}>
-                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>התחברות</Button>
-                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>הרשמה</Button>
-                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>דף הבית</Button>
+              <Box sx={{ display: "flex", gap: "10px" }}>
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="outlined"
+                  color="primary"
+                  sx={{ borderRadius: 2 }}
+                >
+                  התחברות
+                </Button>
+                <Button
+                  component={Link}
+                  to="/signup"
+                  variant="outlined"
+                  color="primary"
+                  sx={{ borderRadius: 2 }}
+                >
+                  הרשמה
+                </Button>
+                <Button
+                  component={Link}
+                  to="/"
+                  variant="outlined"
+                  color="primary"
+                  sx={{ borderRadius: 2 }}
+                >
+                  דף הבית
+                </Button>
               </Box>
             )}
           </Toolbar>
@@ -104,8 +178,27 @@ const KeyPointsProcessing = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{ p: 4, borderRadius: 3, background: 'linear-gradient(to bottom right, #ffffff, #f5f5f5)', border: '1px solid #e8eaf6', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.05)' }}>
-          <Typography component="h1" variant="h4" fontWeight="bold" sx={{ mb: 3, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }} align="center">
+        <Box
+          sx={{
+            p: 4,
+            borderRadius: 3,
+            background: "linear-gradient(to bottom right, #ffffff, #f5f5f5)",
+            border: "1px solid #e8eaf6",
+            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.05)",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h4"
+            fontWeight="bold"
+            sx={{
+              mb: 3,
+              background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+            align="center"
+          >
             עיבוד נקודות מפתח
           </Typography>
 
@@ -125,15 +218,15 @@ const KeyPointsProcessing = () => {
             fullWidth
             size="large"
             onClick={handleProcess}
-            disabled={!s3Key || processing}
+            disabled={!s3Key.trim() || processing}
             sx={{ py: 1.5, borderRadius: 2 }}
           >
-            {processing ? 'מעבד...' : 'שלח ל-AI'}
+            {processing ? "מעבד..." : "שלח ל-AI"}
           </Button>
 
           {processing && (
-            <Box sx={{ width: '100%', mt: 2 }}>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
+            <Box sx={{ width: "100%", mt: 2 }}>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: "center" }}>
                 מעבד את הקובץ...
               </Typography>
               <LinearProgress sx={{ height: 8, borderRadius: 4 }} />
@@ -142,7 +235,7 @@ const KeyPointsProcessing = () => {
 
           {result && (
             <Box sx={{ mt: 3 }}>
-              <Alert severity="success" icon={<CheckCircleIcon />} sx={{ borderRadius: 2, whiteSpace: 'pre-line' }}>
+              <Alert severity="success" icon={<CheckCircleIcon />} sx={{ borderRadius: 2, whiteSpace: "pre-line" }}>
                 {result}
               </Alert>
             </Box>
@@ -156,6 +249,66 @@ const KeyPointsProcessing = () => {
             </Box>
           )}
         </Box>
+
+        {/* אזור היסטוריית תוצאות */}
+        {history.length > 0 && (
+          <Box
+            sx={{
+              mt: 4,
+              p: 3,
+              borderRadius: 3,
+              background: "#fff",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            }}
+            component={Paper}
+            elevation={3}
+          >
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}
+            >
+              <HistoryIcon /> היסטוריית עיבודים אחרונים
+            </Typography>
+            <List dense sx={{ maxHeight: 300, overflowY: "auto" }}>
+              {history.map(({ s3Key, result, timestamp }, index) => (
+                <React.Fragment key={timestamp + index}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText
+                      primary={
+                        <>
+                          <Typography component="span" fontWeight="bold">
+                            {s3Key}
+                          </Typography>{" "}
+                          -{" "}
+                          <Tooltip title={new Date(timestamp).toLocaleString()}>
+                            <Typography
+                              component="span"
+                              color="text.secondary"
+                              sx={{ cursor: "default" }}
+                              variant="body2"
+                            >
+                              {new Date(timestamp).toLocaleDateString()}
+                            </Typography>
+                          </Tooltip>
+                        </>
+                      }
+                      secondary={
+                        <Typography
+                          sx={{ whiteSpace: "pre-line", mt: 0.5 }}
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {result}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                  {index < history.length - 1 && <Divider component="li" />}
+                </React.Fragment>
+              ))}
+            </List>
+          </Box>
+        )}
       </Container>
     </Box>
   );

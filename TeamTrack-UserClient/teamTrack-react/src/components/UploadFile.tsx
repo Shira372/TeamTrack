@@ -3,7 +3,7 @@ import {
   Button, Box, Typography, Container, AppBar, Toolbar, IconButton,
   Divider, Alert, useTheme, useMediaQuery, LinearProgress, Link as MuiLink
 } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import GroupsIcon from '@mui/icons-material/Groups';
 import LoginIcon from '@mui/icons-material/Login';
@@ -21,11 +21,11 @@ const UploadFile = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const xhrRef = useRef<XMLHttpRequest | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate(); // ⬅️ בשביל המעבר האוטומטי
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      // בדיקה ששם הקובץ מסתיים ב-.txt
       if (!file.name.toLowerCase().endsWith(".txt")) {
         setUploadResponse({
           message: "ניתן להעלות רק קבצי טקסט מסוג .txt בלבד.",
@@ -72,6 +72,11 @@ const UploadFile = () => {
             success: true,
             fileUrl: data.fileUrl
           });
+
+          if (data.s3Key) {
+            localStorage.setItem("s3Key", data.s3Key); // ⬅️ שמירה ב-localStorage
+            navigate("/keypoints"); // ⬅️ מעבר אוטומטי
+          }
         } catch {
           setUploadResponse({
             message: "העלאה הצליחה אך לא ניתן לקבל קישור לקובץ.",
@@ -120,7 +125,7 @@ const UploadFile = () => {
             </Box>
 
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu" onClick={() => { }}>
+              <IconButton color="primary" aria-label="menu">
                 <MenuIcon />
               </IconButton>
             ) : (
@@ -145,34 +150,27 @@ const UploadFile = () => {
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                mb: 2,
-                bgcolor: 'rgba(63, 81, 181, 0.05)',
-                borderRadius: '50%',
-                width: 80,
-                height: 80,
-                alignItems: 'center'
-              }}
-            >
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mb: 2,
+              bgcolor: 'rgba(63, 81, 181, 0.05)',
+              borderRadius: '50%',
+              width: 80,
+              height: 80,
+              alignItems: 'center'
+            }}>
               <CloudUploadIcon sx={{ fontSize: 40, color: '#3f51b5' }} />
             </Box>
 
-            <Typography
-              component="h1"
-              variant="h4"
-              fontWeight="bold"
+            <Typography component="h1" variant="h4" fontWeight="bold"
               sx={{
                 mb: 2,
                 background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 textShadow: '0px 2px 5px rgba(0,0,0,0.05)'
-              }}
-              align="center"
-            >
+              }} align="center">
               TeamTrack
             </Typography>
 
