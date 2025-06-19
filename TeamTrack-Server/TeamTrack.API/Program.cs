@@ -119,21 +119,22 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Swagger ב־Development בלבד
+app.UseHttpsRedirection();
+
+// תמיד לפני Routing
+app.UseCors("AllowSpecificOrigin");
+
+app.UseRouting();
+
+// אחרי Routing
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseCors("AllowSpecificOrigin");
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapControllers();
 

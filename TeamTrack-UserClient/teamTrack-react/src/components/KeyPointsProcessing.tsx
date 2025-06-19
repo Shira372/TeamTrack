@@ -32,7 +32,7 @@ type HistoryItem = {
 };
 
 const LOCAL_STORAGE_KEY = "keypoints_history";
-const API_URL = "https://teamtrack-server.onrender.com"; 
+const API_URL = "https://teamtrack-server.onrender.com";
 
 const KeyPointsProcessing = () => {
   const [s3Key, setS3Key] = useState<string>("");
@@ -68,7 +68,6 @@ const KeyPointsProcessing = () => {
     if (s3Key) {
       handleProcess(s3Key);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s3Key]);
 
   const handleProcess = async (key: string) => {
@@ -82,7 +81,7 @@ const KeyPointsProcessing = () => {
       const token = localStorage.getItem("jwt_token");
       if (!token) throw new Error("לא נמצא טוקן התחברות, יש להתחבר מחדש");
 
-      const response = await fetch(`${API_URL}/api/keypoints`, {
+      const response = await fetch(`${API_URL}/api/extract-keypoints`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,12 +122,7 @@ const KeyPointsProcessing = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
-      >
+      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
         <Container>
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -245,12 +239,7 @@ const KeyPointsProcessing = () => {
                           </Typography>{" "}
                           -{" "}
                           <Tooltip title={new Date(timestamp).toLocaleString()}>
-                            <Typography
-                              component="span"
-                              color="text.secondary"
-                              sx={{ cursor: "default" }}
-                              variant="body2"
-                            >
+                            <Typography component="span" color="text.secondary" sx={{ cursor: "default" }} variant="body2">
                               {new Date(timestamp).toLocaleDateString()}
                             </Typography>
                           </Tooltip>
