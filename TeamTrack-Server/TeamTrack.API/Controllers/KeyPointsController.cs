@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using TeamTrack.Core.IServices;
-using TeamTrack.API.Models;
-using Microsoft.Extensions.Logging;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 namespace TeamTrack.API.Controllers
 {
@@ -17,42 +18,52 @@ namespace TeamTrack.API.Controllers
     {
         private readonly IOpenAiService _openAiService;
         private readonly ILogger<KeyPointsController> _logger;
+        private readonly IAmazonS3 _s3Client;
+        private readonly string _bucketName = "teamtrack-files"; // החלף לפי הצורך
 
-        public KeyPointsController(IOpenAiService openAiService, ILogger<KeyPointsController> logger)
+        public KeyPointsController(IOpenAiService openAiService, ILogger<KeyPointsController> logger, IAmazonS3 s3Client)
         {
             _openAiService = openAiService;
             _logger = logger;
+            _s3Client = s3Client;
         }
 
         [HttpPost]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> ExtractKeyPoints([FromForm] KeyPointsRequest request)
+        public async Task<IActionResult> ExtractKeyPointsFromS3([FromBody] S3KeyRequest request)
         {
             try
             {
-                var file = request.File;
+                if (string.IsNullOrWhiteSpace(request.S3Key))
+                    return BadRequest(new { error = "s3Key חסר או ריק." });
 
-                if (file == null || file.Length == 0)
-                    return BadRequest(new { error = "קובץ לא תקין או ריק." });
+                var s3Object = await _s3Client.GetObjectAsync(_bucketName, request.S3Key);
+                if (s3Object.ResponseStream == null)
+                    return NotFound(new { error = "לא נמצא קובץ עם המפתח שסופק." });
 
                 string text;
-                using (var reader = new StreamReader(file.OpenReadStream()))
+                using (var reader = new StreamReader(s3Object.ResponseStream))
                 {
                     text = await reader.ReadToEndAsync();
                 }
 
                 var keyPoints = await _openAiService.ExtractKeyPointsAsync(text);
-
                 return Ok(new { keyPoints });
+            }
+            catch (AmazonS3Exception s3Ex)
+            {
+                _logger.LogError(s3Ex, "שגיאה בגישה ל-S3");
+                return StatusCode(500, new { error = "שגיאה בגישה ל-S3. ודא שהקובץ קיים." });
             }
             catch (Exception ex)
             {
-                // רישום השגיאה ללוג
-                _logger.LogError(ex, "שגיאה בעת עיבוד נקודות מפתח");
-
-                // החזרת שגיאה עם סטטוס 500
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "אירעה שגיאה בשרת. נסה שוב מאוחר יותר." });
+                _logger.LogError(ex, "שגיאה בעיבוד קובץ מ-S3 לנקודות מפתח");
+                return StatusCode(500, new { error = "שגיאה פנימית. נסה שוב מאוחר יותר." });
             }
         }
+    }
+
+    public class S3KeyRequest
+    {
+        public string S3Key { get; set; } = string.Empty;
     }
 }

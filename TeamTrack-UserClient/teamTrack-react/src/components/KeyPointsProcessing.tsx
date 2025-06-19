@@ -10,7 +10,8 @@ import {
   Alert,
   useTheme,
   useMediaQuery,
-  LinearProgress
+  LinearProgress,
+  TextField
 } from "@mui/material";
 import { Link } from 'react-router-dom';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -19,7 +20,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
 const KeyPointsProcessing = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [s3Key, setS3Key] = useState<string>("");
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +28,7 @@ const KeyPointsProcessing = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleProcess = async () => {
-    if (!selectedFile) return;
+    if (!s3Key.trim()) return;
 
     setProcessing(true);
     setResult(null);
@@ -37,16 +38,13 @@ const KeyPointsProcessing = () => {
       const token = localStorage.getItem("jwt_token");
       if (!token) throw new Error("לא נמצא טוקן התחברות, יש להתחבר מחדש");
 
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
       const response = await fetch("/api/keypoints", {
         method: "POST",
         headers: {
+          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
-          // שימי לב: לא צריך להוסיף "Content-Type" כשיש FormData - הדפדפן מטפל בזה.
         },
-        body: formData
+        body: JSON.stringify({ s3Key })
       });
 
       if (response.status === 401) {
@@ -54,7 +52,6 @@ const KeyPointsProcessing = () => {
       }
 
       if (!response.ok) {
-        // נסה לקרוא JSON, אם לא מצליח, תזרוק שגיאה כללית
         let errorMsg = "שגיאה בשרת בעיבוד נקודות מפתח";
         try {
           const errorData = await response.json();
@@ -81,7 +78,12 @@ const KeyPointsProcessing = () => {
           <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <GroupsIcon sx={{ mr: 1, color: '#3f51b5' }} />
-              <Typography variant="h6" component="div" sx={{ fontWeight: 700, background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <Typography variant="h6" sx={{
+                fontWeight: 700,
+                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
                 TeamTrack
               </Typography>
             </Box>
@@ -107,16 +109,14 @@ const KeyPointsProcessing = () => {
             עיבוד נקודות מפתח
           </Typography>
 
-          <input
-            type="file"
-            accept=".txt"
-            onChange={(e) => {
-              if (e.target.files?.length) {
-                setSelectedFile(e.target.files[0]);
-              }
-            }}
+          <TextField
+            label="מפתח הקובץ מ-S3 (s3Key)"
+            fullWidth
+            variant="outlined"
+            value={s3Key}
+            onChange={(e) => setS3Key(e.target.value)}
             disabled={processing}
-            style={{ marginBottom: '20px' }}
+            sx={{ mb: 3 }}
           />
 
           <Button
@@ -125,10 +125,10 @@ const KeyPointsProcessing = () => {
             fullWidth
             size="large"
             onClick={handleProcess}
-            disabled={!selectedFile || processing}
+            disabled={!s3Key || processing}
             sx={{ py: 1.5, borderRadius: 2 }}
           >
-            {processing ? 'מעבד...' : 'שלחי קובץ'}
+            {processing ? 'מעבד...' : 'שלח ל-AI'}
           </Button>
 
           {processing && (

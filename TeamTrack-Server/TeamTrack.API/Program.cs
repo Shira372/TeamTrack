@@ -11,6 +11,7 @@ using TeamTrack.Data;
 using TeamTrack.Service;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +51,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    options.OperationFilter<TeamTrack.API.Swagger.FileUploadOperationFilter>();
 });
 
 // DB Context - MySQL
@@ -104,7 +104,9 @@ builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
-builder.Services.AddScoped<IS3Service, S3Service>(); 
+builder.Services.AddScoped<IS3Service, S3Service>();
+
+
 
 // HTTP Client
 builder.Services.AddHttpClient();

@@ -20,6 +20,7 @@ const UploadFile = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const xhrRef = useRef<XMLHttpRequest | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null); // <-- הוספתי
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -51,6 +52,8 @@ const UploadFile = () => {
 
     xhr.onload = () => {
       setUploading(false);
+      xhrRef.current = null; // <-- ניקוי
+
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
           const data = JSON.parse(xhr.responseText);
@@ -75,11 +78,17 @@ const UploadFile = () => {
 
     xhr.onerror = () => {
       setUploading(false);
+      xhrRef.current = null; // <-- ניקוי
       setUploadResponse({ message: "שגיאה ברשת בהעלאת הקובץ.", success: false });
     };
 
     xhr.open("POST", "https://teamtrack-server.onrender.com/api/fileupload/upload");
     xhr.send(formData);
+  };
+
+  // פונקציה לפתיחת דיאלוג בחירת קובץ ע"י ref במקום getElementById
+  const openFileDialog = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -182,9 +191,18 @@ const UploadFile = () => {
                 boxShadow: '0 2px 8px rgba(63, 81, 181, 0.15)'
               }
             }}
-            onClick={() => document.getElementById('file-input')?.click()}
+            onClick={openFileDialog} // <-- השתמש ב-ref לפתיחת דיאלוג
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openFileDialog() }} // נגישות עם מקלדת
+            role="button"
+            tabIndex={0}
           >
-            <input id="file-input" type="file" onChange={fileSelectedHandler} style={{ display: 'none' }} />
+            <input
+              id="file-input"
+              type="file"
+              onChange={fileSelectedHandler}
+              style={{ display: 'none' }}
+              ref={fileInputRef} // <-- הוספתי
+            />
             <CloudUploadIcon sx={{ fontSize: 48, color: '#3f51b5', mb: 1 }} />
             <Typography variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
               {selectedFile ? selectedFile.name : 'גרור קובץ לכאן או לחץ לבחירה'}
