@@ -20,11 +20,21 @@ const UploadFile = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const xhrRef = useRef<XMLHttpRequest | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null); // <-- הוספתי
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+      const file = event.target.files[0];
+      // בדיקה ששם הקובץ מסתיים ב-.txt
+      if (!file.name.toLowerCase().endsWith(".txt")) {
+        setUploadResponse({
+          message: "ניתן להעלות רק קבצי טקסט מסוג .txt בלבד.",
+          success: false
+        });
+        setSelectedFile(null);
+        return;
+      }
+      setSelectedFile(file);
       setUploadResponse(null);
       setUploadProgress(0);
     }
@@ -52,7 +62,7 @@ const UploadFile = () => {
 
     xhr.onload = () => {
       setUploading(false);
-      xhrRef.current = null; // <-- ניקוי
+      xhrRef.current = null;
 
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
@@ -78,7 +88,7 @@ const UploadFile = () => {
 
     xhr.onerror = () => {
       setUploading(false);
-      xhrRef.current = null; // <-- ניקוי
+      xhrRef.current = null;
       setUploadResponse({ message: "שגיאה ברשת בהעלאת הקובץ.", success: false });
     };
 
@@ -86,7 +96,6 @@ const UploadFile = () => {
     xhr.send(formData);
   };
 
-  // פונקציה לפתיחת דיאלוג בחירת קובץ ע"י ref במקום getElementById
   const openFileDialog = () => {
     fileInputRef.current?.click();
   };
@@ -172,7 +181,7 @@ const UploadFile = () => {
             </Typography>
 
             <Typography variant="subtitle1" color="text.secondary" align="center" sx={{ mt: 1 }}>
-              בחר קובץ מהמחשב שלך להעלאה לענן
+              ניתן להעלות רק קבצי טקסט מסוג <b>.txt</b>
             </Typography>
           </Box>
 
@@ -191,24 +200,25 @@ const UploadFile = () => {
                 boxShadow: '0 2px 8px rgba(63, 81, 181, 0.15)'
               }
             }}
-            onClick={openFileDialog} // <-- השתמש ב-ref לפתיחת דיאלוג
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openFileDialog() }} // נגישות עם מקלדת
+            onClick={openFileDialog}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openFileDialog() }}
             role="button"
             tabIndex={0}
           >
             <input
               id="file-input"
               type="file"
+              accept=".txt"
               onChange={fileSelectedHandler}
               style={{ display: 'none' }}
-              ref={fileInputRef} // <-- הוספתי
+              ref={fileInputRef}
             />
             <CloudUploadIcon sx={{ fontSize: 48, color: '#3f51b5', mb: 1 }} />
             <Typography variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
               {selectedFile ? selectedFile.name : 'גרור קובץ לכאן או לחץ לבחירה'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {selectedFile ? `גודל: ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB` : 'תומך בכל סוגי הקבצים עד 100MB'}
+              {selectedFile ? `גודל: ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB` : 'עד 100MB'}
             </Typography>
           </Box>
 
