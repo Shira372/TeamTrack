@@ -20,7 +20,6 @@ import { useNavigate, Link as RouterLink } from "react-router-dom";
 import GroupsIcon from '@mui/icons-material/Groups';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -34,9 +33,7 @@ interface NewMeetingFormValues {
 const NewMeeting = () => {
   const { user } = useUser();
   const { register, handleSubmit, formState: { errors } } = useForm<NewMeetingFormValues>();
-  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [fileSelected, setFileSelected] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -49,27 +46,20 @@ const NewMeeting = () => {
       }
       setLoading(true);
       const apiUrl = process.env.REACT_APP_API_URL;
-      const formData = new FormData();
-      if (file) {
-        formData.append("file", file);
-      }
-      formData.append("MeetingName", data.MeetingName);
-      formData.append("CreatedByUserId", user.id.toString());
-      formData.append("SummaryLink", data.SummaryLink || "");
 
-      await axios.post(`${apiUrl}/api/meetings`, formData);
+      // בונים את האובייקט פשוט ללא FormData כי אין קובץ
+      const payload = {
+        MeetingName: data.MeetingName,
+        CreatedByUserId: user.id.toString(),
+        SummaryLink: data.SummaryLink || ""
+      };
+
+      await axios.post(`${apiUrl}/api/meetings`, payload);
       navigate('/meetings');
     } catch (error) {
       console.error("Error adding meeting:", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
-      setFileSelected(true);
     }
   };
 
@@ -122,45 +112,12 @@ const NewMeeting = () => {
               helperText={errors.MeetingName?.message}
             />
 
-            {/* השדה CreatedByUserId הוסר מהטופס כי הוא מתמלא אוטומטית */}
-
             <TextField
               label="קישור לסיכום"
               variant="outlined"
               fullWidth
               {...register("SummaryLink")}
             />
-
-            <Box
-              sx={{
-                border: '2px dashed #C5CAE9',
-                borderRadius: 2,
-                p: 3,
-                textAlign: 'center',
-                bgcolor: 'rgba(63, 81, 181, 0.03)',
-                cursor: 'pointer',
-                '&:hover': {
-                  borderColor: '#3f51b5',
-                  bgcolor: 'rgba(63, 81, 181, 0.05)',
-                }
-              }}
-              onClick={() => document.getElementById('file-upload')?.click()}
-            >
-              <input
-                id="file-upload"
-                type="file"
-                accept="audio/*"
-                style={{ display: 'none' }}
-                onChange={handleFileChange}
-              />
-              <CloudUploadIcon sx={{ fontSize: 40, color: '#3f51b5', mb: 1 }} />
-              <Typography variant="h6" sx={{ color: '#3f51b5' }}>
-                {fileSelected ? 'הקובץ נטען בהצלחה' : 'העלאת קובץ מתומלל'}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {fileSelected && file ? file.name : 'גרור קובץ לכאן או לחץ'}
-              </Typography>
-            </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
               <Button
@@ -174,7 +131,7 @@ const NewMeeting = () => {
               <Button
                 type="submit"
                 variant="contained"
-                disabled={loading || !fileSelected}
+                disabled={loading}
                 startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <AddCircleOutlineIcon />}
               >
                 {loading ? "מעלה..." : "צור פגישה"}
