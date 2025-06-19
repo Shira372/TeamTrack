@@ -73,62 +73,63 @@ const Login = () => {
         loginUser(cleanedData);
     };
 
+
+    
     const loginUser = async (data: UserForLogin) => {
         try {
-            setIsLoading(true);
-            setErrorMessage(null);
-            const apiUrl = process.env.REACT_APP_API_URL;
-
+          setIsLoading(true);
+          setErrorMessage(null);
+      
+          const apiUrl = process.env.REACT_APP_API_URL;
+      
+          if (process.env.NODE_ENV !== 'production') {
+            console.log("🔐 login attempt:", data);
+          }
+      
+          const response = await axios.post(`${apiUrl}/api/users/login`, {
+            UserName: data.userName,
+            PasswordHash: data.password
+          });
+      
+          const token = response.data.Token || response.data.token;
+          const user = response.data.User || response.data.user;
+      
+          if (!token || !user) {
             if (process.env.NODE_ENV !== 'production') {
-                console.log("🔐 login attempt:", data);
+              console.error("🚨 Missing token or user in login response:", response.data);
             }
-
-            const response = await axios.post(`${apiUrl}/api/users/login`, {
-                UserName: data.userName,
-                PasswordHash: data.password
-            });
-
-            if (process.env.NODE_ENV !== 'production') {
-                console.log("✅ login response full:", response.data);
-            }
-
-            // בודקים אם השדות מגיעים בגדלים שונים
-            const token = response.data.Token || response.data.token;
-            const user = response.data.User || response.data.user;
-
-            if (!token || !user) {
-                console.error("🚨 Missing token or user in login response:", response.data);
-                setErrorMessage("שגיאה בתשובת השרת. אנא נסה שוב או פנה למנהל המערכת.");
-                return;
-            }
-
-            localStorage.setItem('tt_token', token);
-            localStorage.setItem('tt_user', JSON.stringify(user));
-
-            if (process.env.NODE_ENV !== 'production') {
-                console.log("✅ login success:", user);
-            }
-
-            setUser(user);
-            navigate('/home');
-
+            setErrorMessage("שגיאה בתשובת השרת. אנא נסה שוב או פנה למנהל המערכת.");
+            return;
+          }
+      
+          localStorage.setItem('jwt_token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+      
+          if (process.env.NODE_ENV !== 'production') {
+            console.log("✅ login success:", user);
+          }
+      
+          setUser(user);
+          navigate('/home');
+      
         } catch (error: any) {
-            if (error.response) {
-                setErrorMessage("שם המשתמש או הסיסמה שגויים");
-            } else if (error.request) {
-                setErrorMessage("לא הצלחנו להתחבר לשרת, אנא נסה שוב מאוחר יותר");
-            } else {
-                setErrorMessage("שגיאה לא צפויה, אנא נסה שוב מאוחר יותר");
-            }
-
-            if (process.env.NODE_ENV !== 'production') {
-                console.error("❌ login error:", error);
-            }
+          if (process.env.NODE_ENV !== 'production') {
+            console.error("❌ login error:", error);
+          }
+      
+          if (error.response?.status === 401) {
+            setErrorMessage("שם המשתמש או הסיסמה שגויים");
+          } else if (error.request) {
+            setErrorMessage("אין חיבור לשרת. נסה שוב מאוחר יותר.");
+          } else {
+            setErrorMessage("שגיאה לא צפויה. נסה שוב.");
+          }
         } finally {
-            setIsLoading(false);
+          setIsLoading(false);
         }
-    };
-
+      };
+      
+    
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };

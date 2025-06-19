@@ -23,7 +23,6 @@ namespace TeamTrack.Web.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<UsersController> _logger;
 
-        // ✅ זה הקונסטרקטור התקין היחיד שצריך
         public UsersController(IUserService userService, IConfiguration configuration, IMapper mapper, ILogger<UsersController> logger)
         {
             _userService = userService;

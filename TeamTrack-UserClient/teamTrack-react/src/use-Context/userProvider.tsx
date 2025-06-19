@@ -1,4 +1,3 @@
-// context/UserProvider.tsx
 import React, {
   createContext,
   useContext,
@@ -20,13 +19,14 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUserState] = useState<User | null>(null);
 
-  // Load user from localStorage on app load
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser) as User;
-        console.log('[UserProvider] Loaded user from localStorage:', parsedUser);
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[UserProvider] Loaded user from localStorage:', parsedUser);
+        }
         setUserState(parsedUser);
       }
     } catch (error) {
@@ -35,9 +35,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // Save user to localStorage when updated
   const setUser = (newUser: User | null) => {
-    console.log('[UserProvider] Setting user:', newUser);
     setUserState(newUser);
     if (newUser) {
       localStorage.setItem('user', JSON.stringify(newUser));
@@ -47,8 +45,12 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    console.log('[UserProvider] Logging out...');
-    setUser(null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt_token');
+    setUserState(null);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[UserProvider] User logged out');
+    }
   };
 
   const value = useMemo(() => ({ user, setUser, logout }), [user]);

@@ -53,6 +53,7 @@ const UploadFile = () => {
     const xhr = new XMLHttpRequest();
     xhrRef.current = xhr;
 
+    // הוספת האזנה לפרוגרס
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
         const percentComplete = Math.round((event.loaded / event.total) * 100);
@@ -74,8 +75,8 @@ const UploadFile = () => {
           });
 
           if (data.s3Key) {
-            localStorage.setItem("s3Key", data.s3Key); // ✅ שמירה אוטומטית
-            navigate("/keypoints"); // ✅ מעבר אוטומטי
+            localStorage.setItem("s3Key", data.s3Key);
+            navigate("/keypoints");
           }
         } catch {
           setUploadResponse({
@@ -98,6 +99,13 @@ const UploadFile = () => {
     };
 
     xhr.open("POST", "https://teamtrack-server.onrender.com/api/fileupload/upload");
+
+    // הוספת טוקן ל-Authorization אם קיים
+    const token = localStorage.getItem("jwt_token");
+    if (token) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    }
+
     xhr.send(formData);
   };
 

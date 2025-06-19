@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import {
@@ -38,6 +38,21 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // interceptor שמוסיף אוטומטית טוקן לכל בקשה
+  useEffect(() => {
+    const interceptor = axios.interceptors.request.use(config => {
+      const token = localStorage.getItem("jwt_token");
+      if (token) {
+        config.headers = config.headers ?? {};
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
+  }, []);
+
   const onSubmit = async (data: NewMeetingFormValues) => {
     try {
       if (!user) {
@@ -47,7 +62,6 @@ const NewMeeting = () => {
       setLoading(true);
       const apiUrl = process.env.REACT_APP_API_URL;
 
-      // בונים את האובייקט פשוט ללא FormData כי אין קובץ
       const payload = {
         MeetingName: data.MeetingName,
         CreatedByUserId: user.id.toString(),
@@ -58,6 +72,7 @@ const NewMeeting = () => {
       navigate('/meetings');
     } catch (error) {
       console.error("Error adding meeting:", error);
+      alert("שגיאה ביצירת הפגישה, נסה שנית");
     } finally {
       setLoading(false);
     }
