@@ -21,7 +21,7 @@ const UploadFile = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const xhrRef = useRef<XMLHttpRequest | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate(); // ⬅️ בשביל המעבר האוטומטי
+  const navigate = useNavigate();
 
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -74,8 +74,8 @@ const UploadFile = () => {
           });
 
           if (data.s3Key) {
-            localStorage.setItem("s3Key", data.s3Key); // ⬅️ שמירה ב-localStorage
-            navigate("/keypoints"); // ⬅️ מעבר אוטומטי
+            localStorage.setItem("s3Key", data.s3Key); // ✅ שמירה אוטומטית
+            navigate("/keypoints"); // ✅ מעבר אוטומטי
           }
         } catch {
           setUploadResponse({
@@ -130,9 +130,9 @@ const UploadFile = () => {
               </IconButton>
             ) : (
               <Box sx={{ display: 'flex', gap: 1 }}>
-                <Button component={Link} to="/login" variant="outlined" color="primary" startIcon={<LoginIcon />} sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>התחברות</Button>
-                <Button component={Link} to="/signup" variant="outlined" color="primary" startIcon={<HowToRegIcon />} sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>הרשמה</Button>
-                <Button component={Link} to="/" variant="outlined" color="primary" startIcon={<GroupsIcon />} sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 500 }}>דף הבית</Button>
+                <Button component={Link} to="/login" variant="outlined" color="primary" startIcon={<LoginIcon />} sx={{ borderRadius: 2 }}>התחברות</Button>
+                <Button component={Link} to="/signup" variant="outlined" color="primary" startIcon={<HowToRegIcon />} sx={{ borderRadius: 2 }}>הרשמה</Button>
+                <Button component={Link} to="/" variant="outlined" color="primary" startIcon={<GroupsIcon />} sx={{ borderRadius: 2 }}>דף הבית</Button>
               </Box>
             )}
           </Toolbar>
@@ -140,15 +140,13 @@ const UploadFile = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box
-          sx={{
-            p: 4,
-            borderRadius: 3,
-            background: 'linear-gradient(to bottom right, #fff, #f5f5f5)',
-            border: '1px solid #e8eaf6',
-            boxShadow: '0 8px 20px rgba(0,0,0,0.05)'
-          }}
-        >
+        <Box sx={{
+          p: 4,
+          borderRadius: 3,
+          background: 'linear-gradient(to bottom right, #fff, #f5f5f5)',
+          border: '1px solid #e8eaf6',
+          boxShadow: '0 8px 20px rgba(0,0,0,0.05)'
+        }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
             <Box sx={{
               display: 'flex',
@@ -163,14 +161,12 @@ const UploadFile = () => {
               <CloudUploadIcon sx={{ fontSize: 40, color: '#3f51b5' }} />
             </Box>
 
-            <Typography component="h1" variant="h4" fontWeight="bold"
-              sx={{
-                mb: 2,
-                background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0px 2px 5px rgba(0,0,0,0.05)'
-              }} align="center">
+            <Typography component="h1" variant="h4" fontWeight="bold" sx={{
+              mb: 2,
+              background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }} align="center">
               TeamTrack
             </Typography>
 
@@ -199,7 +195,6 @@ const UploadFile = () => {
               }
             }}
             onClick={openFileDialog}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openFileDialog() }}
             role="button"
             tabIndex={0}
           >
@@ -233,10 +228,8 @@ const UploadFile = () => {
                 py: 1.5,
                 borderRadius: 2,
                 background: 'linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)',
-                boxShadow: '0 3px 5px 2px rgba(63, 81, 181, .3)',
                 '&:hover': {
                   background: 'linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)',
-                  boxShadow: '0 4px 12px rgba(63, 81, 181, 0.4)',
                   transform: 'translateY(-2px)',
                   transition: 'all 0.3s'
                 }
@@ -254,7 +247,7 @@ const UploadFile = () => {
               <LinearProgress
                 variant="determinate"
                 value={uploadProgress}
-                sx={{ height: 8, borderRadius: 4, bgcolor: 'rgba(63, 81, 181, 0.1)' }}
+                sx={{ height: 8, borderRadius: 4 }}
               />
             </Box>
           )}

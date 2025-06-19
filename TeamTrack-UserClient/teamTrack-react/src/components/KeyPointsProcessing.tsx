@@ -11,7 +11,6 @@ import {
   useTheme,
   useMediaQuery,
   LinearProgress,
-  TextField,
   Paper,
   List,
   ListItem,
@@ -40,28 +39,39 @@ const KeyPointsProcessing = () => {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
-    // טען היסטוריה מ-localStorage בעת טעינת הקומפוננטה
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (stored) {
       try {
         setHistory(JSON.parse(stored));
-      } catch {
-        // התעלם אם לא תקין
-      }
+      } catch {}
     }
   }, []);
 
   useEffect(() => {
-    // שמור היסטוריה ב-localStorage בכל שינוי
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
 
-  const handleProcess = async () => {
-    if (!s3Key.trim()) return;
+  useEffect(() => {
+    const storedKey = localStorage.getItem("s3Key");
+    if (storedKey) {
+      setS3Key(storedKey);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (s3Key) {
+      handleProcess(s3Key);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [s3Key]);
+
+  const handleProcess = async (key: string) => {
+    if (!key.trim()) return;
 
     setProcessing(true);
     setResult(null);
@@ -77,7 +87,7 @@ const KeyPointsProcessing = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ s3Key }),
+        body: JSON.stringify({ s3Key: key }),
       });
 
       if (response.status === 401) {
@@ -89,9 +99,7 @@ const KeyPointsProcessing = () => {
         try {
           const errorData = await response.json();
           errorMsg = errorData?.error || errorData?.message || errorMsg;
-        } catch {
-          // אין JSON תקין
-        }
+        } catch {}
         throw new Error(errorMsg);
       }
 
@@ -99,9 +107,8 @@ const KeyPointsProcessing = () => {
       const keyPoints = data.keyPoints || "לא נמצאו נקודות מפתח";
       setResult(keyPoints);
 
-      // הוסף לפרטי ההיסטוריה
       const newItem: HistoryItem = {
-        s3Key: s3Key.trim(),
+        s3Key: key.trim(),
         result: keyPoints,
         timestamp: Date.now(),
       };
@@ -139,36 +146,18 @@ const KeyPointsProcessing = () => {
             </Box>
 
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu" onClick={() => {}}>
+              <IconButton color="primary" aria-label="menu">
                 <MenuIcon />
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Button
-                  component={Link}
-                  to="/login"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   התחברות
                 </Button>
-                <Button
-                  component={Link}
-                  to="/signup"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   הרשמה
                 </Button>
-                <Button
-                  component={Link}
-                  to="/"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   דף הבית
                 </Button>
               </Box>
@@ -202,28 +191,6 @@ const KeyPointsProcessing = () => {
             עיבוד נקודות מפתח
           </Typography>
 
-          <TextField
-            label="מפתח הקובץ מ-S3 (s3Key)"
-            fullWidth
-            variant="outlined"
-            value={s3Key}
-            onChange={(e) => setS3Key(e.target.value)}
-            disabled={processing}
-            sx={{ mb: 3 }}
-          />
-
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            size="large"
-            onClick={handleProcess}
-            disabled={!s3Key.trim() || processing}
-            sx={{ py: 1.5, borderRadius: 2 }}
-          >
-            {processing ? "מעבד..." : "שלח ל-AI"}
-          </Button>
-
           {processing && (
             <Box sx={{ width: "100%", mt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: "center" }}>
@@ -250,7 +217,6 @@ const KeyPointsProcessing = () => {
           )}
         </Box>
 
-        {/* אזור היסטוריית תוצאות */}
         {history.length > 0 && (
           <Box
             sx={{
