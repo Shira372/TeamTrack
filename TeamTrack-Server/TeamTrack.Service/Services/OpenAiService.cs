@@ -37,12 +37,13 @@ namespace TeamTrack.Service
                 ? "חַלֵץ את הנקודות החשובות מהטקסט הבא בעברית."
                 : "Extract the key points from the following text in English.";
 
-            string openAiApiKey = _configuration["OpenAI:OpenAiApiKey"];
+            // ✅ שורת תיקון - שימוש במפתח הנכון כפי שהוגדר ב־appsettings.json או ב־Render
+            string openAiApiKey = _configuration["OpenAI:ApiKey"];
             if (string.IsNullOrWhiteSpace(openAiApiKey))
                 throw new InvalidOperationException("OpenAI API key not found in configuration.");
 
             var client = _httpClientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromSeconds(30); // Timeout מוגדר
+            client.Timeout = TimeSpan.FromSeconds(30);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", openAiApiKey);
 
             var requestBody = new
@@ -57,7 +58,11 @@ namespace TeamTrack.Service
                 temperature = 0.5,
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            var content = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json"
+            );
 
             _logger.LogInformation("📤 שולח טקסט ל-OpenAI, אורך {Length}", text.Length);
 
@@ -80,7 +85,8 @@ namespace TeamTrack.Service
                           .GetProperty("choices")[0]
                           .GetProperty("message")
                           .GetProperty("content")
-                          .GetString();
+                          .GetString()
+                          ?? "לא נמצאו נקודות מפתח";
             }
             catch (TaskCanceledException ex)
             {
