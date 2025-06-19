@@ -35,12 +35,23 @@ namespace TeamTrack.API.Controllers
             try
             {
                 var s3Url = await _s3Service.UploadFileAsync(request.File);
-                return Ok(new { fileUrl = s3Url });
+
+                // חילוץ ה־s3Key מתוך ה־URL
+                var s3Key = s3Url.Split(".com/")[1]; // מניח ש־s3Url כולל .com/
+
+                return Ok(new
+                {
+                    fileUrl = s3Url,
+                    s3Key = s3Key // ✅ עכשיו חוזר גם ללקוח
+                });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "שגיאה בעת העלאת קובץ ל-S3");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "אירעה שגיאה בשרת בזמן העלאת הקובץ. אנא נסה שוב מאוחר יותר." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    error = "אירעה שגיאה בשרת בזמן העלאת הקובץ. אנא נסה שוב מאוחר יותר."
+                });
             }
         }
 
@@ -56,7 +67,10 @@ namespace TeamTrack.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "שגיאה בעת שליפת קבצים מ־S3");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "אירעה שגיאה בעת שליפת הקבצים." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    error = "אירעה שגיאה בעת שליפת הקבצים."
+                });
             }
         }
     }

@@ -31,14 +31,18 @@ namespace TeamTrack.API.Controllers
         [HttpPost]
         public async Task<IActionResult> ExtractKeyPointsFromS3([FromBody] S3KeyRequest request)
         {
+            if (string.IsNullOrWhiteSpace(request.S3Key))
+            {
+                return BadRequest(new { error = "s3Key חסר או ריק." });
+            }
+
             try
             {
-                if (string.IsNullOrWhiteSpace(request.S3Key))
-                    return BadRequest(new { error = "s3Key חסר או ריק." });
-
                 var s3Object = await _s3Client.GetObjectAsync(_bucketName, request.S3Key);
                 if (s3Object.ResponseStream == null)
+                {
                     return NotFound(new { error = "לא נמצא קובץ עם המפתח שסופק." });
+                }
 
                 string text;
                 using (var reader = new StreamReader(s3Object.ResponseStream))
