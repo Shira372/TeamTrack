@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+ï»¿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -101,7 +101,7 @@ builder.Services.AddScoped<IS3Service, S3Service>();
 // HTTP Client
 builder.Services.AddHttpClient();
 
-// CORS – úé÷åï îìà ì-CORS ëåìì Preflight
+// âœ… CORS â€“ ×ž×•×’×“×¨ ×‘×¦×•×¨×” ×ž×“×•×™×§×ª ×œ×˜×™×¤×•×œ ×‘-Preflight
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -119,12 +119,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseCors("AllowSpecificOrigin"); 
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
