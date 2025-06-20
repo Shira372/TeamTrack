@@ -19,7 +19,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
-// Swagger עם JWT + File Upload Filter
+// Swagger + JWT
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -101,18 +101,18 @@ builder.Services.AddScoped<IS3Service, S3Service>();
 // HTTP Client
 builder.Services.AddHttpClient();
 
-// CORS - הגדרת מדיניות עם Origins מותרים
+// CORS – תיקון מלא ל-CORS כולל Preflight
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
         policy.WithOrigins(
+            "https://teamtrack-userclient.onrender.com",
             "http://localhost:3000",
-            "https://localhost:3000",
-            "https://teamtrack-userclient.onrender.com"
+            "https://localhost:3000"
         )
-        .AllowAnyHeader()
-        .AllowAnyMethod()
+        .WithHeaders("Authorization", "Content-Type")
+        .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
         .AllowCredentials();
     });
 });
@@ -120,11 +120,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
-
-app.UseCors("AllowSpecificOrigin");
-
+app.UseCors("AllowSpecificOrigin"); 
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -135,5 +132,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-
 app.Run();
