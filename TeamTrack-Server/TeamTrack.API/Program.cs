@@ -12,7 +12,7 @@ using TeamTrack.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// JSON Options
+// Controllers + JSON
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -49,7 +49,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// DB Context - MySQL
+// DB - MySQL
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -59,7 +59,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// JWT Authentication
+// JWT Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -89,19 +89,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Repositories
+// Services + Repositories
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-
-// Services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
-
-// HTTP Client
 builder.Services.AddHttpClient();
 
-// ✅ CORS – הגדרה תקינה
+// ✅ CORS – מוגדר נכון עם Origins, Headers, Methods
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -111,14 +107,15 @@ builder.Services.AddCors(options =>
             "http://localhost:3000",
             "https://localhost:3000"
         )
-        .WithHeaders("Authorization", "Content-Type")
-        .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        .AllowCredentials();
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials(); // רק אם את שולחת cookies
     });
 });
 
 var app = builder.Build();
 
+// סדר מדויק של Middlewares
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowSpecificOrigin");
