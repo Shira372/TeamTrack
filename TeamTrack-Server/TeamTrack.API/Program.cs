@@ -113,7 +113,7 @@ builder.Services.AddCors(options =>
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
-        .AllowCredentials(); // אם נדרש (אפשר להסיר אם אין צורך)
+        .AllowCredentials();
     });
 });
 
@@ -121,12 +121,10 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-// תמיד לפני Routing
-app.UseCors("AllowSpecificOrigin");
-
 app.UseRouting();
 
-// אחרי Routing
+app.UseCors("AllowSpecificOrigin");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
