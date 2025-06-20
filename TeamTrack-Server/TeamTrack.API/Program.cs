@@ -101,7 +101,7 @@ builder.Services.AddScoped<IS3Service, S3Service>();
 // HTTP Client
 builder.Services.AddHttpClient();
 
-// ✅ CORS – מוגדר בצורה מדויקת לטיפול ב-Preflight
+// ✅ CORS – הגדרה תקינה
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -119,13 +119,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
