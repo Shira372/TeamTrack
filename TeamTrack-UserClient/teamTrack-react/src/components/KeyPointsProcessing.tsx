@@ -59,28 +59,25 @@ const KeyPointsProcessing = () => {
 
   useEffect(() => {
     const storedKey = localStorage.getItem("s3Key");
-    if (storedKey) {
+    const token = localStorage.getItem("jwt_token");
+    if (storedKey && token) {
       setS3Key(storedKey);
     }
   }, []);
 
   useEffect(() => {
-    if (s3Key) {
-      handleProcess(s3Key);
+    const token = localStorage.getItem("jwt_token");
+    if (s3Key && token) {
+      handleProcess(s3Key, token);
     }
   }, [s3Key]);
 
-  const handleProcess = async (key: string) => {
-    if (!key.trim()) return;
-
+  const handleProcess = async (key: string, token: string) => {
     setProcessing(true);
     setResult(null);
     setError(null);
 
     try {
-      const token = localStorage.getItem("jwt_token");
-      if (!token) throw new Error("לא נמצא טוקן התחברות, יש להתחבר מחדש");
-
       const response = await fetch(`${API_URL}/api/extract-keypoints`, {
         method: "POST",
         headers: {
@@ -91,16 +88,13 @@ const KeyPointsProcessing = () => {
       });
 
       if (response.status === 401) {
+        localStorage.removeItem("jwt_token");
         throw new Error("פג תוקף ההתחברות. אנא התחבר מחדש.");
       }
 
       if (!response.ok) {
-        let errorMsg = "שגיאה בשרת בעיבוד נקודות מפתח";
-        try {
-          const errorData = await response.json();
-          errorMsg = errorData?.error || errorData?.message || errorMsg;
-        } catch {}
-        throw new Error(errorMsg);
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || errorData?.error || "שגיאה כללית בשרת");
       }
 
       const data = await response.json();
@@ -113,8 +107,8 @@ const KeyPointsProcessing = () => {
         timestamp: Date.now(),
       };
       setHistory((prev) => [newItem, ...prev]);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "אירעה שגיאה לא ידועה");
+    } catch (e: any) {
+      setError(e.message || "שגיאת רשת לא צפויה");
     } finally {
       setProcessing(false);
     }

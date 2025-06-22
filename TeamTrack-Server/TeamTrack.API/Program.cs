@@ -49,7 +49,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// DB - MySQL
+// DB
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -89,15 +89,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Services + Repositories
-builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IMeetingService, MeetingService>();
-builder.Services.AddScoped<IOpenAiService, OpenAiService>();
-builder.Services.AddScoped<IS3Service, S3Service>();
-builder.Services.AddHttpClient();
-
-// ✅ CORS – מוגדר נכון עם Origins, Headers, Methods
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -107,15 +99,23 @@ builder.Services.AddCors(options =>
             "http://localhost:3000",
             "https://localhost:3000"
         )
-        .AllowAnyHeader()
+        .WithHeaders("Content-Type", "Authorization")
+        .WithExposedHeaders("Token-Expired")
         .AllowAnyMethod()
-        .AllowCredentials(); // רק אם את שולחת cookies
+        .AllowCredentials();
     });
 });
 
+// DI
+builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMeetingService, MeetingService>();
+builder.Services.AddScoped<IOpenAiService, OpenAiService>();
+builder.Services.AddScoped<IS3Service, S3Service>();
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
-// סדר מדויק של Middlewares
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowSpecificOrigin");
