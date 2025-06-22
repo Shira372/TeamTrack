@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Amazon.S3;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using TeamTrack.Core;
 using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
-using TeamTrack.Core;
 using TeamTrack.Data;
 using TeamTrack.Service;
 
@@ -112,15 +113,15 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
+
 builder.Services.AddHttpClient();
+builder.Services.AddAWSService<IAmazonS3>(); // 💥 זה מה שהיה חסר
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
-// ** סדר Middleware קריטי **
 app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
@@ -133,5 +134,4 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-
 app.Run();
