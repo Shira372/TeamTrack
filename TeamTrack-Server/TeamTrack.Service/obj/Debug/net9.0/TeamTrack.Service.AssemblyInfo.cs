@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeamTrack.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8592095e69dc83f6e5bcf1e0b9a979ccbd1dc458")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab1185b8c16c151f5e21a9575927f40349665d67")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeamTrack.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeamTrack.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
