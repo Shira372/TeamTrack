@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
 using TeamTrack.Core;
@@ -12,14 +12,15 @@ using TeamTrack.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers + JSON
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    options.JsonSerializerOptions.WriteIndented = true;
-});
+// Controllers + JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
 
-// Swagger + JWT
+// Swagger + JWT setup
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -49,7 +50,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// DB
+// Database
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -59,7 +60,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// JWT Auth
+// JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -99,14 +100,13 @@ builder.Services.AddCors(options =>
             "http://localhost:3000",
             "https://localhost:3000"
         )
-        .WithHeaders("Content-Type", "Authorization")
-        .WithExposedHeaders("Token-Expired")
+        .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
 });
 
-// DI
+// Dependency Injection
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
@@ -117,8 +117,12 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+// ** סדר Middleware קריטי **
 app.UseCors("AllowSpecificOrigin");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -129,4 +133,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+
 app.Run();
