@@ -9,6 +9,7 @@ namespace TeamTrack.API.Controllers
 {
     [ApiController]
     [Route("api/extract-keypoints")]
+    [Authorize]
     public class KeyPointsController : ControllerBase
     {
         private readonly IAmazonS3 _s3Client;
@@ -26,9 +27,7 @@ namespace TeamTrack.API.Controllers
             public string S3Key { get; set; } = string.Empty;
         }
 
-        // ✅ פוסט רגיל עם Authorize
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Post([FromBody] ExtractKeyPointsRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.S3Key))
@@ -51,17 +50,6 @@ namespace TeamTrack.API.Controllers
             {
                 return StatusCode(500, new { error = $"שגיאה פנימית: {ex.Message}" });
             }
-        }
-
-        // ✅ מתודה לבקשת OPTIONS (Preflight של הדפדפן)
-        [HttpOptions]
-        [AllowAnonymous]
-        public IActionResult Options()
-        {
-            Response.Headers.Add("Access-Control-Allow-Origin", "https://teamtrack-userclient.onrender.com");
-            Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            Response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
-            return Ok();
         }
     }
 }

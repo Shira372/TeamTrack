@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "HWQUuHWoor0=",
+  "dgSpecHash": "7ajiswfjO2g=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\TeamTrack.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user1\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\4.0.0.11\\awssdk.core.4.0.0.11.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\4.0.0.12\\awssdk.core.4.0.0.12.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.s3\\4.0.1.7\\awssdk.s3.4.0.1.7.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.s3\\4.0.2\\awssdk.s3.4.0.2.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.3\\microsoft.aspnetcore.authentication.jwtbearer.9.0.3.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
