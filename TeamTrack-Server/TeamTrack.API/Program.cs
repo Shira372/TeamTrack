@@ -115,12 +115,26 @@ builder.Services.AddAWSService<IAmazonS3>();
 
 var app = builder.Build();
 
-// סדר Middlewareים חשוב!
-app.UseCors("AllowSpecificOrigin");
+// 🔽 חדש - מוסיף טיפול ידני בבקשות OPTIONS
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+        context.Response.Headers.Add("Access-Control-Allow-Origin", "https://teamtrack-userclient.onrender.com");
+        context.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+        await context.Response.CompleteAsync();
+        return;
+    }
+    await next();
+});
 
+// 🔽 סדר נכון של Middleware
+app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
