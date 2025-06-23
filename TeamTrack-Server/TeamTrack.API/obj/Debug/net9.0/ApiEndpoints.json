@@ -1,15 +1,15 @@
 [
   {
-    "ContainingType": "TeamTrack.API.Controllers.AuthController",
-    "Method": "Login",
-    "RelativePath": "api/Auth",
+    "ContainingType": "TeamTrack.API.Controllers.KeyPointsController",
+    "Method": "Post",
+    "RelativePath": "api/extract-keypoints",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "loginModel",
-        "Type": "TeamTrack.API.Models.LoginModel",
+        "Name": "request",
+        "Type": "TeamTrack.API.Controllers.KeyPointsController\u002BExtractKeyPointsRequest",
         "IsRequired": true
       }
     ],
@@ -17,24 +17,18 @@
   },
   {
     "ContainingType": "TeamTrack.API.Controllers.FileUploadController",
-    "Method": "UploadFile",
-    "RelativePath": "api/FileUpload/upload",
-    "HttpMethod": "POST",
+    "Method": "GetFiles",
+    "RelativePath": "api/FileUpload/files",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "File",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "TeamTrack.API.Controllers.KeyPointsController",
-    "Method": "ExtractKeyPoints",
-    "RelativePath": "api/keypoints",
+    "ContainingType": "TeamTrack.API.Controllers.FileUploadController",
+    "Method": "UploadFile",
+    "RelativePath": "api/FileUpload/upload",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

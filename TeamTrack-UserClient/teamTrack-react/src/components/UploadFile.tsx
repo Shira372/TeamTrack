@@ -92,7 +92,6 @@ const UploadFile = () => {
 
           if (data.s3Key) {
             localStorage.setItem("s3Key", data.s3Key);
-            navigate("/keypoints");
           }
         } catch {
           setUploadResponse({
@@ -117,10 +116,7 @@ const UploadFile = () => {
       });
     };
 
-    xhr.open(
-      "POST",
-      "https://teamtrack-server.onrender.com/api/fileupload/upload"
-    );
+    xhr.open("POST", "https://teamtrack-server.onrender.com/api/fileupload/upload");
 
     const token = localStorage.getItem("jwt_token");
     if (token) {
@@ -136,63 +132,28 @@ const UploadFile = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
-      >
+      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
         <Container>
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <GroupsIcon sx={{ mr: 1, color: "#3f51b5" }} />
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
+              <Typography variant="h6" sx={{ fontWeight: 700, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 TeamTrack
               </Typography>
             </Box>
-
             {isMobile ? (
               <IconButton color="primary" aria-label="menu">
                 <MenuIcon />
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: 1 }}>
-                <Button
-                  component={Link}
-                  to="/login"
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<LoginIcon />}
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/login" variant="outlined" color="primary" startIcon={<LoginIcon />} sx={{ borderRadius: 2 }}>
                   התחברות
                 </Button>
-                <Button
-                  component={Link}
-                  to="/signup"
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<HowToRegIcon />}
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/signup" variant="outlined" color="primary" startIcon={<HowToRegIcon />} sx={{ borderRadius: 2 }}>
                   הרשמה
                 </Button>
-                <Button
-                  component={Link}
-                  to="/"
-                  variant="outlined"
-                  color="primary"
-                  startIcon={<GroupsIcon />}
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/" variant="outlined" color="primary" startIcon={<GroupsIcon />} sx={{ borderRadius: 2 }}>
                   דף הבית
                 </Button>
               </Box>
@@ -202,179 +163,58 @@ const UploadFile = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box
-          sx={{
-            p: 4,
-            borderRadius: 3,
-            background: "linear-gradient(to bottom right, #fff, #f5f5f5)",
-            border: "1px solid #e8eaf6",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mb: 3,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mb: 2,
-                bgcolor: "rgba(63, 81, 181, 0.05)",
-                borderRadius: "50%",
-                width: 80,
-                height: 80,
-                alignItems: "center",
-              }}
-            >
+        <Box sx={{ p: 4, borderRadius: 3, background: "linear-gradient(to bottom right, #fff, #f5f5f5)", border: "1px solid #e8eaf6", boxShadow: "0 8px 20px rgba(0,0,0,0.05)" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 2, bgcolor: "rgba(63, 81, 181, 0.05)", borderRadius: "50%", width: 80, height: 80, alignItems: "center" }}>
               <CloudUploadIcon sx={{ fontSize: 40, color: "#3f51b5" }} />
             </Box>
-
-            <Typography
-              component="h1"
-              variant="h4"
-              fontWeight="bold"
-              sx={{
-                mb: 2,
-                background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-              align="center"
-            >
+            <Typography component="h1" variant="h4" fontWeight="bold" sx={{ mb: 2, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} align="center">
               TeamTrack
             </Typography>
-
-            <Typography
-              variant="h5"
-              color="#3f51b5"
-              align="center"
-              sx={{ mt: 1, fontWeight: 500 }}
-            >
+            <Typography variant="h5" color="#3f51b5" align="center" sx={{ mt: 1, fontWeight: 500 }}>
               העלאת קובץ למערכת
             </Typography>
-
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              align="center"
-              sx={{ mt: 1 }}
-            >
+            <Typography variant="subtitle1" color="text.secondary" align="center" sx={{ mt: 1 }}>
               ניתן להעלות רק קבצי טקסט מסוג <b>.txt</b>
             </Typography>
           </Box>
 
           <Divider sx={{ mb: 3 }} />
 
-          <Box
-            sx={{
-              border: "2px dashed #3f51b5",
-              borderRadius: 2,
-              p: 3,
-              textAlign: "center",
-              bgcolor: "rgba(63, 81, 181, 0.03)",
-              cursor: "pointer",
-              "&:hover": {
-                bgcolor: "rgba(63, 81, 181, 0.05)",
-                boxShadow: "0 2px 8px rgba(63, 81, 181, 0.15)",
-              },
-            }}
-            onClick={openFileDialog}
-            role="button"
-            tabIndex={0}
-          >
-            <input
-              id="file-input"
-              type="file"
-              accept=".txt"
-              onChange={fileSelectedHandler}
-              style={{ display: "none" }}
-              ref={fileInputRef}
-            />
-            <CloudUploadIcon
-              sx={{ fontSize: 48, color: "#3f51b5", mb: 1 }}
-            />
+          <Box sx={{ border: "2px dashed #3f51b5", borderRadius: 2, p: 3, textAlign: "center", bgcolor: "rgba(63, 81, 181, 0.03)", cursor: "pointer", "&:hover": { bgcolor: "rgba(63, 81, 181, 0.05)", boxShadow: "0 2px 8px rgba(63, 81, 181, 0.15)" } }} onClick={openFileDialog} role="button" tabIndex={0}>
+            <input id="file-input" type="file" accept=".txt" onChange={fileSelectedHandler} style={{ display: "none" }} ref={fileInputRef} />
+            <CloudUploadIcon sx={{ fontSize: 48, color: "#3f51b5", mb: 1 }} />
             <Typography variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
               {selectedFile ? selectedFile.name : "גרור קובץ לכאן או לחץ לבחירה"}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {selectedFile
-                ? `גודל: ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB`
-                : "עד 100MB"}
+              {selectedFile ? `גודל: ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB` : "עד 100MB"}
             </Typography>
           </Box>
 
           <Box sx={{ mt: 3 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              size="large"
-              onClick={fileUploadHandler}
-              disabled={!selectedFile || uploading}
-              startIcon={<CloudUploadIcon />}
-              sx={{
-                py: 1.5,
-                borderRadius: 2,
-                background:
-                  "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
-                "&:hover": {
-                  background:
-                    "linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)",
-                  transform: "translateY(-2px)",
-                  transition: "all 0.3s",
-                },
-              }}
-            >
+            <Button variant="contained" color="primary" fullWidth size="large" onClick={fileUploadHandler} disabled={!selectedFile || uploading} startIcon={<CloudUploadIcon />} sx={{ py: 1.5, borderRadius: 2, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", "&:hover": { background: "linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)", transform: "translateY(-2px)", transition: "all 0.3s" } }}>
               {uploading ? "מעלה..." : "העלה קובץ"}
             </Button>
           </Box>
 
           {uploading && (
             <Box sx={{ width: "100%", mt: 2 }}>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 1, textAlign: "center" }}
-              >
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: "center" }}>
                 {`מעלה... ${uploadProgress}%`}
               </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={uploadProgress}
-                sx={{ height: 8, borderRadius: 4 }}
-              />
+              <LinearProgress variant="determinate" value={uploadProgress} sx={{ height: 8, borderRadius: 4 }} />
             </Box>
           )}
 
           {uploadResponse && (
             <Box sx={{ mt: 3, textAlign: "center" }}>
-              <Alert
-                severity={uploadResponse.success ? "success" : "error"}
-                icon={
-                  uploadResponse.success ? (
-                    <CheckCircleIcon />
-                  ) : (
-                    <ErrorIcon />
-                  )
-                }
-                sx={{ borderRadius: 2, mb: 2 }}
-              >
+              <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2, mb: 2 }}>
                 {uploadResponse.message}
               </Alert>
 
               {uploadResponse.success && uploadResponse.fileUrl && (
-                <MuiLink
-                  href={uploadResponse.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  underline="hover"
-                  sx={{ fontWeight: "bold", color: "#3f51b5" }}
-                >
+                <MuiLink href={uploadResponse.fileUrl} target="_blank" rel="noopener noreferrer" underline="hover" sx={{ fontWeight: "bold", color: "#3f51b5" }}>
                   לחץ כאן לפתיחת הקובץ שהועלה
                 </MuiLink>
               )}

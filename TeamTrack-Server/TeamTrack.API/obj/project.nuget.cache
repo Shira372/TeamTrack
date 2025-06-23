@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7ajiswfjO2g=",
+  "dgSpecHash": "4YBKP0c4ML4=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\TeamTrack.API.csproj",
   "expectedPackageFiles": [
@@ -82,16 +82,5 @@
     "C:\\Users\\user1\\.nuget\\packages\\system.text.json\\9.0.0-preview.3.24172.9\\system.text.json.9.0.0-preview.3.24172.9.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "TeamTrack.Service depends on AWSSDK.Extensions.NETCore.Setup (>= 3.7.0.2) but AWSSDK.Extensions.NETCore.Setup 3.7.0.2 was not found. AWSSDK.Extensions.NETCore.Setup 3.7.1 was resolved instead.",
-      "libraryId": "AWSSDK.Extensions.NETCore.Setup",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -151,10 +151,10 @@ C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamT
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.TeamTrack.API.props
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.TeamTrack.API.props
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrac.CC03E7D8.Up2Date
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrack.API.dll
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\refint\TeamTrack.API.dll
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrack.API.pdb
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrack.API.genruntimeconfig.cache
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\ref\TeamTrack.API.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

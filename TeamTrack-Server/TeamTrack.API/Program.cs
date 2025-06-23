@@ -115,8 +115,7 @@ builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
 
 builder.Services.AddHttpClient();
-builder.Services.AddAWSService<IAmazonS3>(); // 💥 זה מה שהיה חסר
-
+builder.Services.AddAWSService<IAmazonS3>(); 
 var app = builder.Build();
 
 app.UseHttpsRedirection();

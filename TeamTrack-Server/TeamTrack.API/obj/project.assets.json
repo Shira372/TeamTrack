@@ -4014,6 +4014,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "AWSSDK.Extensions.NETCore.Setup >= 3.7.1",
       "AWSSDK.S3 >= 4.0.2",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 9.0.3",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.3.0",
@@ -4088,6 +4089,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "AWSSDK.Extensions.NETCore.Setup": {
+            "target": "Package",
+            "version": "[3.7.1, )"
+          },
           "AWSSDK.S3": {
             "target": "Package",
             "version": "[4.0.2, )"
@@ -4149,17 +4154,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "TeamTrack.Service depends on AWSSDK.Extensions.NETCore.Setup (>= 3.7.0.2) but AWSSDK.Extensions.NETCore.Setup 3.7.0.2 was not found. AWSSDK.Extensions.NETCore.Setup 3.7.1 was resolved instead.",
-      "libraryId": "AWSSDK.Extensions.NETCore.Setup",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  }
 }
