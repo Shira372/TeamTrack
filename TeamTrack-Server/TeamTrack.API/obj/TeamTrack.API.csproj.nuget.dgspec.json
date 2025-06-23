@@ -62,11 +62,11 @@
           "dependencies": {
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
-              "version": "[3.7.1, )"
+              "version": "[3.7.300, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[4.0.2, )"
+              "version": "[3.7.100.13, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -336,7 +336,7 @@
           "dependencies": {
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
-              "version": "[3.7.0.2, )"
+              "version": "[3.7.300, )"
             },
             "AWSSDK.S3": {
               "target": "Package",

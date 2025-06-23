@@ -36,13 +36,12 @@ namespace TeamTrack.API.Controllers
             {
                 var s3Url = await _s3Service.UploadFileAsync(request.File);
 
-                // חילוץ ה־s3Key מתוך ה־URL
-                var s3Key = s3Url.Split(".com/")[1]; // מניח ש־s3Url כולל .com/
+                var s3Key = s3Url.Split(".com/")[1]; 
 
                 return Ok(new
                 {
                     fileUrl = s3Url,
-                    s3Key = s3Key // ✅ עכשיו חוזר גם ללקוח
+                    s3Key = s3Key 
                 });
             }
             catch (Exception ex)

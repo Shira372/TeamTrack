@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "4YBKP0c4ML4=",
+  "dgSpecHash": "plKkQMSJaQY=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\TeamTrack.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user1\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\4.0.0.12\\awssdk.core.4.0.0.12.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.s3\\4.0.2\\awssdk.s3.4.0.2.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\3.7.300\\awssdk.core.3.7.300.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.300\\awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.s3\\3.7.101\\awssdk.s3.3.7.101.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.3\\microsoft.aspnetcore.authentication.jwtbearer.9.0.3.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
@@ -82,5 +82,16 @@
     "C:\\Users\\user1\\.nuget\\packages\\system.text.json\\9.0.0-preview.3.24172.9\\system.text.json.9.0.0-preview.3.24172.9.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "TeamTrack.API depends on AWSSDK.S3 (>= 3.7.100.13) but AWSSDK.S3 3.7.100.13 was not found. AWSSDK.S3 3.7.101 was resolved instead.",
+      "libraryId": "AWSSDK.S3",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }
