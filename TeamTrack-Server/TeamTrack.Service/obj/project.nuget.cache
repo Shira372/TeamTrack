@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Tl3hI5WFweM=",
+  "dgSpecHash": "k/iEyURByE0=",
   "success": true,
   "projectFilePath": "C:\\Users\\user1\\Desktop\\שנה ב-תשפה\\פרויקט Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\TeamTrack.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user1\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\3.7.100\\awssdk.core.3.7.100.nupkg.sha512",
-    "C:\\Users\\user1\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.1\\awssdk.extensions.netcore.setup.3.7.1.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.core\\3.7.300\\awssdk.core.3.7.300.nupkg.sha512",
+    "C:\\Users\\user1\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.300\\awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\awssdk.s3\\3.7.101\\awssdk.s3.3.7.101.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\user1\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",
@@ -33,16 +33,6 @@
     "C:\\Users\\user1\\.nuget\\packages\\system.text.json\\9.0.0-preview.3.24172.9\\system.text.json.9.0.0-preview.3.24172.9.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "TeamTrack.Service depends on AWSSDK.Extensions.NETCore.Setup (>= 3.7.0.2) but AWSSDK.Extensions.NETCore.Setup 3.7.0.2 was not found. AWSSDK.Extensions.NETCore.Setup 3.7.1 was resolved instead.",
-      "libraryId": "AWSSDK.Extensions.NETCore.Setup",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    },
     {
       "code": "NU1603",
       "level": "Warning",

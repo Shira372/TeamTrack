@@ -13,7 +13,11 @@ using TeamTrack.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers + JSON options
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -21,7 +25,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.WriteIndented = true;
     });
 
-// Swagger + JWT setup
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -51,17 +54,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Database
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 41))
     ));
 
-// AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-// JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -91,7 +91,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
@@ -99,11 +98,10 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("https://teamtrack-userclient.onrender.com")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); // חשוב מאוד!
+              .AllowCredentials();
     });
 });
 
-// Dependency Injection
 builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
@@ -115,7 +113,6 @@ builder.Services.AddAWSService<IAmazonS3>();
 
 var app = builder.Build();
 
-// 🔽 חדש - מוסיף טיפול ידני בבקשות OPTIONS
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
@@ -131,7 +128,6 @@ app.Use(async (context, next) =>
     await next();
 });
 
-// 🔽 סדר נכון של Middleware
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();

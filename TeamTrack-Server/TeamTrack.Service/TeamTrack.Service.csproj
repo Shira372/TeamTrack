@@ -15,10 +15,8 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
 
-		<!-- AWS SDK -->
+		<!-- AWS SDK – תואם לגרסאות עדכניות -->
 		<PackageReference Include="AWSSDK.S3" Version="3.7.100.13" />
-		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.2" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.300" />
 	</ItemGroup>
 </Project>
-
-
