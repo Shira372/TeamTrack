@@ -96,14 +96,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins(
-            "https://teamtrack-userclient.onrender.com",
-            "http://localhost:3000",
-            "https://localhost:3000"
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
+        policy.WithOrigins("https://teamtrack-userclient.onrender.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // חשוב מאוד!
     });
 });
 
@@ -115,13 +111,15 @@ builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
 
 builder.Services.AddHttpClient();
-builder.Services.AddAWSService<IAmazonS3>(); 
+builder.Services.AddAWSService<IAmazonS3>();
+
 var app = builder.Build();
+
+// סדר Middlewareים חשוב!
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();
