@@ -12,7 +12,6 @@ import {
   useTheme,
   useMediaQuery,
   LinearProgress,
-  Link as MuiLink,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -212,12 +211,6 @@ const UploadFile = () => {
               <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2, mb: 2 }}>
                 {uploadResponse.message}
               </Alert>
-
-              {uploadResponse.success && uploadResponse.fileUrl && (
-                <MuiLink href={uploadResponse.fileUrl} target="_blank" rel="noopener noreferrer" underline="hover" sx={{ fontWeight: "bold", color: "#3f51b5" }}>
-                  לחץ כאן לפתיחת הקובץ שהועלה
-                </MuiLink>
-              )}
             </Box>
           )}
         </Box>

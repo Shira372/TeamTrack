@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Amazon.S3;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Amazon.S3;
-using System.IO;
-using System.Threading.Tasks;
 using TeamTrack.Core.IServices;
 
 namespace TeamTrack.API.Controllers
@@ -50,6 +48,13 @@ namespace TeamTrack.API.Controllers
             {
                 return StatusCode(500, new { error = $"שגיאה פנימית: {ex.Message}" });
             }
+        }
+
+        [HttpOptions]
+        [AllowAnonymous]
+        public IActionResult Options()
+        {
+            return Ok();
         }
     }
 }
