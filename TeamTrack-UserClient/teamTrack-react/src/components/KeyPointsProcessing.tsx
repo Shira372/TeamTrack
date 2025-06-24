@@ -27,6 +27,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 type HistoryItem = {
   s3Key: string;
@@ -50,7 +51,6 @@ const KeyPointsProcessing = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
 
-  // טען היסטוריה ו-s3Key מ-localStorage
   useEffect(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (stored) {
@@ -62,7 +62,6 @@ const KeyPointsProcessing = () => {
     if (storedKey) setS3Key(storedKey);
   }, []);
 
-  // שמור היסטוריה ב-localStorage
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
@@ -102,10 +101,7 @@ const KeyPointsProcessing = () => {
 
       setResult(keyPoints);
       setSummaryLink(link);
-
-      localStorage.setItem("summaryLink", link); 
-
-      navigate("/newMeeting");
+      localStorage.setItem("summaryLink", link);
 
       const newItem: HistoryItem = {
         s3Key: s3Key.trim(),
@@ -133,7 +129,12 @@ const KeyPointsProcessing = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
+      <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
+      >
         <Container>
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -156,13 +157,13 @@ const KeyPointsProcessing = () => {
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Button component={RouterLink} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/login" variant="outlined" color="primary">
                   התחברות
                 </Button>
-                <Button component={RouterLink} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/signup" variant="outlined" color="primary">
                   הרשמה
                 </Button>
-                <Button component={RouterLink} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/" variant="outlined" color="primary">
                   דף הבית
                 </Button>
               </Box>
@@ -226,6 +227,15 @@ const KeyPointsProcessing = () => {
                   <Link href={summaryLink} target="_blank" rel="noopener" underline="hover">
                     הורדת קובץ סיכום
                   </Link>
+                  <Button
+                    component={RouterLink}
+                    to="/newMeeting"
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}
+                    sx={{ mt: 2 }}
+                  >
+                    צור פגישה חדשה
+                  </Button>
                 </Box>
               )}
             </Box>
@@ -240,13 +250,29 @@ const KeyPointsProcessing = () => {
           )}
         </Box>
 
-        <Box sx={{ mt: 4, p: 3, borderRadius: 3, background: "#fff", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }} component={Paper} elevation={3}>
+        <Box
+          sx={{
+            mt: 4,
+            p: 3,
+            borderRadius: 3,
+            background: "#fff",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          }}
+          component={Paper}
+          elevation={3}
+        >
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
             <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <HistoryIcon /> היסטוריית עיבודים אחרונים
             </Typography>
             {history.length > 0 && (
-              <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={handleClearHistory} size="small">
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleClearHistory}
+                size="small"
+              >
                 מחק הכול
               </Button>
             )}

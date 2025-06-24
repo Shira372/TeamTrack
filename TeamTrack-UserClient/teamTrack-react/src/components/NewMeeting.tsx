@@ -43,6 +43,7 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // ✅ הזרקת הטוקן לבקשות axios
   useEffect(() => {
     const interceptor = axios.interceptors.request.use((config) => {
       const token = localStorage.getItem("jwt_token");
@@ -57,12 +58,12 @@ const NewMeeting = () => {
     };
   }, []);
 
-  // ** הטענת summaryLink מה-localStorage לשדה הטופס **
+  // ✅ טעינת summaryLink מה־localStorage
   useEffect(() => {
     const storedSummaryLink = localStorage.getItem("summaryLink");
     if (storedSummaryLink) {
       setValue("SummaryLink", storedSummaryLink);
-      // אפשר למחוק את הערך מ-localStorage אחרי שליפה אם רוצים:
+      // אפשר למחוק מה-localStorage אם רוצים:
       // localStorage.removeItem("summaryLink");
     }
   }, [setValue]);
