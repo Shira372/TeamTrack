@@ -196,13 +196,14 @@ const Home = () => {
       borderRadius: '50%',
       opacity: 0.1,
       background: 'linear-gradient(45deg, #3f51b5, #5c6bc0)',
-      animation: 'float 8s infinite ease-in-out',
+      animation: 'floatUp 8s infinite ease-in-out',
       zIndex: 0,
-      '@keyframes float': {
-        '0%': { transform: 'translate(0, 0) rotate(0deg)' },
-        '33%': { transform: 'translate(10px, -15px) rotate(5deg)' },
-        '66%': { transform: 'translate(-10px, 10px) rotate(-5deg)' },
-        '100%': { transform: 'translate(0, 0) rotate(0deg)' }
+      '@keyframes floatUp': {
+        '0%': { transform: 'translateY(100vh) translateX(0px) rotate(0deg)', opacity: 0.1 },
+        '10%': { opacity: 0.15 },
+        '50%': { transform: 'translateY(-20vh) translateX(30px) rotate(180deg)', opacity: 0.1 },
+        '90%': { opacity: 0.05 },
+        '100%': { transform: 'translateY(-120vh) translateX(0px) rotate(360deg)', opacity: 0 }
       }
     },
     metricCard: {
@@ -279,11 +280,10 @@ const Home = () => {
   // Floating bubbles for hero section (enhanced with 6 bubbles and animation delay)
   const floatingBubbles = useMemo(() => {
     return Array.from({ length: 6 }).map((_, i) => ({
-      size: 100 + Math.random() * 150,
-      top: `${Math.random() * 80}%`,
-      left: `${Math.random() * 80}%`,
-      animationDuration: `${3 + Math.random() * 4}s`,
-      animationDelay: `${Math.random() * 2}s`,
+      size: 80 + Math.random() * 120,
+      left: `${Math.random() * 90}%`,
+      animationDuration: `${4 + Math.random() * 3}s`,
+      animationDelay: `${Math.random() * 8}s`,
     }));
   }, []);
 
@@ -383,7 +383,7 @@ const Home = () => {
       <Container maxWidth="lg" sx={{ mt: 6, mb: 8 }}>
         <Zoom in={isLoaded} style={{ transitionDelay: '100ms' }}>
           <Paper elevation={0} ref={heroRef} sx={styles.heroContainer}>
-            {/* Enhanced floating background elements with 6 bubbles and animation delay */}
+            {/* Enhanced floating background elements with 6 bubbles that float upward */}
             {floatingBubbles.map((bubble, i) => (
               <Box
                 key={i}
@@ -391,7 +391,7 @@ const Home = () => {
                   ...styles.floatingElement,
                   width: bubble.size,
                   height: bubble.size,
-                  top: bubble.top,
+                  bottom: 0,
                   left: bubble.left,
                   animationDuration: bubble.animationDuration,
                   animationDelay: bubble.animationDelay,

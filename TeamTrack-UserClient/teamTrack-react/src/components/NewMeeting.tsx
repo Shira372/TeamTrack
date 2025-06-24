@@ -161,7 +161,8 @@ const NewMeeting = () => {
               fullWidth
               {...register("SummaryLink", {
                 pattern: {
-                  value: /^(https?:\/\/)?([\w.-]+)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/,
+                  // Regex פשוט יותר לבדיקה בסיסית של URL
+                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/,
                   message: "כתובת URL לא תקינה",
                 },
               })}

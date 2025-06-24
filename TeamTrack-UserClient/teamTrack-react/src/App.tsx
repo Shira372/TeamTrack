@@ -20,7 +20,6 @@ const App = () => {
   const path = location.pathname.toLowerCase();
   const isAuthRoute = ["/login", "/signup"].includes(path);
 
-  // אם מדובר בעמוד התחברות/הרשמה, נציג רק את הטופס עצמו בלי עטיפות כלליות
   if (isAuthRoute) {
     return (
       <Routes>
@@ -30,7 +29,6 @@ const App = () => {
     );
   }
 
-  // עטיפה כללית לכל שאר המסכים
   return (
     <div className="flex flex-col min-h-screen" dir="rtl">
       {user && <Navbar />}
@@ -40,7 +38,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/meetings" element={user ? <Meetings /> : <Navigate to="/login" />} />
-          <Route path="/meetingDetail/:id" element={user ? <MeetingDetail /> : <Navigate to="/login" />} />
+          <Route path="/meetings/:id" element={user ? <MeetingDetail /> : <Navigate to="/login" />} />
           <Route path="/newMeeting" element={user ? <NewMeeting /> : <Navigate to="/login" />} />
           <Route path="/uploadFile" element={user ? <UploadFile /> : <Navigate to="/login" />} />
           <Route path="/keypoints" element={user ? <KeyPointsProcessing /> : <Navigate to="/login" />} />
