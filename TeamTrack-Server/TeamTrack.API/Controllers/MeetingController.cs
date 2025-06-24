@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TeamTrack.Core.Entities;
 using TeamTrack.Core.IServices;
-using System.Threading.Tasks;
 using TeamTrack.API.Models;
-using AutoMapper;
 using TeamTrack.Core.DTOs;
+using AutoMapper;
 
 namespace TeamTrack.API.Controllers
 {
@@ -13,17 +12,22 @@ namespace TeamTrack.API.Controllers
     public class MeetingsController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
-        private readonly IUserService _userService; // להוסיף שירות משתמשים
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogger<MeetingsController> _logger;
 
-        public MeetingsController(IMeetingService meetingService, IUserService userService, IMapper mapper)
+        public MeetingsController(
+            IMeetingService meetingService,
+            IUserService userService,
+            IMapper mapper,
+            ILogger<MeetingsController> logger)
         {
             _meetingService = meetingService;
             _userService = userService;
             _mapper = mapper;
+            _logger = logger;
         }
-        
-        // GET: api/Meetings
+
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -32,56 +36,63 @@ namespace TeamTrack.API.Controllers
             return Ok(meetingsDTO);
         }
 
-        // GET api/Meetings/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
             var meeting = await _meetingService.GetById(id);
-            var meetingDTO = _mapper.Map<MeetingDTO>(meeting);
             if (meeting == null)
-            {
                 return NotFound();
-            }
+
+            var meetingDTO = _mapper.Map<MeetingDTO>(meeting);
             return Ok(meetingDTO);
         }
 
-        // POST api/Meetings
         [HttpPost]
-        public async Task<IActionResult> AddMeeting([FromBody] MeetingPostModel meeting)
+        public async Task<ActionResult> Post([FromBody] MeetingPostModel meetingModel)
         {
-            var meetingToAdd=new Meeting() { MeetingName=meeting.MeetingName, CreatedByUserId =meeting.CreatedByUserId,TranscriptionLink =meeting.TranscriptionLink, SummaryLink =meeting.SummaryLink };
-            // ודא שה- CreatedByUserId שנשלח מציין משתמש קיים במסד הנתונים
-            var user = await _userService.GetById(meetingToAdd.CreatedByUserId ?? 0);
-
-            if (user == null)
+            try
             {
-                // החזר שגיאה אם המשתמש לא קיים
-                return BadRequest("המשתמש לא קיים במסד הנתונים.");
-            }
+                var user = await _userService.GetById(meetingModel.CreatedByUserId ?? 0);
+                if (user == null)
+                    return BadRequest("המשתמש לא קיים במסד הנתונים.");
 
-            // אם המשתמש קיים, המשך להוסיף את הישיבה
-            var addedMeeting = await _meetingService.AddAsync(meetingToAdd);
-            return CreatedAtAction(nameof(Get), new { id = addedMeeting.Id }, addedMeeting);
+                // ✅ המרה ידנית של MeetingPostModel ל-Meeting
+                var meeting = new Meeting
+                {
+                    MeetingName = meetingModel.MeetingName,
+                    CreatedByUserId = meetingModel.CreatedByUserId,
+                    TranscriptionLink = meetingModel.TranscriptionLink,
+                    SummaryLink = meetingModel.SummaryLink
+                };
+
+                var added = await _meetingService.AddAsync(meeting);
+                return CreatedAtAction(nameof(Get), new { id = added.Id }, added);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "שגיאה ביצירת פגישה");
+                return StatusCode(500, "שגיאה פנימית בשרת");
+            }
         }
 
-        // PUT api/Meetings/5
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Meeting meeting)
         {
-            var updatedMeeting = await _meetingService.UpdateAsync(meeting);
-            if (updatedMeeting == null)
-            {
-                return NotFound();
-            }
-            return Ok(updatedMeeting);
+            var updated = await _meetingService.UpdateAsync(meeting);
+            if (updated == null)
+                return NotFound("הפגישה לא נמצאה");
+
+            return Ok(updated);
         }
 
-        // DELETE api/Meetings/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _meetingService.DeleteAsync(id);
-            return NoContent(); // החזרת תשובה ריקה לאחר מחיקה מוצלחת
+            var deleted = await _meetingService.DeleteAsync(id);
+            if (!deleted)
+                return NotFound("הפגישה לא קיימת");
+
+            return Ok();
         }
     }
 }

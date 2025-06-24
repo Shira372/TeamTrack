@@ -4,10 +4,10 @@ namespace TeamTrack.Core.IRepositories
 {
     public interface IMeetingRepository
     {
-        Task<List<Meeting>> GetAllAsync();    // שינוי ל-GetAllAsync
-        Task<Meeting?> GetByIdAsync(int id);  // שינוי ל-GetByIdAsync
-        Task<Meeting> AddAsync(Meeting meeting);  // שינוי ל-AddAsync
-        Task<Meeting> UpdateAsync(Meeting meeting); // שינוי ל-UpdateAsync
-        Task DeleteAsync(int id);  // שינוי ל-DeleteAsync
+        Task<List<Meeting>> GetAllAsync();
+        Task<Meeting?> GetByIdAsync(int id);
+        Task<Meeting> AddAsync(Meeting meeting);
+        Task<Meeting> UpdateAsync(Meeting meeting);
+        Task DeleteAsync(int id);
     }
 }

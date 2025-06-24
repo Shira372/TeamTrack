@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using TeamTrack.Core.DTOs;
 using TeamTrack.Core.Entities;
 
@@ -14,7 +9,7 @@ namespace TeamTrack.Core
     {
         public MappingProfile()
         {
-            CreateMap<User,UserDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Meeting, MeetingDTO>().ReverseMap();
         }
     }

@@ -5,7 +5,7 @@ using TeamTrack.Core.IServices;
 public class MeetingService : IMeetingService
 {
     private readonly IRepositoryManager _repositoryManager;
-    private readonly IUserService _userService; // להוסיף את שירות המשתמש
+    private readonly IUserService _userService;
 
     public MeetingService(IRepositoryManager repositoryManager, IUserService userService)
     {
@@ -25,27 +25,31 @@ public class MeetingService : IMeetingService
 
     public async Task<Meeting> AddAsync(Meeting meeting)
     {
-        // וודא שהמשתמש קיים לפני יצירת הישיבה
-        var user = await _userService.GetById(meeting.CreatedByUserId ?? 0); // אם CreatedByUserId הוא null או לא תקין, השתמש ב-0
+        var user = await _userService.GetById(meeting.CreatedByUserId ?? 0);
         if (user == null)
-        {
             throw new ArgumentException("המשתמש לא קיים במסד הנתונים.");
-        }
 
-        // אם המשתמש קיים, אז הוסף את הישיבה
-        var addedMeeting = await _repositoryManager.MeetingRepository.AddAsync(meeting);
-        return addedMeeting; 
+        var added = await _repositoryManager.MeetingRepository.AddAsync(meeting);
+        await _repositoryManager.SaveAsync();
+        return added;
     }
 
-    public async Task<Meeting> UpdateAsync(Meeting meeting)
+    public async Task<Meeting?> UpdateAsync(Meeting meeting)
     {
-        var updatedMeeting = await _repositoryManager.MeetingRepository.UpdateAsync(meeting);
-        return updatedMeeting; 
+        var updated = await _repositoryManager.MeetingRepository.UpdateAsync(meeting);
+        if (updated == null) return null;
+
+        await _repositoryManager.SaveAsync();
+        return updated;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
+        var meeting = await _repositoryManager.MeetingRepository.GetByIdAsync(id);
+        if (meeting == null) return false;
+
         await _repositoryManager.MeetingRepository.DeleteAsync(id);
-        
+        await _repositoryManager.SaveAsync();
+        return true;
     }
 }

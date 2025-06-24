@@ -62,11 +62,11 @@
           "dependencies": {
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
-              "version": "[3.7.300, )"
+              "version": "[3.7.1, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.7.100.13, )"
+              "version": "[3.7.101, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -84,7 +84,7 @@
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
-              "version": "[9.0.0-preview.3.24172.9, )"
+              "version": "[9.0.0, )"
             },
             "OpenAI": {
               "target": "Package",
@@ -336,11 +336,11 @@
           "dependencies": {
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
-              "version": "[3.7.0.2, )"
+              "version": "[3.7.1, )"
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.7.100.13, )"
+              "version": "[3.7.101, )"
             },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
@@ -348,15 +348,15 @@
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[9.0.0-preview.3.24172.9, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[9.0.0-preview.3.24172.9, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
-              "version": "[9.0.0-preview.3.24172.9, )"
+              "version": "[9.0.0, )"
             }
           },
           "imports": [

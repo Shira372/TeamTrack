@@ -12,6 +12,7 @@ namespace TeamTrack.Core.Entities
         public int Id { get; set; } // מזהה ישיבה
 
         public string? MeetingName { get; set; } // שם הישיבה
+
         public User? CreatedByUser { get; set; } // הקשר למשתמש שיצר את הישיבה
 
         public int? CreatedByUserId { get; set; } // מזהה המשתמש שיצר את הישיבה

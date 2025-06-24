@@ -4,10 +4,10 @@ namespace TeamTrack.Core.IServices
 {
     public interface IMeetingService
     {
-        Task<List<Meeting>> GetList();  // שינוי ל-Task<List<Meeting>>
-        Task<Meeting?> GetById(int id); // שינוי ל-Task<Meeting?>
-        Task<Meeting> AddAsync(Meeting meeting); // שינוי ל-Task<Meeting>
-        Task<Meeting> UpdateAsync(Meeting meeting); // שינוי ל-Task<Meeting>
-        Task DeleteAsync(int id); // שינוי ל-Task
+        Task<List<Meeting>> GetList();
+        Task<Meeting?> GetById(int id);
+        Task<Meeting> AddAsync(Meeting meeting);
+        Task<Meeting?> UpdateAsync(Meeting meeting);
+        Task<bool> DeleteAsync(int id); // מתוקן להחזרת bool – כדי לדעת אם נמחק
     }
 }
