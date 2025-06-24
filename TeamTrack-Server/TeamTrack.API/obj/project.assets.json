@@ -1537,7 +1537,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
-          "AWSSDK.Extensions.NETCore.Setup": "3.7.300",
+          "AWSSDK.Extensions.NETCore.Setup": "3.7.0.2",
           "AWSSDK.S3": "3.7.100.13",
           "Microsoft.AspNetCore.Http.Abstractions": "2.3.0",
           "Microsoft.Extensions.Configuration": "9.0.0-preview.3.24172.9",

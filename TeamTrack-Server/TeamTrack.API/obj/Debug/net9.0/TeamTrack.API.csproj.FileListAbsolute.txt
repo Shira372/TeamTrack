@@ -128,3 +128,4 @@ C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamT
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrack.API.pdb
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\TeamTrack.API.genruntimeconfig.cache
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\ref\TeamTrack.API.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

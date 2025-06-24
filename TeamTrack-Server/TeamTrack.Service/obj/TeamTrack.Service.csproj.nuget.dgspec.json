@@ -131,7 +131,7 @@
           "dependencies": {
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
-              "version": "[3.7.300, )"
+              "version": "[3.7.0.2, )"
             },
             "AWSSDK.S3": {
               "target": "Package",

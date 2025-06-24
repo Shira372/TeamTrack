@@ -14,7 +14,6 @@ import {
   Paper,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   Divider,
   Tooltip,
@@ -66,7 +65,12 @@ const KeyPointsProcessing = () => {
     }
   }, []);
 
-  // הסרתי את הקריאה האוטומטית לעיבוד כאן כדי שתפעיל ידנית
+  useEffect(() => {
+    const token = localStorage.getItem("jwt_token");
+    if (s3Key && token) {
+      handleProcess(s3Key, token);
+    }
+  }, [s3Key]);
 
   const handleProcess = async (key: string, token: string) => {
     setProcessing(true);
@@ -110,27 +114,9 @@ const KeyPointsProcessing = () => {
     }
   };
 
-  const onClickProcess = () => {
-    const token = localStorage.getItem("jwt_token");
-    if (!s3Key) {
-      setError("אין מפתח קובץ לעיבוד");
-      return;
-    }
-    if (!token) {
-      setError("אנא התחבר כדי להמשיך");
-      return;
-    }
-    handleProcess(s3Key, token);
-  };
-
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
-      >
+      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
         <Container>
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -154,31 +140,13 @@ const KeyPointsProcessing = () => {
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Button
-                  component={Link}
-                  to="/login"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   התחברות
                 </Button>
-                <Button
-                  component={Link}
-                  to="/signup"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   הרשמה
                 </Button>
-                <Button
-                  component={Link}
-                  to="/"
-                  variant="outlined"
-                  color="primary"
-                  sx={{ borderRadius: 2 }}
-                >
+                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   דף הבית
                 </Button>
               </Box>
@@ -211,28 +179,6 @@ const KeyPointsProcessing = () => {
           >
             עיבוד נקודות מפתח
           </Typography>
-
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            size="large"
-            onClick={onClickProcess}
-            disabled={processing || !s3Key}
-            sx={{
-              py: 1.5,
-              borderRadius: 2,
-              background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
-              "&:hover": {
-                background: "linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)",
-                transform: "translateY(-2px)",
-                transition: "all 0.3s",
-              },
-              mb: 3,
-            }}
-          >
-            {processing ? "מעבד..." : "התחל עיבוד"}
-          </Button>
 
           {processing && (
             <Box sx={{ width: "100%", mt: 2 }}>
@@ -278,39 +224,27 @@ const KeyPointsProcessing = () => {
             <List dense sx={{ maxHeight: 300, overflowY: "auto" }}>
               {history.map(({ s3Key, result, timestamp }, index) => (
                 <React.Fragment key={timestamp + index}>
-                  <ListItem disablePadding>
-                    <ListItemButton
-                      onClick={() => {
-                        // פעולה בלחיצה
-                      }}
-                      alignItems="flex-start"
-                    >
-                      <ListItemText
-                        primary={
-                          <>
-                            <Typography component="span" fontWeight="bold">
-                              {s3Key}
-                            </Typography>{" "}
-                            -{" "}
-                            <Tooltip title={new Date(timestamp).toLocaleString()}>
-                              <Typography
-                                component="span"
-                                color="text.secondary"
-                                sx={{ cursor: "default" }}
-                                variant="body2"
-                              >
-                                {new Date(timestamp).toLocaleDateString()}
-                              </Typography>
-                            </Tooltip>
-                          </>
-                        }
-                        secondary={
-                          <Typography sx={{ whiteSpace: "pre-line", mt: 0.5 }} variant="body2" color="text.primary">
-                            {result}
-                          </Typography>
-                        }
-                      />
-                    </ListItemButton>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText
+                      primary={
+                        <>
+                          <Typography component="span" fontWeight="bold">
+                            {s3Key}
+                          </Typography>{" "}
+                          -{" "}
+                          <Tooltip title={new Date(timestamp).toLocaleString()}>
+                            <Typography component="span" color="text.secondary" sx={{ cursor: "default" }} variant="body2">
+                              {new Date(timestamp).toLocaleDateString()}
+                            </Typography>
+                          </Tooltip>
+                        </>
+                      }
+                      secondary={
+                        <Typography sx={{ whiteSpace: "pre-line", mt: 0.5 }} variant="body2" color="text.primary">
+                          {result}
+                        </Typography>
+                      }
+                    />
                   </ListItem>
                   {index < history.length - 1 && <Divider component="li" />}
                 </React.Fragment>

@@ -13,13 +13,15 @@ namespace TeamTrack.Service
 {
     public class S3Service : IS3Service
     {
-        private readonly IAmazonS3 _s3Client;
+        private readonly string _accessKey;
+        private readonly string _secretKey;
         private readonly string _bucketName;
         private readonly string _region;
 
-        public S3Service(IAmazonS3 s3Client, IConfiguration configuration)
+        public S3Service(IConfiguration configuration)
         {
-            _s3Client = s3Client;
+            _accessKey = configuration["AWS:AccessKey"];
+            _secretKey = configuration["AWS:SecretKey"];
             _bucketName = configuration["AWS:BucketName"];
             _region = configuration["AWS:Region"];
         }
@@ -30,6 +32,7 @@ namespace TeamTrack.Service
                 throw new ArgumentException("Invalid file");
 
             using var stream = file.OpenReadStream();
+            var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
 
             var uploadRequest = new TransferUtilityUploadRequest
             {
@@ -39,7 +42,7 @@ namespace TeamTrack.Service
                 ContentType = file.ContentType
             };
 
-            var fileTransferUtility = new TransferUtility(_s3Client);
+            var fileTransferUtility = new TransferUtility(client);
             await fileTransferUtility.UploadAsync(uploadRequest);
 
             return $"https://{_bucketName}.s3.{_region}.amazonaws.com/{file.FileName}";
@@ -47,12 +50,13 @@ namespace TeamTrack.Service
 
         public async Task<List<string>> ListFilesAsync()
         {
+            var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
             var request = new ListObjectsV2Request
             {
                 BucketName = _bucketName
             };
 
-            var response = await _s3Client.ListObjectsV2Async(request);
+            var response = await client.ListObjectsV2Async(request);
             var urls = new List<string>();
 
             foreach (var entry in response.S3Objects)
