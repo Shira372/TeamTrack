@@ -20,7 +20,7 @@ import {
   Link,
   Stack,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import GroupsIcon from "@mui/icons-material/Groups";
 import MenuIcon from "@mui/icons-material/Menu";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -48,7 +48,9 @@ const KeyPointsProcessing = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
+  // טען היסטוריה ו-s3Key מ-localStorage
   useEffect(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (stored) {
@@ -60,6 +62,7 @@ const KeyPointsProcessing = () => {
     if (storedKey) setS3Key(storedKey);
   }, []);
 
+  // שמור היסטוריה ב-localStorage
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
@@ -99,6 +102,12 @@ const KeyPointsProcessing = () => {
 
       setResult(keyPoints);
       setSummaryLink(link);
+
+      // שמירת ה-summaryLink ב-localStorage
+      localStorage.setItem("summaryLink", link);
+
+      // ניווט אוטומטי לעמוד יצירת פגישה חדשה
+      navigate("/new-meeting");
 
       const newItem: HistoryItem = {
         s3Key: s3Key.trim(),
@@ -239,13 +248,7 @@ const KeyPointsProcessing = () => {
               <HistoryIcon /> היסטוריית עיבודים אחרונים
             </Typography>
             {history.length > 0 && (
-              <Button
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={handleClearHistory}
-                size="small"
-              >
+              <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={handleClearHistory} size="small">
                 מחק הכול
               </Button>
             )}
