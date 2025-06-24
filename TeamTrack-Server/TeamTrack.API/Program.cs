@@ -1,4 +1,6 @@
-﻿using Amazon.S3;
+﻿using Amazon;
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -111,11 +113,24 @@ builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
 
 builder.Services.AddHttpClient();
-builder.Services.AddAWSService<IAmazonS3>();
+
+// --- הגדרת AWS S3 Client עם Credentials מפורשים ---
+var awsAccessKey = builder.Configuration["AWS:AccessKey"];
+var awsSecretKey = builder.Configuration["AWS:SecretKey"];
+var awsRegion = builder.Configuration["AWS:Region"];
+
+var awsCredentials = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+var awsConfig = new AmazonS3Config
+{
+    RegionEndpoint = RegionEndpoint.GetBySystemName(awsRegion)
+};
+
+var s3Client = new AmazonS3Client(awsCredentials, awsConfig);
+builder.Services.AddSingleton<IAmazonS3>(s3Client);
 
 var app = builder.Build();
 
-// 🔽 חדש - מוסיף טיפול ידני בבקשות OPTIONS
+// טיפול ידני בבקשות OPTIONS
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
@@ -131,7 +146,7 @@ app.Use(async (context, next) =>
     await next();
 });
 
-// 🔽 סדר נכון של Middleware
+// סדר Middleware נכון
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
