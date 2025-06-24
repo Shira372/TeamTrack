@@ -77,8 +77,17 @@ const NewMeeting = () => {
         SummaryLink: data.SummaryLink || "",
       };
 
-      await axios.post(`${apiUrl}/api/meetings`, payload);
-      navigate("/meetings");
+      const response = await axios.post(`${apiUrl}/api/meetings`, payload);
+
+      // נווט לעמוד הפרטים של הפגישה החדשה עם ה-ID שהתקבל
+      const createdMeeting = response.data;
+      const meetingId = createdMeeting.id || createdMeeting.Id; // תלוי איך השדה נקרא בשרת
+      if (meetingId) {
+        navigate(`/meetings/${meetingId}`);
+      } else {
+        // fallback - אם אין ID, חזור לרשימת הפגישות
+        navigate("/meetings");
+      }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         localStorage.removeItem("jwt_token");
@@ -161,7 +170,6 @@ const NewMeeting = () => {
               fullWidth
               {...register("SummaryLink", {
                 pattern: {
-                  // Regex פשוט יותר לבדיקה בסיסית של URL
                   value: /^https?:\/\/[^\s$.?#].[^\s]*$/,
                   message: "כתובת URL לא תקינה",
                 },
