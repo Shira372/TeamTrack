@@ -18,6 +18,8 @@ interface Meeting {
   Id: string | number;
   MeetingName: string;
   CreatedAt: string;
+  UpdatedAt?: string;
+  CreatedByUserFullName?: string; // שם מלא של היוצר
 }
 
 const Meetings = () => {
@@ -154,13 +156,31 @@ const Meetings = () => {
                 {meeting.MeetingName}
               </Typography>
 
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                תאריך יצירה:{" "}
                 {new Date(meeting.CreatedAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
                   day: "numeric"
                 })}
               </Typography>
+
+              {meeting.UpdatedAt && (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  עדכון אחרון:{" "}
+                  {new Date(meeting.UpdatedAt).toLocaleDateString("he-IL", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  })}
+                </Typography>
+              )}
+
+              {meeting.CreatedByUserFullName && (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  נוצר על ידי: {meeting.CreatedByUserFullName}
+                </Typography>
+              )}
 
               <Button
                 variant="outlined"

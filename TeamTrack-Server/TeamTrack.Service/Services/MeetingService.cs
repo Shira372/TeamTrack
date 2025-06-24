@@ -15,20 +15,24 @@ public class MeetingService : IMeetingService
 
     public async Task<List<Meeting>> GetList()
     {
+        // מחזיר את כל הישיבות כולל המשתתפים
         return await _repositoryManager.MeetingRepository.GetAllAsync();
     }
 
     public async Task<Meeting?> GetById(int id)
     {
+        // מחפש ישיבה לפי מזהה כולל המשתתפים
         return await _repositoryManager.MeetingRepository.GetByIdAsync(id);
     }
 
     public async Task<Meeting> AddAsync(Meeting meeting)
     {
+        // בודק אם היוצר קיים במסד
         var user = await _userService.GetById(meeting.CreatedByUserId ?? 0);
         if (user == null)
             throw new ArgumentException("המשתמש לא קיים במסד הנתונים.");
 
+        // מוסיף את הישיבה למסד הנתונים
         var added = await _repositoryManager.MeetingRepository.AddAsync(meeting);
         await _repositoryManager.SaveAsync();
         return added;
@@ -36,9 +40,16 @@ public class MeetingService : IMeetingService
 
     public async Task<Meeting?> UpdateAsync(Meeting meeting)
     {
-        var updated = await _repositoryManager.MeetingRepository.UpdateAsync(meeting);
-        if (updated == null) return null;
+        var existing = await _repositoryManager.MeetingRepository.GetByIdAsync(meeting.Id);
+        if (existing == null) return null;
 
+        // מעדכן שדות קיימים בלבד כדי לשמור על שלמות הנתונים
+        existing.MeetingName = meeting.MeetingName;
+        existing.SummaryLink = meeting.SummaryLink;
+        existing.TranscriptionLink = meeting.TranscriptionLink;
+        existing.UpdatedAt = DateTime.UtcNow;
+
+        var updated = await _repositoryManager.MeetingRepository.UpdateAsync(existing);
         await _repositoryManager.SaveAsync();
         return updated;
     }

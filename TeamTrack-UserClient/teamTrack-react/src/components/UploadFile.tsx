@@ -12,6 +12,7 @@ import {
   useTheme,
   useMediaQuery,
   LinearProgress,
+  Snackbar,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -21,6 +22,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import MenuIcon from "@mui/icons-material/Menu";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const UploadFile = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -32,6 +34,8 @@ const UploadFile = () => {
     s3Key?: string;
   } | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [copySuccess, setCopySuccess] = useState(false);
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const xhrRef = useRef<XMLHttpRequest | null>(null);
@@ -142,9 +146,22 @@ const UploadFile = () => {
     fileInputRef.current?.click();
   };
 
+  // העתקת הקישור ללוח
+  const handleCopyLink = () => {
+    if (uploadResponse?.fileUrl) {
+      navigator.clipboard.writeText(uploadResponse.fileUrl);
+      setCopySuccess(true);
+    }
+  };
+
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
+      <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
+      >
         <Container>
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -167,13 +184,34 @@ const UploadFile = () => {
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: 1 }}>
-                <Button component={Link} to="/login" variant="outlined" color="primary" startIcon={<LoginIcon />} sx={{ borderRadius: 2 }}>
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<LoginIcon />}
+                  sx={{ borderRadius: 2 }}
+                >
                   התחברות
                 </Button>
-                <Button component={Link} to="/signup" variant="outlined" color="primary" startIcon={<HowToRegIcon />} sx={{ borderRadius: 2 }}>
+                <Button
+                  component={Link}
+                  to="/signup"
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<HowToRegIcon />}
+                  sx={{ borderRadius: 2 }}
+                >
                   הרשמה
                 </Button>
-                <Button component={Link} to="/" variant="outlined" color="primary" startIcon={<GroupsIcon />} sx={{ borderRadius: 2 }}>
+                <Button
+                  component={Link}
+                  to="/"
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<GroupsIcon />}
+                  sx={{ borderRadius: 2 }}
+                >
                   דף הבית
                 </Button>
               </Box>
@@ -244,13 +282,20 @@ const UploadFile = () => {
             onClick={openFileDialog}
             role="button"
             tabIndex={0}
-            onKeyDown={e => {
+            onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 openFileDialog();
               }
             }}
           >
-            <input id="file-input" type="file" accept=".txt" onChange={fileSelectedHandler} style={{ display: "none" }} ref={fileInputRef} />
+            <input
+              id="file-input"
+              type="file"
+              accept=".txt"
+              onChange={fileSelectedHandler}
+              style={{ display: "none" }}
+              ref={fileInputRef}
+            />
             <CloudUploadIcon sx={{ fontSize: 48, color: "#3f51b5", mb: 1 }} />
             <Typography variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
               {selectedFile ? selectedFile.name : "גרור קובץ לכאן או לחץ לבחירה"}
@@ -295,13 +340,37 @@ const UploadFile = () => {
 
           {uploadResponse && (
             <Box sx={{ mt: 3, textAlign: "center" }}>
-              <Alert severity={uploadResponse.success ? "success" : "error"} icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />} sx={{ borderRadius: 2, mb: 2 }}>
+              <Alert
+                severity={uploadResponse.success ? "success" : "error"}
+                icon={uploadResponse.success ? <CheckCircleIcon /> : <ErrorIcon />}
+                sx={{ borderRadius: 2, mb: 2 }}
+              >
                 {uploadResponse.message}
               </Alert>
+
+              {/* כפתור העתקת קישור */}
+              {uploadResponse.success && uploadResponse.fileUrl && (
+                <Button
+                  variant="outlined"
+                  startIcon={<ContentCopyIcon />}
+                  onClick={handleCopyLink}
+                  sx={{ borderRadius: 2 }}
+                >
+                  העתק קישור לקובץ
+                </Button>
+              )}
             </Box>
           )}
         </Box>
       </Container>
+
+      <Snackbar
+        open={copySuccess}
+        autoHideDuration={2000}
+        onClose={() => setCopySuccess(false)}
+        message="הקישור הועתק ללוח!"
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
     </Box>
   );
 };

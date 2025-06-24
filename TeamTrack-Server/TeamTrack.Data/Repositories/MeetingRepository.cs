@@ -15,15 +15,15 @@ public class MeetingRepository : IMeetingRepository
     public async Task<List<Meeting>> GetAllAsync()
     {
         return await _context.Meetings
-            .Include(m => m.Users)       // כולל את המשתמשים בישיבה (קשר רבים-לרבים)
-            .AsNoTracking()              // בלי לעקוב אחרי האובייקטים (לקריאה בלבד, משפר ביצועים)
+            .Include(m => m.Users) // כולל את המשתתפים
+            .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<Meeting?> GetByIdAsync(int id)
     {
         return await _context.Meetings
-            .Include(m => m.Users)       // כולל את המשתמשים בישיבה
+            .Include(m => m.Users) // כולל את המשתתפים
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
@@ -39,8 +39,13 @@ public class MeetingRepository : IMeetingRepository
         var existing = await _context.Meetings.FirstOrDefaultAsync(x => x.Id == meeting.Id);
         if (existing == null) return null;
 
-        // עדכון הערכים הקיימים בערך החדש
-        _context.Entry(existing).CurrentValues.SetValues(meeting);
+        // עדכון שדות ספציפיים בלבד
+        existing.MeetingName = meeting.MeetingName;
+        existing.TranscriptionLink = meeting.TranscriptionLink;
+        existing.SummaryLink = meeting.SummaryLink;
+        existing.UpdatedAt = DateTime.UtcNow;
+
+        // לא קורא ל-SaveChanges כאן - השמירה תתבצע בשירות
         return existing;
     }
 

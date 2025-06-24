@@ -31,13 +31,15 @@ namespace TeamTrack.Service
             if (file == null || file.Length == 0)
                 throw new ArgumentException("Invalid file");
 
+            var key = $"uploads/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
             using var stream = file.OpenReadStream();
             var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
 
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = stream,
-                Key = file.FileName,
+                Key = key,
                 BucketName = _bucketName,
                 ContentType = file.ContentType
             };
@@ -45,7 +47,14 @@ namespace TeamTrack.Service
             var fileTransferUtility = new TransferUtility(client);
             await fileTransferUtility.UploadAsync(uploadRequest);
 
-            return $"https://{_bucketName}.s3.{_region}.amazonaws.com/{file.FileName}";
+            var urlRequest = new GetPreSignedUrlRequest
+            {
+                BucketName = _bucketName,
+                Key = key,
+                Expires = DateTime.UtcNow.AddHours(1)
+            };
+
+            return client.GetPreSignedURL(urlRequest);
         }
 
         public async Task<List<string>> ListFilesAsync()

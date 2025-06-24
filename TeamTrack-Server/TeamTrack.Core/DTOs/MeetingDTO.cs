@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamTrack.Core.Entities;
-
-namespace TeamTrack.Core.DTOs
+﻿namespace TeamTrack.Core.DTOs
 {
     public class MeetingDTO
     {
-        public int Id { get; set; } // מזהה ישיבה
+        public int Id { get; set; }
+        public string? MeetingName { get; set; }
 
-        public string? MeetingName { get; set; } // שם הישיבה
+        public int? CreatedByUserId { get; set; }
 
-        public int? CreatedByUserId { get; set; } // מזהה המשתמש שיצר את הישיבה
+        public string? CreatedByUserFullName { get; set; }
+        public string? TranscriptionLink { get; set; }
 
-        public string? TranscriptionLink { get; set; } // קישור לתמלול בענן
+        public string? SummaryLink { get; set; }
 
-        public string? SummaryLink { get; set; } // קישור לסיכום בענן
+        public DateTime? CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+
+        public List<UserDTO>? Participants { get; set; } // המשתתפים בפגישה
     }
 }

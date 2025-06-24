@@ -22,7 +22,6 @@ namespace TeamTrack.API.Controllers
             _logger = logger;
         }
 
-        // העלאת קובץ ל־S3
         [HttpPost("upload")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadFile([FromForm] FileUploadRequest request)
@@ -34,15 +33,9 @@ namespace TeamTrack.API.Controllers
 
             try
             {
-                var s3Url = await _s3Service.UploadFileAsync(request.File);
+                var fileUrl = await _s3Service.UploadFileAsync(request.File);
 
-                var s3Key = s3Url.Split(".com/")[1]; 
-
-                return Ok(new
-                {
-                    fileUrl = s3Url,
-                    s3Key = s3Key 
-                });
+                return Ok(new { fileUrl }); // מחזיר רק קישור זמני חתום מראש
             }
             catch (Exception ex)
             {
@@ -54,7 +47,6 @@ namespace TeamTrack.API.Controllers
             }
         }
 
-        // שליפת כל הקבצים מ־S3
         [HttpGet("files")]
         public async Task<IActionResult> GetFiles()
         {

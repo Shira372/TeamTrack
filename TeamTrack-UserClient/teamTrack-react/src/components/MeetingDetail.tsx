@@ -26,12 +26,14 @@ import ArticleIcon from '@mui/icons-material/Article';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 interface Meeting {
-  Id: number | string;
-  MeetingName: string;
-  CreatedAt: string;
-  CreatedByUserId: string;
-  TranscriptionLink?: string;
-  SummaryLink?: string;
+  id: number | string;
+  meetingName: string;
+  createdAt: string;
+  updatedAt?: string;
+  createdByUserId: string;
+  createdByUserFullName?: string;
+  transcriptionLink?: string;
+  summaryLink?: string;
 }
 
 const MeetingDetail = () => {
@@ -197,9 +199,7 @@ const MeetingDetail = () => {
             boxShadow: "0 8px 20px rgba(0, 0, 0, 0.05)"
           }}
         >
-          <Box
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}
-          >
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
             <Box
               sx={{
                 display: "flex",
@@ -220,15 +220,14 @@ const MeetingDetail = () => {
               fontWeight="bold"
               sx={{
                 mb: 2,
-                background:
-                  "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 textShadow: "0px 2px 5px rgba(0,0,0,0.05)"
               }}
               align="center"
             >
-              {meeting.MeetingName}
+              {meeting.meetingName}
             </Typography>
           </Box>
 
@@ -237,12 +236,9 @@ const MeetingDetail = () => {
           <Box sx={{ mb: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 2, dir: "rtl" }}>
               <CalendarTodayIcon sx={{ mr: 1, color: "#3f51b5" }} />
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}
-              >
+              <Typography variant="body1" sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}>
                 תאריך יצירה:{" "}
-                {new Date(meeting.CreatedAt).toLocaleDateString("he-IL", {
+                {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
                   day: "numeric"
@@ -250,13 +246,24 @@ const MeetingDetail = () => {
               </Typography>
             </Box>
 
+            {meeting.updatedAt && (
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2, dir: "rtl" }}>
+                <CalendarTodayIcon sx={{ mr: 1, color: "#3f51b5" }} />
+                <Typography variant="body1" sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}>
+                  עדכון אחרון:{" "}
+                  {new Date(meeting.updatedAt).toLocaleDateString("he-IL", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  })}
+                </Typography>
+              </Box>
+            )}
+
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
               <PersonIcon sx={{ mr: 1, color: "#3f51b5" }} />
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}
-              >
-                נוצר על ידי: {meeting.CreatedByUserId}
+              <Typography variant="body1" sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}>
+                נוצר על ידי: {meeting.createdByUserFullName || meeting.createdByUserId}
               </Typography>
             </Box>
           </Box>
@@ -264,9 +271,9 @@ const MeetingDetail = () => {
           <Divider sx={{ mb: 3 }} />
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {meeting.TranscriptionLink && (
+            {meeting.transcriptionLink && (
               <a
-                href={meeting.TranscriptionLink}
+                href={meeting.transcriptionLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
@@ -276,9 +283,9 @@ const MeetingDetail = () => {
               </a>
             )}
 
-            {meeting.SummaryLink && (
+            {meeting.summaryLink && (
               <a
-                href={meeting.SummaryLink}
+                href={meeting.summaryLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}

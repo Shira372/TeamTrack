@@ -28,6 +28,7 @@ import { useUser } from "../use-Context/userProvider";
 interface NewMeetingFormValues {
   MeetingName: string;
   SummaryLink?: string;
+  TranscriptionLink?: string; // הוספתי פה את השדה החדש
 }
 
 const NewMeeting = () => {
@@ -73,19 +74,18 @@ const NewMeeting = () => {
 
       const payload = {
         MeetingName: data.MeetingName,
-        CreatedByUserId: user.id.toString(),
         SummaryLink: data.SummaryLink || "",
+        TranscriptionLink: data.TranscriptionLink || "",  // שולח גם את הקישור לתמלול
+        // CreatedByUserId לא שולחים – השרת מטפל בזה אוטומטית לפי המשתמש המחובר
       };
 
       const response = await axios.post(`${apiUrl}/api/meetings`, payload);
 
-      // נווט לעמוד הפרטים של הפגישה החדשה עם ה-ID שהתקבל
       const createdMeeting = response.data;
-      const meetingId = createdMeeting.id || createdMeeting.Id; // תלוי איך השדה נקרא בשרת
+      const meetingId = createdMeeting.id || createdMeeting.Id;
       if (meetingId) {
         navigate(`/meetings/${meetingId}`);
       } else {
-        // fallback - אם אין ID, חזור לרשימת הפגישות
         navigate("/meetings");
       }
     } catch (error) {
@@ -162,6 +162,20 @@ const NewMeeting = () => {
               {...register("MeetingName", { required: "שדה חובה" })}
               error={!!errors.MeetingName}
               helperText={errors.MeetingName?.message}
+            />
+
+            <TextField
+              label="קישור לתמלול (אופציונלי)"
+              variant="outlined"
+              fullWidth
+              {...register("TranscriptionLink", {
+                pattern: {
+                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/,
+                  message: "כתובת URL לא תקינה",
+                },
+              })}
+              error={!!errors.TranscriptionLink}
+              helperText={errors.TranscriptionLink?.message}
             />
 
             <TextField

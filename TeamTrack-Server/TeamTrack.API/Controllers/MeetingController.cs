@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TeamTrack.Core.Entities;
 using TeamTrack.Core.IServices;
-using TeamTrack.API.Models;
 using TeamTrack.Core.DTOs;
 using AutoMapper;
+using TeamTrack.API.Models;
 
 namespace TeamTrack.API.Controllers
 {
@@ -32,7 +32,21 @@ namespace TeamTrack.API.Controllers
         public async Task<ActionResult> Get()
         {
             var meetings = await _meetingService.GetList();
-            var meetingsDTO = _mapper.Map<IEnumerable<MeetingDTO>>(meetings);
+
+            var meetingsDTO = new List<MeetingDTO>();
+            foreach (var meeting in meetings)
+            {
+                var dto = _mapper.Map<MeetingDTO>(meeting);
+
+                if (meeting.CreatedByUserId.HasValue)
+                {
+                    var user = await _userService.GetById(meeting.CreatedByUserId.Value);
+                    dto.CreatedByUserFullName = user?.FullName ?? "Unknown";
+                }
+
+                meetingsDTO.Add(dto);
+            }
+
             return Ok(meetingsDTO);
         }
 
@@ -44,6 +58,13 @@ namespace TeamTrack.API.Controllers
                 return NotFound();
 
             var meetingDTO = _mapper.Map<MeetingDTO>(meeting);
+
+            if (meeting.CreatedByUserId.HasValue)
+            {
+                var user = await _userService.GetById(meeting.CreatedByUserId.Value);
+                meetingDTO.CreatedByUserFullName = user?.FullName ?? "Unknown";
+            }
+
             return Ok(meetingDTO);
         }
 
@@ -52,17 +73,21 @@ namespace TeamTrack.API.Controllers
         {
             try
             {
-                var user = await _userService.GetById(meetingModel.CreatedByUserId ?? 0);
+                var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                    return Unauthorized("משתמש לא מזוהה");
+
+                var user = await _userService.GetById(userId);
                 if (user == null)
                     return BadRequest("המשתמש לא קיים במסד הנתונים.");
 
-                // ✅ המרה ידנית של MeetingPostModel ל-Meeting
                 var meeting = new Meeting
                 {
                     MeetingName = meetingModel.MeetingName,
-                    CreatedByUserId = meetingModel.CreatedByUserId,
+                    CreatedByUserId = userId,
                     TranscriptionLink = meetingModel.TranscriptionLink,
-                    SummaryLink = meetingModel.SummaryLink
+                    SummaryLink = meetingModel.SummaryLink,
+                    CreatedAt = DateTime.UtcNow
                 };
 
                 var added = await _meetingService.AddAsync(meeting);
@@ -78,6 +103,9 @@ namespace TeamTrack.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Meeting meeting)
         {
+            if (id != meeting.Id)
+                return BadRequest("ה־ID בפנייה שונה מה־ID של הפגישה");
+
             var updated = await _meetingService.UpdateAsync(meeting);
             if (updated == null)
                 return NotFound("הפגישה לא נמצאה");
