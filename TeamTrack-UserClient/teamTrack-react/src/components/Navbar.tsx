@@ -12,7 +12,7 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  if (!user) return null; // מונע הצגת Navbar אם אין משתמש עדיין
+  if (!user) return null; 
 
   const firstLetter = user.userName?.charAt(0)?.toUpperCase() || '?';
 

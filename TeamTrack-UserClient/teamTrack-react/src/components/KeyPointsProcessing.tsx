@@ -103,11 +103,9 @@ const KeyPointsProcessing = () => {
       setResult(keyPoints);
       setSummaryLink(link);
 
-      // שמירת ה-summaryLink ב-localStorage
-      localStorage.setItem("summaryLink", link);
+      localStorage.setItem("summaryLink", link); 
 
-      // ניווט אוטומטי לעמוד יצירת פגישה חדשה
-      navigate("/new-meeting");
+      navigate("/newMeeting");
 
       const newItem: HistoryItem = {
         s3Key: s3Key.trim(),
