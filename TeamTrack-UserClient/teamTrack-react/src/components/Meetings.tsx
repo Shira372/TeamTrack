@@ -24,7 +24,7 @@ const Meetings = () => {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showButton, setShowButton] = useState(false); 
+  const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,11 +56,12 @@ const Meetings = () => {
         setTimeout(() => setShowButton(true), 300);
       }
     };
+
     fetchMeetings();
   }, [navigate]);
 
   const handleMeetingClick = (meetingId: string | number) => {
-    navigate(`/meeting/${meetingId}`);
+    navigate(`/meetings/${meetingId}`);
   };
 
   const handleCreateNewMeeting = () => {
@@ -124,7 +125,14 @@ const Meetings = () => {
           </Typography>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, justifyContent: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 2,
+            justifyContent: "center"
+          }}
+        >
           {meetings.map((meeting) => (
             <Box
               key={meeting.Id}

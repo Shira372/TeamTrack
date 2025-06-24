@@ -282,8 +282,8 @@ const Home = () => {
       size: 100 + Math.random() * 150,
       top: `${Math.random() * 80}%`,
       left: `${Math.random() * 80}%`,
-      animationDuration: `${8 + Math.random() * 10}s`,
-      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${3 + Math.random() * 4}s`,
+      animationDelay: `${Math.random() * 2}s`,
     }));
   }, []);
 
