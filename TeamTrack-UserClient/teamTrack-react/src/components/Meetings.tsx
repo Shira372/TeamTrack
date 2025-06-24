@@ -37,7 +37,12 @@ const Meetings = () => {
           return;
         }
 
-        const response = await axios.get(`${apiUrl}/api/meetings`);
+        const token = localStorage.getItem("jwt_token");
+        const config = token
+          ? { headers: { Authorization: `Bearer ${token}` } }
+          : {};
+
+        const response = await axios.get(`${apiUrl}/api/meetings`, config);
         setMeetings(response.data);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {

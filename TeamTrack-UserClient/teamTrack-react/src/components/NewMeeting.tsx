@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import {
@@ -42,8 +42,7 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // ✅ הזרקת הטוקן לבקשות axios
-  React.useEffect(() => {
+  useEffect(() => {
     const interceptor = axios.interceptors.request.use((config) => {
       const token = localStorage.getItem("jwt_token");
       if (token && config.url?.startsWith(process.env.REACT_APP_API_URL || "")) {
@@ -75,7 +74,7 @@ const NewMeeting = () => {
       const payload = {
         MeetingName: data.MeetingName,
         CreatedByUserId: user.id.toString(),
-        SummaryLink: data.SummaryLink || "", // משתמשים בערך שהוקלד, לא ב-localStorage
+        SummaryLink: data.SummaryLink || "",
       };
 
       await axios.post(`${apiUrl}/api/meetings`, payload);

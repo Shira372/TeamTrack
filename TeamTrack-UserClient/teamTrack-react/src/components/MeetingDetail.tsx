@@ -26,16 +26,16 @@ import ArticleIcon from '@mui/icons-material/Article';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 interface Meeting {
-  id: string | number;
-  meetingName: string;
-  createdAt: string;
-  createdByUserId: string;
-  transcriptionLink?: string;
-  summaryLink?: string;
+  Id: number | string;
+  MeetingName: string;
+  CreatedAt: string;
+  CreatedByUserId: string;
+  TranscriptionLink?: string;
+  SummaryLink?: string;
 }
 
 const MeetingDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [meeting, setMeeting] = useState<Meeting | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -121,7 +121,6 @@ const MeetingDetail = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      {/* Header */}
       <AppBar
         position="static"
         color="default"
@@ -178,7 +177,6 @@ const MeetingDetail = () => {
         </Container>
       </AppBar>
 
-      {/* Meeting Details */}
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
         {errorMessage && (
           <Paper
@@ -199,7 +197,6 @@ const MeetingDetail = () => {
             boxShadow: "0 8px 20px rgba(0, 0, 0, 0.05)"
           }}
         >
-          {/* Meeting Info */}
           <Box
             sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}
           >
@@ -231,13 +228,12 @@ const MeetingDetail = () => {
               }}
               align="center"
             >
-              {meeting.meetingName}
+              {meeting.MeetingName}
             </Typography>
           </Box>
 
           <Divider sx={{ mb: 3 }} />
 
-          {/* Date and Creator */}
           <Box sx={{ mb: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 2, dir: "rtl" }}>
               <CalendarTodayIcon sx={{ mr: 1, color: "#3f51b5" }} />
@@ -246,7 +242,7 @@ const MeetingDetail = () => {
                 sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}
               >
                 תאריך יצירה:{" "}
-                {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
+                {new Date(meeting.CreatedAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
                   day: "numeric"
@@ -260,18 +256,17 @@ const MeetingDetail = () => {
                 variant="body1"
                 sx={{ fontWeight: 500, ml: 1, color: "#546e7a" }}
               >
-                נוצר על ידי: {meeting.createdByUserId}
+                נוצר על ידי: {meeting.CreatedByUserId}
               </Typography>
             </Box>
           </Box>
 
           <Divider sx={{ mb: 3 }} />
 
-          {/* Links */}
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {meeting.transcriptionLink && (
+            {meeting.TranscriptionLink && (
               <a
-                href={meeting.transcriptionLink}
+                href={meeting.TranscriptionLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
@@ -281,9 +276,9 @@ const MeetingDetail = () => {
               </a>
             )}
 
-            {meeting.summaryLink && (
+            {meeting.SummaryLink && (
               <a
-                href={meeting.summaryLink}
+                href={meeting.SummaryLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
