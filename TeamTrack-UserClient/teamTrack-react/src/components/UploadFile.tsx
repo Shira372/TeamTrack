@@ -38,6 +38,8 @@ const UploadFile = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const fileSelectedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
@@ -57,6 +59,14 @@ const UploadFile = () => {
 
   const fileUploadHandler = () => {
     if (!selectedFile) return;
+
+    if (!apiUrl) {
+      setUploadResponse({
+        message: "שגיאה: כתובת השרת לא מוגדרת.",
+        success: false,
+      });
+      return;
+    }
 
     setUploading(true);
     setUploadProgress(0);
@@ -98,6 +108,9 @@ const UploadFile = () => {
             success: true,
           });
         }
+      } else if (xhr.status === 401) {
+        localStorage.removeItem("jwt_token");
+        navigate("/login");
       } else {
         setUploadResponse({
           message: `שגיאה בהעלאה: ${xhr.statusText || xhr.status}`,
@@ -115,7 +128,7 @@ const UploadFile = () => {
       });
     };
 
-    xhr.open("POST", "https://teamtrack-server.onrender.com/api/fileupload/upload");
+    xhr.open("POST", `${apiUrl}/api/fileupload/upload`);
 
     const token = localStorage.getItem("jwt_token");
     if (token) {
@@ -136,7 +149,15 @@ const UploadFile = () => {
           <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <GroupsIcon sx={{ mr: 1, color: "#3f51b5" }} />
-              <Typography variant="h6" sx={{ fontWeight: 700, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
                 TeamTrack
               </Typography>
             </Box>
@@ -162,12 +183,42 @@ const UploadFile = () => {
       </AppBar>
 
       <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
-        <Box sx={{ p: 4, borderRadius: 3, background: "linear-gradient(to bottom right, #fff, #f5f5f5)", border: "1px solid #e8eaf6", boxShadow: "0 8px 20px rgba(0,0,0,0.05)" }}>
+        <Box
+          sx={{
+            p: 4,
+            borderRadius: 3,
+            background: "linear-gradient(to bottom right, #fff, #f5f5f5)",
+            border: "1px solid #e8eaf6",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
+          }}
+        >
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 2, bgcolor: "rgba(63, 81, 181, 0.05)", borderRadius: "50%", width: 80, height: 80, alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                mb: 2,
+                bgcolor: "rgba(63, 81, 181, 0.05)",
+                borderRadius: "50%",
+                width: 80,
+                height: 80,
+                alignItems: "center",
+              }}
+            >
               <CloudUploadIcon sx={{ fontSize: 40, color: "#3f51b5" }} />
             </Box>
-            <Typography component="h1" variant="h4" fontWeight="bold" sx={{ mb: 2, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }} align="center">
+            <Typography
+              component="h1"
+              variant="h4"
+              fontWeight="bold"
+              sx={{
+                mb: 2,
+                background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+              align="center"
+            >
               TeamTrack
             </Typography>
             <Typography variant="h5" color="#3f51b5" align="center" sx={{ mt: 1, fontWeight: 500 }}>
@@ -180,7 +231,25 @@ const UploadFile = () => {
 
           <Divider sx={{ mb: 3 }} />
 
-          <Box sx={{ border: "2px dashed #3f51b5", borderRadius: 2, p: 3, textAlign: "center", bgcolor: "rgba(63, 81, 181, 0.03)", cursor: "pointer", "&:hover": { bgcolor: "rgba(63, 81, 181, 0.05)", boxShadow: "0 2px 8px rgba(63, 81, 181, 0.15)" } }} onClick={openFileDialog} role="button" tabIndex={0}>
+          <Box
+            sx={{
+              border: "2px dashed #3f51b5",
+              borderRadius: 2,
+              p: 3,
+              textAlign: "center",
+              bgcolor: "rgba(63, 81, 181, 0.03)",
+              cursor: "pointer",
+              "&:hover": { bgcolor: "rgba(63, 81, 181, 0.05)", boxShadow: "0 2px 8px rgba(63, 81, 181, 0.15)" },
+            }}
+            onClick={openFileDialog}
+            role="button"
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === "Enter" || e.key === " ") {
+                openFileDialog();
+              }
+            }}
+          >
             <input id="file-input" type="file" accept=".txt" onChange={fileSelectedHandler} style={{ display: "none" }} ref={fileInputRef} />
             <CloudUploadIcon sx={{ fontSize: 48, color: "#3f51b5", mb: 1 }} />
             <Typography variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
@@ -192,7 +261,25 @@ const UploadFile = () => {
           </Box>
 
           <Box sx={{ mt: 3 }}>
-            <Button variant="contained" color="primary" fullWidth size="large" onClick={fileUploadHandler} disabled={!selectedFile || uploading} startIcon={<CloudUploadIcon />} sx={{ py: 1.5, borderRadius: 2, background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)", "&:hover": { background: "linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)", transform: "translateY(-2px)", transition: "all 0.3s" } }}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              size="large"
+              onClick={fileUploadHandler}
+              disabled={!selectedFile || uploading}
+              startIcon={<CloudUploadIcon />}
+              sx={{
+                py: 1.5,
+                borderRadius: 2,
+                background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                "&:hover": {
+                  background: "linear-gradient(45deg, #303f9f 30%, #3f51b5 90%)",
+                  transform: "translateY(-2px)",
+                  transition: "all 0.3s",
+                },
+              }}
+            >
               {uploading ? "מעלה..." : "העלה קובץ"}
             </Button>
           </Box>

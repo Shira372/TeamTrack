@@ -31,17 +31,28 @@ const Meetings = () => {
     const fetchMeetings = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
+        if (!apiUrl) {
+          setErrorMessage("שגיאה בהגדרות השרת");
+          setLoading(false);
+          return;
+        }
+
         const response = await axios.get(`${apiUrl}/api/meetings`);
         setMeetings(response.data);
       } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          localStorage.removeItem("jwt_token");
+          navigate("/login");
+          return;
+        }
         setErrorMessage("לא הצלחנו להטעין את הפגישות, אנא נסה מאוחר יותר");
       } finally {
         setLoading(false);
-        setTimeout(() => setShowButton(true), 300); 
+        setTimeout(() => setShowButton(true), 300);
       }
     };
     fetchMeetings();
-  }, []);
+  }, [navigate]);
 
   const handleMeetingClick = (meetingId: string | number) => {
     navigate(`/meeting/${meetingId}`);

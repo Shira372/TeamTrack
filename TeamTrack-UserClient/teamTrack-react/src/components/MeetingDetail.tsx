@@ -22,6 +22,8 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 interface Meeting {
   id: string | number;
@@ -52,8 +54,14 @@ const MeetingDetail = () => {
 
   useEffect(() => {
     const fetchMeetingDetail = async () => {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      if (!apiUrl) {
+        setErrorMessage("שגיאה בהגדרות השרת");
+        setLoading(false);
+        return;
+      }
+
       try {
-        const apiUrl = process.env.REACT_APP_API_URL;
         const token = localStorage.getItem("jwt_token");
         const config = token
           ? { headers: { Authorization: `Bearer ${token}` } }
@@ -62,13 +70,19 @@ const MeetingDetail = () => {
         const response = await axios.get(`${apiUrl}/api/meetings/${id}`, config);
         setMeeting(response.data);
       } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          localStorage.removeItem("jwt_token");
+          navigate("/login");
+          return;
+        }
         setErrorMessage("לא הצלחנו להטען את פרטי הפגישה");
       } finally {
         setLoading(false);
       }
     };
+
     fetchMeetingDetail();
-  }, [id]);
+  }, [id, navigate]);
 
   if (loading) {
     return (
@@ -262,7 +276,7 @@ const MeetingDetail = () => {
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
               >
-                <EventIcon sx={{ mr: 1 }} />
+                <DescriptionIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לתמלול</Typography>
               </a>
             )}
@@ -274,7 +288,7 @@ const MeetingDetail = () => {
                 rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
               >
-                <EventIcon sx={{ mr: 1 }} />
+                <ArticleIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לסיכום</Typography>
               </a>
             )}

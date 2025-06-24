@@ -38,11 +38,10 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // interceptor שמוסיף אוטומטית טוקן לכל בקשה
   useEffect(() => {
     const interceptor = axios.interceptors.request.use(config => {
       const token = localStorage.getItem("jwt_token");
-      if (token) {
+      if (token && config.url?.startsWith(process.env.REACT_APP_API_URL || "")) {
         config.headers = config.headers ?? {};
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -59,8 +58,14 @@ const NewMeeting = () => {
         alert('משתמש לא מחובר');
         return;
       }
-      setLoading(true);
+
       const apiUrl = process.env.REACT_APP_API_URL;
+      if (!apiUrl) {
+        alert("שגיאה בהגדרות השרת");
+        return;
+      }
+
+      setLoading(true);
 
       const payload = {
         MeetingName: data.MeetingName,
@@ -70,21 +75,19 @@ const NewMeeting = () => {
 
       await axios.post(`${apiUrl}/api/meetings`, payload);
       navigate('/meetings');
+
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        localStorage.removeItem("jwt_token");
+        navigate("/login");
+        return;
+      }
       console.error("Error adding meeting:", error);
       alert("שגיאה ביצירת הפגישה, נסה שנית");
     } finally {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', bgcolor: '#f8f9fa' }}>
-        <CircularProgress sx={{ color: '#3f51b5' }} />
-      </Box>
-    );
-  }
 
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh' }}>
@@ -131,7 +134,14 @@ const NewMeeting = () => {
               label="קישור לסיכום"
               variant="outlined"
               fullWidth
-              {...register("SummaryLink")}
+              {...register("SummaryLink", {
+                pattern: {
+                  value: /^(https?:\/\/)?([\w.-]+)+[\w-]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/,
+                  message: "כתובת URL לא תקינה"
+                }
+              })}
+              error={!!errors.SummaryLink}
+              helperText={errors.SummaryLink?.message}
             />
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>

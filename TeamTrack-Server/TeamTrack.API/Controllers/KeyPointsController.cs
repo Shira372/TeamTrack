@@ -40,17 +40,17 @@ namespace TeamTrack.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ExtractKeyPointsRequest request)
         {
-            _logger.LogInformation("\u05d4\u05ea\u05d7\u05dc\u05d4 \u05d1\u05d8\u05d9\u05e4\u05d5\u05dc /api/extract-keypoints עם S3Key: {S3Key}", request.S3Key);
+            _logger.LogInformation("התחלה בטיפול /api/extract-keypoints עם S3Key: {S3Key}", request.S3Key);
 
             if (string.IsNullOrWhiteSpace(request.S3Key))
             {
-                _logger.LogWarning("\u05e0\u05e9\u05dc\u05d7 S3Key \u05e8\u05d9\u05e7 או חסר");
+                _logger.LogWarning("נשלח S3Key ריק או חסר");
                 return BadRequest(new { error = "s3Key חסר או ריק." });
             }
 
             try
             {
-                _logger.LogInformation("\u05e0\u05d9\u05e1\u05d9\u05d5\u05df \u05e7\u05d1\u05e6 \u05de\u05e7\u05d5\u05d1\u05e5 S3: {S3Key}", request.S3Key);
+                _logger.LogInformation("ניסיון קבץ מקובץ S3: {S3Key}", request.S3Key);
                 var getObjectResponse = await _s3Client.GetObjectAsync(new GetObjectRequest
                 {
                     BucketName = _bucketName,
@@ -60,20 +60,40 @@ namespace TeamTrack.API.Controllers
                 using var reader = new StreamReader(getObjectResponse.ResponseStream);
                 string fileContent = await reader.ReadToEndAsync();
 
-                _logger.LogInformation("\u05e9\u05d5\u05dc\u05d7 \u05e2\u05d9\u05d1\u05d5\u05d3 \u05dc-OpenAI");
+                _logger.LogInformation("שולח עיבוד ל-OpenAI");
                 var keyPoints = await _openAiService.ExtractKeyPointsAsync(fileContent);
 
-                _logger.LogInformation("\u05e0\u05e7\u05d5\u05d3\u05d5\u05ea \u05de\u05e4\u05ea\u05d7 \u05e0\u05d7\u05e6\u05d5");
-                return Ok(new { keyPoints });
+                _logger.LogInformation("שומר את התוצאה בקובץ חדש ב-S3");
+                var summaryKey = $"summaries/{Guid.NewGuid()}.txt";
+                var putRequest = new PutObjectRequest
+                {
+                    BucketName = _bucketName,
+                    Key = summaryKey,
+                    ContentBody = keyPoints,
+                    ContentType = "text/plain"
+                };
+                await _s3Client.PutObjectAsync(putRequest);
+
+                // יצירת קישור זמני
+                var requestUrl = new GetPreSignedUrlRequest
+                {
+                    BucketName = _bucketName,
+                    Key = summaryKey,
+                    Expires = DateTime.UtcNow.AddMinutes(60)
+                };
+                string summaryLink = _s3Client.GetPreSignedURL(requestUrl);
+
+                _logger.LogInformation("נקודות מפתח הוחזרו בהצלחה + קישור זמני נוצר");
+                return Ok(new { keyPoints, summaryLink });
             }
             catch (AmazonS3Exception ex)
             {
-                _logger.LogError(ex, "\u05e9\u05d2\u05d9\u05d0\u05d4 \u05d1\u05d2\u05d9\u05e9\u05d4 \u05dc-S3 עם מפתח: {S3Key}", request.S3Key);
+                _logger.LogError(ex, "שגיאה בגישה ל-S3 עם מפתח: {S3Key}", request.S3Key);
                 return StatusCode(500, new { error = $"שגיאה בגישה ל־S3: {ex.Message}" });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "\u05e9\u05d2\u05d9\u05d0\u05d4 \u05e4\u05e0\u05d9\u05de\u05d9\u05ea \u05d1\u05e9\u05e8\u05ea");
+                _logger.LogError(ex, "שגיאה פנימית בשרת");
                 return StatusCode(500, new { error = $"שגיאה פנימית: {ex.Message}" });
             }
         }

@@ -17,17 +17,21 @@ import {
   ListItemText,
   Divider,
   Tooltip,
+  Link,
+  Stack,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import GroupsIcon from "@mui/icons-material/Groups";
 import MenuIcon from "@mui/icons-material/Menu";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import HistoryIcon from "@mui/icons-material/History";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type HistoryItem = {
   s3Key: string;
   result: string;
+  summaryLink: string;
   timestamp: number;
 };
 
@@ -38,6 +42,7 @@ const KeyPointsProcessing = () => {
   const [s3Key, setS3Key] = useState<string>("");
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<string | null>(null);
+  const [summaryLink, setSummaryLink] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
@@ -51,31 +56,22 @@ const KeyPointsProcessing = () => {
         setHistory(JSON.parse(stored));
       } catch {}
     }
+    const storedKey = localStorage.getItem("s3Key");
+    if (storedKey) setS3Key(storedKey);
   }, []);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(history));
   }, [history]);
 
-  useEffect(() => {
-    const storedKey = localStorage.getItem("s3Key");
+  const handleProcess = async () => {
     const token = localStorage.getItem("jwt_token");
-    if (storedKey && token) {
-      setS3Key(storedKey);
-    }
-  }, []);
+    if (!token || !s3Key) return;
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwt_token");
-    if (s3Key && token) {
-      handleProcess(s3Key, token);
-    }
-  }, [s3Key]);
-
-  const handleProcess = async (key: string, token: string) => {
     setProcessing(true);
     setResult(null);
     setError(null);
+    setSummaryLink(null);
 
     try {
       const response = await fetch(`${API_URL}/api/extract-keypoints`, {
@@ -84,7 +80,7 @@ const KeyPointsProcessing = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ s3Key: key }),
+        body: JSON.stringify({ s3Key }),
       });
 
       if (response.status === 401) {
@@ -99,11 +95,15 @@ const KeyPointsProcessing = () => {
 
       const data = await response.json();
       const keyPoints = data.keyPoints || "לא נמצאו נקודות מפתח";
+      const link = data.summaryLink || "";
+
       setResult(keyPoints);
+      setSummaryLink(link);
 
       const newItem: HistoryItem = {
-        s3Key: key.trim(),
+        s3Key: s3Key.trim(),
         result: keyPoints,
+        summaryLink: link,
         timestamp: Date.now(),
       };
       setHistory((prev) => [newItem, ...prev]);
@@ -111,6 +111,16 @@ const KeyPointsProcessing = () => {
       setError(e.message || "שגיאת רשת לא צפויה");
     } finally {
       setProcessing(false);
+    }
+  };
+
+  const handleDeleteItem = (timestamp: number) => {
+    setHistory((prev) => prev.filter((item) => item.timestamp !== timestamp));
+  };
+
+  const handleClearHistory = () => {
+    if (window.confirm("האם אתה בטוח שברצונך למחוק את כל היסטוריית העיבודים?")) {
+      setHistory([]);
     }
   };
 
@@ -133,20 +143,19 @@ const KeyPointsProcessing = () => {
                 TeamTrack
               </Typography>
             </Box>
-
             {isMobile ? (
               <IconButton color="primary" aria-label="menu">
                 <MenuIcon />
               </IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: "10px" }}>
-                <Button component={Link} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/login" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   התחברות
                 </Button>
-                <Button component={Link} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/signup" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   הרשמה
                 </Button>
-                <Button component={Link} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
+                <Button component={RouterLink} to="/" variant="outlined" color="primary" sx={{ borderRadius: 2 }}>
                   דף הבית
                 </Button>
               </Box>
@@ -180,6 +189,17 @@ const KeyPointsProcessing = () => {
             עיבוד נקודות מפתח
           </Typography>
 
+          <Button
+            onClick={handleProcess}
+            disabled={!s3Key || processing}
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ borderRadius: 3, mt: 2 }}
+          >
+            התחלת עיבוד
+          </Button>
+
           {processing && (
             <Box sx={{ width: "100%", mt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1, textAlign: "center" }}>
@@ -194,6 +214,13 @@ const KeyPointsProcessing = () => {
               <Alert severity="success" icon={<CheckCircleIcon />} sx={{ borderRadius: 2, whiteSpace: "pre-line" }}>
                 {result}
               </Alert>
+              {summaryLink && (
+                <Box sx={{ mt: 2, textAlign: "center" }}>
+                  <Link href={summaryLink} target="_blank" rel="noopener" underline="hover">
+                    הורדת קובץ סיכום
+                  </Link>
+                </Box>
+              )}
             </Box>
           )}
 
@@ -206,25 +233,42 @@ const KeyPointsProcessing = () => {
           )}
         </Box>
 
-        {history.length > 0 && (
-          <Box
-            sx={{
-              mt: 4,
-              p: 3,
-              borderRadius: 3,
-              background: "#fff",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            }}
-            component={Paper}
-            elevation={3}
-          >
-            <Typography variant="h6" sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+        <Box sx={{ mt: 4, p: 3, borderRadius: 3, background: "#fff", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }} component={Paper} elevation={3}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <HistoryIcon /> היסטוריית עיבודים אחרונים
             </Typography>
+            {history.length > 0 && (
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleClearHistory}
+                size="small"
+              >
+                מחק הכול
+              </Button>
+            )}
+          </Stack>
+
+          {history.length === 0 ? (
+            <Typography color="text.secondary" align="center" sx={{ mt: 3 }}>
+              אין היסטוריית עיבודים להצגה.
+            </Typography>
+          ) : (
             <List dense sx={{ maxHeight: 300, overflowY: "auto" }}>
-              {history.map(({ s3Key, result, timestamp }, index) => (
+              {history.map(({ s3Key, result, summaryLink, timestamp }, index) => (
                 <React.Fragment key={timestamp + index}>
-                  <ListItem alignItems="flex-start">
+                  <ListItem
+                    alignItems="flex-start"
+                    secondaryAction={
+                      <Tooltip title="מחק פריט">
+                        <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteItem(timestamp)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    }
+                  >
                     <ListItemText
                       primary={
                         <>
@@ -240,9 +284,18 @@ const KeyPointsProcessing = () => {
                         </>
                       }
                       secondary={
-                        <Typography sx={{ whiteSpace: "pre-line", mt: 0.5 }} variant="body2" color="text.primary">
-                          {result}
-                        </Typography>
+                        <>
+                          <Typography sx={{ whiteSpace: "pre-line", mt: 0.5 }} variant="body2" color="text.primary">
+                            {result}
+                          </Typography>
+                          {summaryLink && (
+                            <Typography sx={{ mt: 1 }}>
+                              <Link href={summaryLink} target="_blank" rel="noopener" underline="hover">
+                                צפייה/הורדה
+                              </Link>
+                            </Typography>
+                          )}
+                        </>
                       }
                     />
                   </ListItem>
@@ -250,8 +303,8 @@ const KeyPointsProcessing = () => {
                 </React.Fragment>
               ))}
             </List>
-          </Box>
-        )}
+          )}
+        </Box>
       </Container>
     </Box>
   );
