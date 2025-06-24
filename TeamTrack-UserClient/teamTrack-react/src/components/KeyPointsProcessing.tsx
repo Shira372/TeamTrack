@@ -19,15 +19,17 @@ import {
   Tooltip,
   Link,
   Stack,
+  Snackbar,
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import GroupsIcon from "@mui/icons-material/Groups";
 import MenuIcon from "@mui/icons-material/Menu";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 type HistoryItem = {
   s3Key: string;
@@ -46,6 +48,7 @@ const KeyPointsProcessing = () => {
   const [summaryLink, setSummaryLink] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -101,6 +104,8 @@ const KeyPointsProcessing = () => {
 
       setResult(keyPoints);
       setSummaryLink(link);
+
+      // שומרים רק ב-KeyPointsProcessing, לא ב-NewMeeting
       localStorage.setItem("summaryLink", link);
 
       const newItem: HistoryItem = {
@@ -114,6 +119,14 @@ const KeyPointsProcessing = () => {
       setError(e.message || "שגיאת רשת לא צפויה");
     } finally {
       setProcessing(false);
+    }
+  };
+
+  // העתקת הלינק לסיכום ללוח
+  const handleCopyLink = () => {
+    if (summaryLink) {
+      navigator.clipboard.writeText(summaryLink);
+      setCopySuccess(true);
     }
   };
 
@@ -222,20 +235,40 @@ const KeyPointsProcessing = () => {
               <Alert severity="success" icon={<CheckCircleIcon />} sx={{ borderRadius: 2, whiteSpace: "pre-line" }}>
                 {result}
               </Alert>
+
               {summaryLink && (
-                <Box sx={{ mt: 2, textAlign: "center" }}>
+                <Box
+                  sx={{
+                    mt: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
                   <Link href={summaryLink} target="_blank" rel="noopener" underline="hover">
                     הורדת קובץ סיכום
                   </Link>
-                  <Button
-                    component={RouterLink}
-                    to="/newMeeting"
-                    variant="outlined"
-                    startIcon={<AddCircleOutlineIcon />}
-                    sx={{ mt: 2 }}
-                  >
-                    צור פגישה חדשה
-                  </Button>
+
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <Button
+                      variant="outlined"
+                      startIcon={<ContentCopyIcon />}
+                      onClick={handleCopyLink}
+                      sx={{ whiteSpace: "nowrap" }}
+                    >
+                      העתק קישור לסיכום
+                    </Button>
+
+                    <Button
+                      component={RouterLink}
+                      to="/newMeeting"
+                      variant="outlined"
+                      startIcon={<AddCircleOutlineIcon />}
+                    >
+                      צור פגישה חדשה
+                    </Button>
+                  </Box>
                 </Box>
               )}
             </Box>
@@ -250,6 +283,7 @@ const KeyPointsProcessing = () => {
           )}
         </Box>
 
+        {/* היסטוריית עיבודים */}
         <Box
           sx={{
             mt: 4,
@@ -332,6 +366,13 @@ const KeyPointsProcessing = () => {
             </List>
           )}
         </Box>
+
+        <Snackbar
+          open={copySuccess}
+          autoHideDuration={2000}
+          onClose={() => setCopySuccess(false)}
+          message="הקישור הועתק ללוח!"
+        />
       </Container>
     </Box>
   );

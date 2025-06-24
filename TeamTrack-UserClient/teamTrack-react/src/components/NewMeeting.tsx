@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import {
@@ -35,7 +35,6 @@ const NewMeeting = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<NewMeetingFormValues>();
   const [loading, setLoading] = useState(false);
@@ -44,7 +43,7 @@ const NewMeeting = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   // ✅ הזרקת הטוקן לבקשות axios
-  useEffect(() => {
+  React.useEffect(() => {
     const interceptor = axios.interceptors.request.use((config) => {
       const token = localStorage.getItem("jwt_token");
       if (token && config.url?.startsWith(process.env.REACT_APP_API_URL || "")) {
@@ -57,16 +56,6 @@ const NewMeeting = () => {
       axios.interceptors.request.eject(interceptor);
     };
   }, []);
-
-  // ✅ טעינת summaryLink מה־localStorage
-  useEffect(() => {
-    const storedSummaryLink = localStorage.getItem("summaryLink");
-    if (storedSummaryLink) {
-      setValue("SummaryLink", storedSummaryLink);
-      // אפשר למחוק מה-localStorage אם רוצים:
-      // localStorage.removeItem("summaryLink");
-    }
-  }, [setValue]);
 
   const onSubmit = async (data: NewMeetingFormValues) => {
     try {
@@ -86,7 +75,7 @@ const NewMeeting = () => {
       const payload = {
         MeetingName: data.MeetingName,
         CreatedByUserId: user.id.toString(),
-        SummaryLink: data.SummaryLink || "",
+        SummaryLink: data.SummaryLink || "", // משתמשים בערך שהוקלד, לא ב-localStorage
       };
 
       await axios.post(`${apiUrl}/api/meetings`, payload);
@@ -121,7 +110,7 @@ const NewMeeting = () => {
               </Typography>
             </Box>
             {isMobile ? (
-              <IconButton color="primary">
+              <IconButton color="primary" aria-label="menu">
                 <MenuIcon />
               </IconButton>
             ) : (
@@ -168,7 +157,7 @@ const NewMeeting = () => {
             />
 
             <TextField
-              label="קישור לסיכום"
+              label="קישור לסיכום (אופציונלי)"
               variant="outlined"
               fullWidth
               {...register("SummaryLink", {
