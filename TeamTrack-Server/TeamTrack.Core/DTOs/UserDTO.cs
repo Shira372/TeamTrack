@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamTrack.Core.Entities;
-
-namespace TeamTrack.Core.DTOs
+﻿namespace TeamTrack.Core.DTOs
 {
     public class UserDTO
     {
-        public int Id { get; set; } // מזהה משתמש
+        public int Id { get; set; }
 
-        public string? UserName { get; set; } // שם משתמש
+        public string? UserName { get; set; }
 
-        public string? Company { get; set; } // חברה
+        public string? Company { get; set; }
 
-        public string? Role { get; set; } // תפקיד
+        public string? Role { get; set; }
 
-        public string? Email { get; set; } // מייל
+        public string? Email { get; set; }
+
+        public string? FullName => UserName ?? "לא ידוע";
     }
 }

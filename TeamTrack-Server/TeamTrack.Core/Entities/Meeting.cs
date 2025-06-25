@@ -11,6 +11,8 @@ namespace TeamTrack.Core.Entities
 
         public int? CreatedByUserId { get; set; }
 
+        public User? CreatedByUser { get; set; }
+
         public string? TranscriptionLink { get; set; }
 
         public string? SummaryLink { get; set; }

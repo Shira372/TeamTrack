@@ -4,3 +4,13 @@ C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamT
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrack.Data.AssemblyInfo.cs
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrack.Data.csproj.CoreCompileInputs.cache
 C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrack.Data.sourcelink.json
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net9.0\TeamTrack.Data.deps.json
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net9.0\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net9.0\TeamTrack.Data.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net9.0\TeamTrack.Core.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\bin\Debug\net9.0\TeamTrack.Core.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrac.B200DEE5.Up2Date
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\refint\TeamTrack.Data.dll
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\TeamTrack.Data.pdb
+C:\Users\user1\Desktop\שנה ב-תשפה\פרויקט Fullstack\TeamTrack\TeamTrack-Server\TeamTrack.Data\obj\Debug\net9.0\ref\TeamTrack.Data.dll

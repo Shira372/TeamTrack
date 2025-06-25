@@ -8,25 +8,28 @@ namespace TeamTrack.Core.Entities
     public class User
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // מספור אוטומטי
-        public int Id { get; set; } // מזהה משתמש
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-        public string? UserName { get; set; } // שם משתמש
+        public string? UserName { get; set; }
 
-        public string? PasswordHash { get; set; } // סיסמה (מוצפנת)
+        public string? PasswordHash { get; set; }
 
-        public string? Company { get; set; } // חברה
+        public string? Company { get; set; }
 
-        public string? Role { get; set; } // תפקיד
+        public string? Role { get; set; }
 
-        public string? Email { get; set; } // מייל
+        public string? Email { get; set; }
 
-        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow; // תאריך יצירה
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow; // תאריך עדכון
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public List<Meeting>? Meetings { get; set; } = new List<Meeting>();  // קשר רבים לרבים עם ישיבות נוספות
+        public List<Meeting>? Meetings { get; set; } = new List<Meeting>();
 
-        public List<Meeting>? MeetingsUserCreate { get; set; } = new List<Meeting>(); // ישיבות שיצר המשתמש
+        public List<Meeting>? MeetingsUserCreate { get; set; } = new List<Meeting>();
+
+        [NotMapped]
+        public string FullName => UserName ?? "לא ידוע";
     }
 }
