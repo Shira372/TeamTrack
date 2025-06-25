@@ -15,11 +15,11 @@ import {
 } from "@mui/icons-material";
 
 interface Meeting {
-  Id: string | number;
-  MeetingName: string;
-  CreatedAt: string;
-  UpdatedAt?: string;
-  CreatedByUserFullName?: string; // שם מלא של היוצר
+  id: number;
+  meetingName: string;
+  createdAt: string;
+  updatedAt?: string;
+  createdByUserFullName?: string;
 }
 
 const Meetings = () => {
@@ -62,7 +62,7 @@ const Meetings = () => {
     fetchMeetings();
   }, [navigate]);
 
-  const handleMeetingClick = (meetingId: string | number) => {
+  const handleMeetingClick = (meetingId: number) => {
     navigate(`/meetings/${meetingId}`);
   };
 
@@ -137,7 +137,7 @@ const Meetings = () => {
         >
           {meetings.map((meeting) => (
             <Box
-              key={meeting.Id}
+              key={meeting.id}
               sx={{
                 maxWidth: 300,
                 width: "100%",
@@ -153,22 +153,20 @@ const Meetings = () => {
                 variant="h6"
                 sx={{ mb: 1, fontWeight: 600, color: "#3f51b5" }}
               >
-                {meeting.MeetingName}
+                {meeting.meetingName}
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                תאריך יצירה:{" "}
-                {new Date(meeting.CreatedAt).toLocaleDateString("he-IL", {
+                תאריך יצירה: {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
                   day: "numeric"
                 })}
               </Typography>
 
-              {meeting.UpdatedAt && (
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  עדכון אחרון:{" "}
-                  {new Date(meeting.UpdatedAt).toLocaleDateString("he-IL", {
+              {meeting.updatedAt && (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  עדכון אחרון: {new Date(meeting.updatedAt).toLocaleDateString("he-IL", {
                     year: "numeric",
                     month: "long",
                     day: "numeric"
@@ -176,9 +174,9 @@ const Meetings = () => {
                 </Typography>
               )}
 
-              {meeting.CreatedByUserFullName && (
+              {meeting.createdByUserFullName && (
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  נוצר על ידי: {meeting.CreatedByUserFullName}
+                  נוצר על ידי: {meeting.createdByUserFullName}
                 </Typography>
               )}
 
@@ -186,7 +184,7 @@ const Meetings = () => {
                 variant="outlined"
                 color="primary"
                 fullWidth
-                onClick={() => handleMeetingClick(meeting.Id)}
+                onClick={() => handleMeetingClick(meeting.id)}
                 startIcon={<VisibilityIcon />}
               >
                 צפה בפרטים

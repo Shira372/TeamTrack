@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Box,
   Typography,
@@ -24,6 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import DescriptionIcon from '@mui/icons-material/Description';
+import axios from "axios";
 
 interface Meeting {
   id: number | string;
@@ -77,7 +77,7 @@ const MeetingDetail = () => {
           navigate("/login");
           return;
         }
-        setErrorMessage("לא הצלחנו להטען את פרטי הפגישה");
+        setErrorMessage("לא הצלחנו להטעין את פרטי הפגישה");
       } finally {
         setLoading(false);
       }
@@ -138,8 +138,7 @@ const MeetingDetail = () => {
                 component="div"
                 sx={{
                   fontWeight: 700,
-                  background:
-                    "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
+                  background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent"
                 }}

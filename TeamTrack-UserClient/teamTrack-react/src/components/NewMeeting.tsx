@@ -26,9 +26,9 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useUser } from "../use-Context/userProvider";
 
 interface NewMeetingFormValues {
-  MeetingName: string;
-  SummaryLink?: string;
-  TranscriptionLink?: string; // הוספתי פה את השדה החדש
+  meetingName: string;
+  summaryLink?: string;
+  transcriptionLink?: string;
 }
 
 const NewMeeting = () => {
@@ -43,6 +43,7 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // axios interceptor להוספת JWT אוטומטית ל־headers
   useEffect(() => {
     const interceptor = axios.interceptors.request.use((config) => {
       const token = localStorage.getItem("jwt_token");
@@ -73,10 +74,10 @@ const NewMeeting = () => {
       setLoading(true);
 
       const payload = {
-        MeetingName: data.MeetingName,
-        SummaryLink: data.SummaryLink || "",
-        TranscriptionLink: data.TranscriptionLink || "",  // שולח גם את הקישור לתמלול
-        // CreatedByUserId לא שולחים – השרת מטפל בזה אוטומטית לפי המשתמש המחובר
+        meetingName: data.meetingName,
+        summaryLink: data.summaryLink?.trim() || "",
+        transcriptionLink: data.transcriptionLink?.trim() || "",
+        // CreatedByUserId לא צריך לשלוח – השרת מזהה לפי ה־JWT
       };
 
       const response = await axios.post(`${apiUrl}/api/meetings`, payload);
@@ -94,8 +95,8 @@ const NewMeeting = () => {
         navigate("/login");
         return;
       }
-      console.error("Error adding meeting:", error);
-      alert("שגיאה ביצירת הפגישה, נסה שנית");
+      console.error("שגיאה ביצירת פגישה:", error);
+      alert("אירעה שגיאה ביצירת הפגישה, נסה שוב");
     } finally {
       setLoading(false);
     }
@@ -159,37 +160,37 @@ const NewMeeting = () => {
               label="שם הפגישה"
               variant="outlined"
               fullWidth
-              {...register("MeetingName", { required: "שדה חובה" })}
-              error={!!errors.MeetingName}
-              helperText={errors.MeetingName?.message}
+              {...register("meetingName", { required: "שדה חובה" })}
+              error={!!errors.meetingName}
+              helperText={errors.meetingName?.message}
             />
 
             <TextField
               label="קישור לתמלול (אופציונלי)"
               variant="outlined"
               fullWidth
-              {...register("TranscriptionLink", {
+              {...register("transcriptionLink", {
                 pattern: {
-                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/,
+                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
                   message: "כתובת URL לא תקינה",
                 },
               })}
-              error={!!errors.TranscriptionLink}
-              helperText={errors.TranscriptionLink?.message}
+              error={!!errors.transcriptionLink}
+              helperText={errors.transcriptionLink?.message}
             />
 
             <TextField
               label="קישור לסיכום (אופציונלי)"
               variant="outlined"
               fullWidth
-              {...register("SummaryLink", {
+              {...register("summaryLink", {
                 pattern: {
-                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/,
+                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
                   message: "כתובת URL לא תקינה",
                 },
               })}
-              error={!!errors.SummaryLink}
-              helperText={errors.SummaryLink?.message}
+              error={!!errors.summaryLink}
+              helperText={errors.summaryLink?.message}
             />
 
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>

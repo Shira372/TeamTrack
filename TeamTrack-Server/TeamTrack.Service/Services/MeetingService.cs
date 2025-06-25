@@ -1,4 +1,8 @@
-﻿using TeamTrack.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TeamTrack.Core.Entities;
 using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
 
@@ -15,24 +19,41 @@ public class MeetingService : IMeetingService
 
     public async Task<List<Meeting>> GetList()
     {
-        // מחזיר את כל הישיבות כולל המשתתפים
+        // מחזיר את כל הישיבות כולל המשתתפים והיוצר
         return await _repositoryManager.MeetingRepository.GetAllAsync();
     }
 
     public async Task<Meeting?> GetById(int id)
     {
-        // מחפש ישיבה לפי מזהה כולל המשתתפים
+        // מחפש ישיבה לפי מזהה כולל המשתתפים והיוצר
         return await _repositoryManager.MeetingRepository.GetByIdAsync(id);
     }
 
     public async Task<Meeting> AddAsync(Meeting meeting)
     {
-        // בודק אם היוצר קיים במסד
-        var user = await _userService.GetById(meeting.CreatedByUserId ?? 0);
-        if (user == null)
-            throw new ArgumentException("המשתמש לא קיים במסד הנתונים.");
+        // בדיקה אם היוצר קיים במסד
+        var creator = await _userService.GetById(meeting.CreatedByUserId ?? 0);
+        if (creator == null)
+            throw new ArgumentException("המשתמש היוצר לא קיים במסד הנתונים.");
 
-        // מוסיף את הישיבה למסד הנתונים
+        // טיפול במשתתפים - לוודא שכל המשתתפים קיימים במסד
+        if (meeting.Users != null && meeting.Users.Any())
+        {
+            var validatedUsers = new List<User>();
+            foreach (var userToAdd in meeting.Users)
+            {
+                var existingUser = await _userService.GetById(userToAdd.Id);
+                if (existingUser != null)
+                    validatedUsers.Add(existingUser);
+            }
+            meeting.Users = validatedUsers;
+        }
+        else
+        {
+            meeting.Users = new List<User>();
+        }
+
+        // הוספת הישיבה למסד ושמירת שינויים
         var added = await _repositoryManager.MeetingRepository.AddAsync(meeting);
         await _repositoryManager.SaveAsync();
         return added;
@@ -43,11 +64,24 @@ public class MeetingService : IMeetingService
         var existing = await _repositoryManager.MeetingRepository.GetByIdAsync(meeting.Id);
         if (existing == null) return null;
 
-        // מעדכן שדות קיימים בלבד כדי לשמור על שלמות הנתונים
+        // עדכון שדות בסיסיים
         existing.MeetingName = meeting.MeetingName;
         existing.SummaryLink = meeting.SummaryLink;
         existing.TranscriptionLink = meeting.TranscriptionLink;
         existing.UpdatedAt = DateTime.UtcNow;
+
+        // אפשרות לעדכן משתתפים (כאן אפשר להרחיב בעתיד)
+        if (meeting.Users != null)
+        {
+            var validatedUsers = new List<User>();
+            foreach (var userToAdd in meeting.Users)
+            {
+                var existingUser = await _userService.GetById(userToAdd.Id);
+                if (existingUser != null)
+                    validatedUsers.Add(existingUser);
+            }
+            existing.Users = validatedUsers;
+        }
 
         var updated = await _repositoryManager.MeetingRepository.UpdateAsync(existing);
         await _repositoryManager.SaveAsync();

@@ -1,6 +1,9 @@
-﻿using TeamTrack.Core.Entities;
-using TeamTrack.Core.IRepositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using TeamTrack.Core.Entities;
+using TeamTrack.Core.IRepositories;
 using TeamTrack.Data;
 
 public class MeetingRepository : IMeetingRepository
@@ -15,7 +18,8 @@ public class MeetingRepository : IMeetingRepository
     public async Task<List<Meeting>> GetAllAsync()
     {
         return await _context.Meetings
-            .Include(m => m.Users) // כולל את המשתתפים
+            .Include(m => m.Users)          // כולל את המשתתפים
+            .Include(m => m.CreatedByUser)  // כולל את היוצר של הישיבה
             .AsNoTracking()
             .ToListAsync();
     }
@@ -23,7 +27,8 @@ public class MeetingRepository : IMeetingRepository
     public async Task<Meeting?> GetByIdAsync(int id)
     {
         return await _context.Meetings
-            .Include(m => m.Users) // כולל את המשתתפים
+            .Include(m => m.Users)          // כולל את המשתתפים
+            .Include(m => m.CreatedByUser)  // כולל את היוצר של הישיבה
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
@@ -36,16 +41,29 @@ public class MeetingRepository : IMeetingRepository
 
     public async Task<Meeting?> UpdateAsync(Meeting meeting)
     {
-        var existing = await _context.Meetings.FirstOrDefaultAsync(x => x.Id == meeting.Id);
+        var existing = await _context.Meetings
+            .Include(m => m.Users) // חובה כדי לעדכן את רשימת המשתתפים
+            .FirstOrDefaultAsync(x => x.Id == meeting.Id);
+
         if (existing == null) return null;
 
-        // עדכון שדות ספציפיים בלבד
+        // עדכון שדות בסיסיים בלבד
         existing.MeetingName = meeting.MeetingName;
         existing.TranscriptionLink = meeting.TranscriptionLink;
         existing.SummaryLink = meeting.SummaryLink;
         existing.UpdatedAt = DateTime.UtcNow;
 
-        // לא קורא ל-SaveChanges כאן - השמירה תתבצע בשירות
+        // עדכון משתתפים (Users)
+        existing.Users.Clear();
+        foreach (var user in meeting.Users)
+        {
+            var userFromDb = await _context.Users.FindAsync(user.Id);
+            if (userFromDb != null)
+            {
+                existing.Users.Add(userFromDb);
+            }
+        }
+
         return existing;
     }
 

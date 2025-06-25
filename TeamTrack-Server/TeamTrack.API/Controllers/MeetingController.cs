@@ -50,6 +50,32 @@ namespace TeamTrack.API.Controllers
             return Ok(meetingsDTO);
         }
 
+        // --- הוספת API לקבלת הפגישות של המשתמש המחובר בלבד ---
+        [HttpGet("my")]
+        public async Task<ActionResult> GetMyMeetings()
+        {
+            var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                return Unauthorized("משתמש לא מזוהה");
+
+            var meetings = await _meetingService.GetList();
+            var myMeetings = meetings.Where(m => m.CreatedByUserId == userId).ToList();
+
+            var meetingsDTO = new List<MeetingDTO>();
+            foreach (var meeting in myMeetings)
+            {
+                var dto = _mapper.Map<MeetingDTO>(meeting);
+                if (meeting.CreatedByUserId.HasValue)
+                {
+                    var user = await _userService.GetById(meeting.CreatedByUserId.Value);
+                    dto.CreatedByUserFullName = user?.FullName ?? "Unknown";
+                }
+                meetingsDTO.Add(dto);
+            }
+
+            return Ok(meetingsDTO);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
