@@ -230,7 +230,7 @@ const Home = () => {
   // Navigation buttons render function
   const renderNavButtons = useCallback(() => {
     if (isLoggedIn) {
-      return null; // Don't show anything when logged in
+      return null; 
     } else {
       return (
         <>
@@ -283,10 +283,11 @@ const Home = () => {
       size: 100 + Math.random() * 150,
       top: `${Math.random() * 80}%`,
       left: `${Math.random() * 80}%`,
-      animationDuration: `${3 + Math.random() * 4}s`,
-      animationDelay: `${Math.random() * 2}s`,
+      animationDuration: `${8 + Math.random() * 6}s`,
+      animationDelay: `${Math.random() * 4}s`,       
     }));
   }, []);
+  
 
   return (
     <Box sx={{ bgcolor: '#f8f9fa', minHeight: '100vh' }}>
