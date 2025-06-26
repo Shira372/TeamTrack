@@ -28,6 +28,7 @@ namespace TeamTrack.API.Controllers
             _logger = logger;
         }
 
+        // GET: api/meetings
         [HttpGet]
         public async Task<ActionResult> Get()
         {
@@ -36,21 +37,13 @@ namespace TeamTrack.API.Controllers
             var meetingsDTO = new List<MeetingDTO>();
             foreach (var meeting in meetings)
             {
-                var dto = _mapper.Map<MeetingDTO>(meeting);
-
-                if (meeting.CreatedByUserId.HasValue)
-                {
-                    var user = await _userService.GetById(meeting.CreatedByUserId.Value);
-                    dto.CreatedByUserFullName = user?.FullName ?? "Unknown";
-                }
-
-                meetingsDTO.Add(dto);
+                meetingsDTO.Add(await MapMeetingToDTO(meeting));
             }
 
             return Ok(meetingsDTO);
         }
 
-        // --- הוספת API לקבלת הפגישות של המשתמש המחובר בלבד ---
+        // GET: api/meetings/my
         [HttpGet("my")]
         public async Task<ActionResult> GetMyMeetings()
         {
@@ -64,18 +57,13 @@ namespace TeamTrack.API.Controllers
             var meetingsDTO = new List<MeetingDTO>();
             foreach (var meeting in myMeetings)
             {
-                var dto = _mapper.Map<MeetingDTO>(meeting);
-                if (meeting.CreatedByUserId.HasValue)
-                {
-                    var user = await _userService.GetById(meeting.CreatedByUserId.Value);
-                    dto.CreatedByUserFullName = user?.FullName ?? "Unknown";
-                }
-                meetingsDTO.Add(dto);
+                meetingsDTO.Add(await MapMeetingToDTO(meeting));
             }
 
             return Ok(meetingsDTO);
         }
 
+        // GET: api/meetings/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
@@ -83,17 +71,11 @@ namespace TeamTrack.API.Controllers
             if (meeting == null)
                 return NotFound();
 
-            var meetingDTO = _mapper.Map<MeetingDTO>(meeting);
-
-            if (meeting.CreatedByUserId.HasValue)
-            {
-                var user = await _userService.GetById(meeting.CreatedByUserId.Value);
-                meetingDTO.CreatedByUserFullName = user?.FullName ?? "Unknown";
-            }
-
-            return Ok(meetingDTO);
+            var dto = await MapMeetingToDTO(meeting);
+            return Ok(dto);
         }
 
+        // POST: api/meetings
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] MeetingPostModel meetingModel)
         {
@@ -116,8 +98,21 @@ namespace TeamTrack.API.Controllers
                     CreatedAt = DateTime.UtcNow
                 };
 
+                // טיפול ברשימת משתתפים
+                if (meetingModel.ParticipantIds != null && meetingModel.ParticipantIds.Any())
+                {
+                    var participants = new List<User>();
+                    foreach (var participantId in meetingModel.ParticipantIds)
+                    {
+                        var participant = await _userService.GetById(participantId);
+                        if (participant != null)
+                            participants.Add(participant);
+                    }
+                    meeting.Users = participants;
+                }
+
                 var added = await _meetingService.AddAsync(meeting);
-                return CreatedAtAction(nameof(Get), new { id = added.Id }, added);
+                return CreatedAtAction(nameof(Get), new { id = added.Id }, await MapMeetingToDTO(added));
             }
             catch (Exception ex)
             {
@@ -126,6 +121,8 @@ namespace TeamTrack.API.Controllers
             }
         }
 
+
+        // PUT: api/meetings/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Meeting meeting)
         {
@@ -136,9 +133,10 @@ namespace TeamTrack.API.Controllers
             if (updated == null)
                 return NotFound("הפגישה לא נמצאה");
 
-            return Ok(updated);
+            return Ok(await MapMeetingToDTO(updated));
         }
 
+        // DELETE: api/meetings/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -148,5 +146,31 @@ namespace TeamTrack.API.Controllers
 
             return Ok();
         }
+
+        // ------------------- מתודת עזר -------------------
+        private async Task<MeetingDTO> MapMeetingToDTO(Meeting meeting)
+        {
+            var dto = _mapper.Map<MeetingDTO>(meeting);
+
+            if (meeting.CreatedByUserId.HasValue)
+            {
+                var user = await _userService.GetById(meeting.CreatedByUserId.Value);
+                dto.CreatedByUserFullName = user?.UserName ?? "Unknown";
+            }
+
+            dto.Participants = meeting.Users?
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    Company = u.Company,
+                    Role = u.Role,
+                    Email = u.Email
+                })
+                .ToList();
+
+            return dto;
+        }
+
     }
 }

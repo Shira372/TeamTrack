@@ -39,7 +39,7 @@ type HistoryItem = {
 };
 
 const LOCAL_STORAGE_KEY = "keypoints_history";
-const API_URL = "https://teamtrack-server.onrender.com";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const KeyPointsProcessing = () => {
   const [s3Key, setS3Key] = useState<string>("");
@@ -70,7 +70,7 @@ const KeyPointsProcessing = () => {
   }, [history]);
 
   const handleProcess = async () => {
-    const token = localStorage.getItem("jwt_token");
+    const token = localStorage.getItem("tt_token");
     if (!token || !s3Key) return;
 
     setProcessing(true);
@@ -89,7 +89,7 @@ const KeyPointsProcessing = () => {
       });
 
       if (response.status === 401) {
-        localStorage.removeItem("jwt_token");
+        localStorage.removeItem("tt_token");
         throw new Error("פג תוקף ההתחברות. אנא התחבר מחדש.");
       }
 

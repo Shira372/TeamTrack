@@ -46,7 +46,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem('user');
-    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('tt_token');
     setUserState(null);
     if (process.env.NODE_ENV !== 'production') {
       console.log('[UserProvider] User logged out');

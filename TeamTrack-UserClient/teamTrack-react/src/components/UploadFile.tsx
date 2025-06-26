@@ -113,7 +113,7 @@ const UploadFile = () => {
           });
         }
       } else if (xhr.status === 401) {
-        localStorage.removeItem("jwt_token");
+        localStorage.removeItem("tt_token"); // שים לב לשם החדש
         navigate("/login");
       } else {
         setUploadResponse({
@@ -134,7 +134,7 @@ const UploadFile = () => {
 
     xhr.open("POST", `${apiUrl}/api/fileupload/upload`);
 
-    const token = localStorage.getItem("jwt_token");
+    const token = localStorage.getItem("tt_token"); // כאן משתמש ב-tt_token
     if (token) {
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     }

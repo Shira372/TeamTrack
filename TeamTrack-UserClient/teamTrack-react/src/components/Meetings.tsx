@@ -5,14 +5,24 @@ import {
   Paper,
   Typography,
   CircularProgress,
-  Slide
+  Slide,
+  Divider,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Add as AddIcon,
-  Visibility as VisibilityIcon
+  Visibility as VisibilityIcon,
+  Person as PersonIcon,
 } from "@mui/icons-material";
+
+interface User {
+  id: number;
+  userName: string;
+  role?: string;
+  company?: string;
+  email?: string;
+}
 
 interface Meeting {
   id: number;
@@ -20,6 +30,7 @@ interface Meeting {
   createdAt: string;
   updatedAt?: string;
   createdByUserFullName?: string;
+  participants?: User[];
 }
 
 const Meetings = () => {
@@ -39,16 +50,16 @@ const Meetings = () => {
           return;
         }
 
-        const token = localStorage.getItem("jwt_token");
+        const token = localStorage.getItem("tt_token");
         const config = token
           ? { headers: { Authorization: `Bearer ${token}` } }
           : {};
 
-        const response = await axios.get(`${apiUrl}/api/meetings`, config);
+        const response = await axios.get<Meeting[]>(`${apiUrl}/api/meetings`, config);
         setMeetings(response.data);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {
-          localStorage.removeItem("jwt_token");
+          localStorage.removeItem("tt_token");
           navigate("/login");
           return;
         }
@@ -136,47 +147,87 @@ const Meetings = () => {
           }}
         >
           {meetings.map((meeting) => (
-            <Box
+            <Paper
               key={meeting.id}
               sx={{
-                maxWidth: 300,
+                maxWidth: 320,
                 width: "100%",
                 bgcolor: "white",
                 borderRadius: 2,
                 boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
                 p: 3,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                gap: 1.5,
               }}
+              elevation={3}
             >
               <Typography
                 variant="h6"
-                sx={{ mb: 1, fontWeight: 600, color: "#3f51b5" }}
+                sx={{ fontWeight: 600, color: "#3f51b5" }}
               >
                 {meeting.meetingName}
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                תאריך יצירה: {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
+                תאריך יצירה:{" "}
+                {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
-                  day: "numeric"
+                  day: "numeric",
                 })}
               </Typography>
 
               {meeting.updatedAt && (
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  עדכון אחרון: {new Date(meeting.updatedAt).toLocaleDateString("he-IL", {
+                <Typography variant="body2" color="text.secondary">
+                  עדכון אחרון:{" "}
+                  {new Date(meeting.updatedAt).toLocaleDateString("he-IL", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
+                    day: "numeric",
                   })}
                 </Typography>
               )}
 
               {meeting.createdByUserFullName && (
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                <Typography variant="body2" color="text.secondary">
                   נוצר על ידי: {meeting.createdByUserFullName}
+                </Typography>
+              )}
+
+              <Divider sx={{ my: 1 }} />
+
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: 600, color: "#1976d2" }}
+              >
+                משתתפים בפגישה:
+              </Typography>
+
+              {meeting.participants && meeting.participants.length > 0 ? (
+                meeting.participants.map((participant) => (
+                  <Box
+                    key={participant.id}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      bgcolor: "#e3f2fd",
+                      p: 1,
+                      borderRadius: 1,
+                    }}
+                  >
+                    <PersonIcon sx={{ color: "#1e88e5" }} />
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {participant.userName}
+                      {participant.role ? ` - ${participant.role}` : ""}
+                      {participant.company ? `, ${participant.company}` : ""}
+                    </Typography>
+                  </Box>
+                ))
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  אין משתתפים
                 </Typography>
               )}
 
@@ -186,10 +237,11 @@ const Meetings = () => {
                 fullWidth
                 onClick={() => handleMeetingClick(meeting.id)}
                 startIcon={<VisibilityIcon />}
+                sx={{ mt: 2 }}
               >
                 צפה בפרטים
               </Button>
-            </Box>
+            </Paper>
           ))}
         </Box>
       )}

@@ -15,6 +15,12 @@ import {
   useMediaQuery,
   CircularProgress,
   Divider,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Select,
+  OutlinedInput,
+  Chip,
 } from "@mui/material";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -29,6 +35,12 @@ interface NewMeetingFormValues {
   meetingName: string;
   summaryLink?: string;
   transcriptionLink?: string;
+  participantIds?: number[];
+}
+
+interface UserOption {
+  id: number;
+  userName: string;
 }
 
 const NewMeeting = () => {
@@ -37,18 +49,23 @@ const NewMeeting = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm<NewMeetingFormValues>();
   const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState<UserOption[]>([]);
+  const participantIds = watch("participantIds") || [];
+
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // axios interceptor להוספת JWT אוטומטית ל־headers
   useEffect(() => {
     const interceptor = axios.interceptors.request.use((config) => {
-      const token = localStorage.getItem("jwt_token");
-      if (token && config.url?.startsWith(process.env.REACT_APP_API_URL || "")) {
-        config.headers = config.headers ?? {};
+      const token = localStorage.getItem("tt_token");
+      const apiPrefix = process.env.REACT_APP_API_URL;
+      if (token && config.url?.startsWith(apiPrefix || "")) {
+        config.headers = config.headers || {};
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
@@ -56,6 +73,20 @@ const NewMeeting = () => {
     return () => {
       axios.interceptors.request.eject(interceptor);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      if (!apiUrl) return;
+      try {
+        const res = await axios.get(`${apiUrl}/api/users`);
+        setUsers(res.data || []);
+      } catch (err) {
+        console.error("שגיאה בשליפת משתמשים:", err);
+      }
+    };
+    fetchUsers();
   }, []);
 
   const onSubmit = async (data: NewMeetingFormValues) => {
@@ -74,29 +105,23 @@ const NewMeeting = () => {
       setLoading(true);
 
       const payload = {
-        meetingName: data.meetingName,
+        meetingName: data.meetingName.trim(),
         summaryLink: data.summaryLink?.trim() || "",
         transcriptionLink: data.transcriptionLink?.trim() || "",
-        // CreatedByUserId לא צריך לשלוח – השרת מזהה לפי ה־JWT
+        participantIds: data.participantIds || [],
       };
 
       const response = await axios.post(`${apiUrl}/api/meetings`, payload);
-
-      const createdMeeting = response.data;
-      const meetingId = createdMeeting.id || createdMeeting.Id;
-      if (meetingId) {
-        navigate(`/meetings/${meetingId}`);
-      } else {
-        navigate("/meetings");
-      }
+      const meetingId = response.data.id || response.data.Id;
+      navigate(meetingId ? `/meetings/${meetingId}` : "/meetings");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        localStorage.removeItem("jwt_token");
+        localStorage.removeItem("tt_token");
         navigate("/login");
         return;
       }
       console.error("שגיאה ביצירת פגישה:", error);
-      alert("אירעה שגיאה ביצירת הפגישה, נסה שוב");
+      alert("אירעה שגיאה ביצירת הפגישה. נסה שוב.");
     } finally {
       setLoading(false);
     }
@@ -104,14 +129,9 @@ const NewMeeting = () => {
 
   return (
     <Box sx={{ bgcolor: "#f8f9fa", minHeight: "100vh" }}>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}
-      >
+      <AppBar position="static" color="default" elevation={0} sx={{ bgcolor: "white", borderBottom: "1px solid #e0e0e0" }}>
         <Container>
-          <Toolbar sx={{ justifyContent: "space-between", px: { xs: 0, sm: 2 } }}>
+          <Toolbar sx={{ justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <GroupsIcon sx={{ mr: 1, color: "#3f51b5" }} />
               <Typography variant="h6" sx={{ fontWeight: 700, color: "#3f51b5" }}>
@@ -119,17 +139,11 @@ const NewMeeting = () => {
               </Typography>
             </Box>
             {isMobile ? (
-              <IconButton color="primary" aria-label="menu">
-                <MenuIcon />
-              </IconButton>
+              <IconButton color="primary"><MenuIcon /></IconButton>
             ) : (
               <Box sx={{ display: "flex", gap: 2 }}>
-                <Button component={RouterLink} to="/home" variant="outlined" startIcon={<HomeIcon />}>
-                  דף הבית
-                </Button>
-                <Button component={RouterLink} to="/meetings" variant="outlined" startIcon={<ListAltIcon />}>
-                  הפגישות שלי
-                </Button>
+                <Button component={RouterLink} to="/home" variant="outlined" startIcon={<HomeIcon />}>דף הבית</Button>
+                <Button component={RouterLink} to="/meetings" variant="outlined" startIcon={<ListAltIcon />}>הפגישות שלי</Button>
               </Box>
             )}
           </Toolbar>
@@ -140,12 +154,8 @@ const NewMeeting = () => {
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
           <Box sx={{ textAlign: "center", mb: 3 }}>
             <AddCircleOutlineIcon sx={{ fontSize: 50, color: "#3f51b5" }} />
-            <Typography variant="h4" fontWeight="bold" sx={{ mt: 2 }}>
-              יצירת פגישה חדשה
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              מלא את הפרטים ליצירת פגישה חדשה
-            </Typography>
+            <Typography variant="h4" fontWeight="bold" sx={{ mt: 2 }}>יצירת פגישה חדשה</Typography>
+            <Typography variant="subtitle1" color="text.secondary">מלא את הפרטים ליצירת פגישה חדשה</Typography>
           </Box>
 
           <Divider sx={{ mb: 3 }} />
@@ -157,7 +167,7 @@ const NewMeeting = () => {
             sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
             <TextField
-              label="שם הפגישה"
+              label="שם הפגישה *"
               variant="outlined"
               fullWidth
               {...register("meetingName", { required: "שדה חובה" })}
@@ -171,7 +181,7 @@ const NewMeeting = () => {
               fullWidth
               {...register("transcriptionLink", {
                 pattern: {
-                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
+                  value: /^https?:\/\/[^\s]+$/i,
                   message: "כתובת URL לא תקינה",
                 },
               })}
@@ -185,7 +195,7 @@ const NewMeeting = () => {
               fullWidth
               {...register("summaryLink", {
                 pattern: {
-                  value: /^https?:\/\/[^\s$.?#].[^\s]*$/i,
+                  value: /^https?:\/\/[^\s]+$/i,
                   message: "כתובת URL לא תקינה",
                 },
               })}
@@ -193,10 +203,32 @@ const NewMeeting = () => {
               helperText={errors.summaryLink?.message}
             />
 
+            <FormControl fullWidth>
+              <InputLabel>בחר משתתפים</InputLabel>
+              <Select
+                multiple
+                value={participantIds}
+                onChange={(e) => setValue("participantIds", e.target.value as number[])}
+                input={<OutlinedInput label="בחר משתתפים" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((id) => {
+                      const user = users.find(u => u.id === id);
+                      return <Chip key={id} label={user?.userName || id} />;
+                    })}
+                  </Box>
+                )}
+              >
+                {users.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.userName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-              <Button component={RouterLink} to="/meetings" variant="outlined" startIcon={<ArrowBackIcon />}>
-                חזרה
-              </Button>
+              <Button component={RouterLink} to="/meetings" variant="outlined" startIcon={<ArrowBackIcon />}>חזרה</Button>
               <Button
                 type="submit"
                 variant="contained"

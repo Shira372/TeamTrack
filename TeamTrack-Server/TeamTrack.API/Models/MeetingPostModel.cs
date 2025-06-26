@@ -4,10 +4,10 @@ namespace TeamTrack.API.Models
 {
     public class MeetingPostModel
     {
-        public string? MeetingName { get; set; }            // שם הפגישה
-
-        public string? TranscriptionLink { get; set; }      // קישור לתמלול
-
-        public string? SummaryLink { get; set; }            // קישור לסיכום
+        public string? MeetingName { get; set; }
+        public string? TranscriptionLink { get; set; }
+        public string? SummaryLink { get; set; }
+        public List<int>? ParticipantIds { get; set; }  
     }
+
 }

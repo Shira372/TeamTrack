@@ -11,19 +11,27 @@ import {
   AppBar,
   Toolbar,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { useParams, useNavigate, Link as RouterLink } from "react-router-dom";
-import GroupsIcon from '@mui/icons-material/Groups';
-import EventIcon from '@mui/icons-material/Event';
-import PersonIcon from '@mui/icons-material/Person';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import ArticleIcon from '@mui/icons-material/Article';
-import DescriptionIcon from '@mui/icons-material/Description';
+import GroupsIcon from "@mui/icons-material/Groups";
+import EventIcon from "@mui/icons-material/Event";
+import PersonIcon from "@mui/icons-material/Person";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import ArticleIcon from "@mui/icons-material/Article";
+import DescriptionIcon from "@mui/icons-material/Description";
 import axios from "axios";
+
+interface UserDTO {
+  id: number | string;
+  userName: string;
+  company?: string;
+  role?: string;
+  email?: string;
+}
 
 interface Meeting {
   id: number | string;
@@ -34,6 +42,7 @@ interface Meeting {
   createdByUserFullName?: string;
   transcriptionLink?: string;
   summaryLink?: string;
+  participants?: UserDTO[]; // משתתפים
 }
 
 const MeetingDetail = () => {
@@ -43,7 +52,7 @@ const MeetingDetail = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -64,7 +73,8 @@ const MeetingDetail = () => {
       }
 
       try {
-        const token = localStorage.getItem("jwt_token");
+        const token = localStorage.getItem("tt_token");
+
         const config = token
           ? { headers: { Authorization: `Bearer ${token}` } }
           : {};
@@ -94,7 +104,7 @@ const MeetingDetail = () => {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-          bgcolor: "#f8f9fa"
+          bgcolor: "#f8f9fa",
         }}
       >
         <CircularProgress sx={{ color: "#3f51b5" }} />
@@ -140,7 +150,7 @@ const MeetingDetail = () => {
                   fontWeight: 700,
                   background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
                   WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent"
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 TeamTrack
@@ -195,7 +205,7 @@ const MeetingDetail = () => {
             borderRadius: 3,
             background: "linear-gradient(to bottom right, #ffffff, #f5f5f5)",
             border: "1px solid #e8eaf6",
-            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.05)"
+            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.05)",
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 3 }}>
@@ -208,7 +218,7 @@ const MeetingDetail = () => {
                 borderRadius: "50%",
                 width: "80px",
                 height: "80px",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <EventIcon sx={{ fontSize: 40, color: "#3f51b5" }} />
@@ -222,7 +232,7 @@ const MeetingDetail = () => {
                 background: "linear-gradient(45deg, #3f51b5 30%, #5c6bc0 90%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                textShadow: "0px 2px 5px rgba(0,0,0,0.05)"
+                textShadow: "0px 2px 5px rgba(0,0,0,0.05)",
               }}
               align="center"
             >
@@ -240,7 +250,7 @@ const MeetingDetail = () => {
                 {new Date(meeting.createdAt).toLocaleDateString("he-IL", {
                   year: "numeric",
                   month: "long",
-                  day: "numeric"
+                  day: "numeric",
                 })}
               </Typography>
             </Box>
@@ -253,7 +263,7 @@ const MeetingDetail = () => {
                   {new Date(meeting.updatedAt).toLocaleDateString("he-IL", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
+                    day: "numeric",
                   })}
                 </Typography>
               </Box>
@@ -269,13 +279,62 @@ const MeetingDetail = () => {
 
           <Divider sx={{ mb: 3 }} />
 
+          {/* משתתפים */}
+          <Box sx={{ mb: 4 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                mb: 2,
+                fontWeight: 600,
+                color: "#3f51b5",
+                borderBottom: "2px solid #3f51b5",
+                display: "inline-block",
+              }}
+            >
+              משתתפים בפגישה
+            </Typography>
+            {meeting.participants && meeting.participants.length > 0 ? (
+              meeting.participants.map((participant) => (
+                <Box
+                  key={participant.id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mb: 1,
+                    bgcolor: "#e3f2fd",
+                    p: 1,
+                    borderRadius: 1,
+                  }}
+                >
+                  <PersonIcon sx={{ mr: 1, color: "#1e88e5" }} />
+                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    {participant.userName}{" "}
+                    {participant.role ? `- ${participant.role}` : ""}
+                    {participant.company ? `, ${participant.company}` : ""}
+                  </Typography>
+                </Box>
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                אין משתתפים
+              </Typography>
+            )}
+          </Box>
+
+          <Divider sx={{ mb: 3 }} />
+
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {meeting.transcriptionLink && (
               <a
                 href={meeting.transcriptionLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#3f51b5",
+                  textDecoration: "none",
+                }}
               >
                 <DescriptionIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לתמלול</Typography>
@@ -287,7 +346,12 @@ const MeetingDetail = () => {
                 href={meeting.summaryLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", color: "#3f51b5", textDecoration: "none" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#3f51b5",
+                  textDecoration: "none",
+                }}
               >
                 <ArticleIcon sx={{ mr: 1 }} />
                 <Typography variant="body1">קישור לסיכום</Typography>

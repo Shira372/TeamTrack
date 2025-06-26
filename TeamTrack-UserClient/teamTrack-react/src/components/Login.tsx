@@ -102,7 +102,7 @@ const Login = () => {
             return;
           }
       
-          localStorage.setItem('jwt_token', token);
+          localStorage.setItem('tt_token', token);
           localStorage.setItem('user', JSON.stringify(user));
       
           if (process.env.NODE_ENV !== 'production') {
