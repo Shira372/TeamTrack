@@ -72,13 +72,16 @@ const SignUp = () => {
 
       console.log("נשלח לשרת:", payload);
 
-      const response = await axios.post<User>(`${apiUrl}/api/users/signup`, payload);
+      const response = await axios.post(`${apiUrl}/api/users/signup`, payload);
 
-      setUser(response.data);
+      // שמירת המשתמש והטוקן שנשלחו מהשרת
+      setUser(response.data.User);
+      localStorage.setItem('tt_token', response.data.Token);
+
       navigate('/meetings');
     } catch (err) {
       console.error("שגיאה בהרשמה:", err);
-      // אפשר להוסיף פה טיפול בשגיאות ותצוגת הודעות למשתמש בעתיד
+      // כאן אפשר להוסיף הודעות שגיאה למשתמש, לפי שיקולך
     } finally {
       setIsLoading(false);
     }
