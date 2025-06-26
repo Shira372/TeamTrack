@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TeamTrack.Core.Entities;
 using TeamTrack.Core.IServices;
 using TeamTrack.Core.DTOs;
@@ -9,6 +10,7 @@ namespace TeamTrack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // כל המתודות דורשות משתמש מזוהה
     public class MeetingsController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
@@ -33,8 +35,8 @@ namespace TeamTrack.API.Controllers
         public async Task<ActionResult> Get()
         {
             var meetings = await _meetingService.GetList();
-
             var meetingsDTO = new List<MeetingDTO>();
+
             foreach (var meeting in meetings)
             {
                 meetingsDTO.Add(await MapMeetingToDTO(meeting));
@@ -47,12 +49,11 @@ namespace TeamTrack.API.Controllers
         [HttpGet("my")]
         public async Task<ActionResult> GetMyMeetings()
         {
-            var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            if (!TryGetUserId(out int userId))
                 return Unauthorized("משתמש לא מזוהה");
 
-            var meetings = await _meetingService.GetList();
-            var myMeetings = meetings.Where(m => m.CreatedByUserId == userId).ToList();
+            var allMeetings = await _meetingService.GetList();
+            var myMeetings = allMeetings.Where(m => m.CreatedByUserId == userId).ToList();
 
             var meetingsDTO = new List<MeetingDTO>();
             foreach (var meeting in myMeetings)
@@ -81,8 +82,7 @@ namespace TeamTrack.API.Controllers
         {
             try
             {
-                var userIdClaim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
-                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                if (!TryGetUserId(out int userId))
                     return Unauthorized("משתמש לא מזוהה");
 
                 var user = await _userService.GetById(userId);
@@ -98,13 +98,12 @@ namespace TeamTrack.API.Controllers
                     CreatedAt = DateTime.UtcNow
                 };
 
-                // טיפול ברשימת משתתפים
-                if (meetingModel.ParticipantIds != null && meetingModel.ParticipantIds.Any())
+                if (meetingModel.ParticipantIds?.Any() == true)
                 {
                     var participants = new List<User>();
-                    foreach (var participantId in meetingModel.ParticipantIds)
+                    foreach (var id in meetingModel.ParticipantIds)
                     {
-                        var participant = await _userService.GetById(participantId);
+                        var participant = await _userService.GetById(id);
                         if (participant != null)
                             participants.Add(participant);
                     }
@@ -120,7 +119,6 @@ namespace TeamTrack.API.Controllers
                 return StatusCode(500, "שגיאה פנימית בשרת");
             }
         }
-
 
         // PUT: api/meetings/{id}
         [HttpPut("{id}")]
@@ -147,7 +145,8 @@ namespace TeamTrack.API.Controllers
             return Ok();
         }
 
-        // ------------------- מתודת עזר -------------------
+        // ------------------- מתודות עזר -------------------
+
         private async Task<MeetingDTO> MapMeetingToDTO(Meeting meeting)
         {
             var dto = _mapper.Map<MeetingDTO>(meeting);
@@ -155,7 +154,7 @@ namespace TeamTrack.API.Controllers
             if (meeting.CreatedByUserId.HasValue)
             {
                 var user = await _userService.GetById(meeting.CreatedByUserId.Value);
-                dto.CreatedByUserFullName = user?.UserName ?? "Unknown";
+                dto.CreatedByUserFullName = user?.UserName ?? "לא ידוע";
             }
 
             dto.Participants = meeting.Users?
@@ -172,5 +171,11 @@ namespace TeamTrack.API.Controllers
             return dto;
         }
 
+        private bool TryGetUserId(out int userId)
+        {
+            userId = 0;
+            var claim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
+            return claim != null && int.TryParse(claim.Value, out userId);
+        }
     }
 }
