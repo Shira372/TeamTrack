@@ -55,7 +55,9 @@ const Meetings = () => {
           ? { headers: { Authorization: `Bearer ${token}` } }
           : {};
 
-        const response = await axios.get<Meeting[]>(`${apiUrl}/api/meetings`, config);
+        // חשוב: לקרוא לפגישות של המשתמש הנוכחי
+        const response = await axios.get<Meeting[]>(`${apiUrl}/api/meetings/my`, config);
+
         setMeetings(response.data);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 401) {
