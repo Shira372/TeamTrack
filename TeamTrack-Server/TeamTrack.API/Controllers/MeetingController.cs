@@ -8,9 +8,9 @@ using TeamTrack.API.Models;
 
 namespace TeamTrack.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // כל המתודות דורשות משתמש מזוהה
+    [Route("api/[controller]")]
+    [Authorize] // כל הפונקציות דורשות התחברות
     public class MeetingsController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
@@ -30,41 +30,34 @@ namespace TeamTrack.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/meetings
         [HttpGet]
         public async Task<ActionResult> Get()
         {
             var meetings = await _meetingService.GetList();
-            var meetingsDTO = new List<MeetingDTO>();
+            var result = new List<MeetingDTO>();
 
             foreach (var meeting in meetings)
-            {
-                meetingsDTO.Add(await MapMeetingToDTO(meeting));
-            }
+                result.Add(await MapMeetingToDTO(meeting));
 
-            return Ok(meetingsDTO);
+            return Ok(result);
         }
 
-        // GET: api/meetings/my
         [HttpGet("my")]
         public async Task<ActionResult> GetMyMeetings()
         {
             if (!TryGetUserId(out int userId))
                 return Unauthorized("משתמש לא מזוהה");
 
-            var allMeetings = await _meetingService.GetList();
-            var myMeetings = allMeetings.Where(m => m.CreatedByUserId == userId).ToList();
+            var meetings = await _meetingService.GetList();
+            var myMeetings = meetings.Where(m => m.CreatedByUserId == userId).ToList();
 
-            var meetingsDTO = new List<MeetingDTO>();
+            var result = new List<MeetingDTO>();
             foreach (var meeting in myMeetings)
-            {
-                meetingsDTO.Add(await MapMeetingToDTO(meeting));
-            }
+                result.Add(await MapMeetingToDTO(meeting));
 
-            return Ok(meetingsDTO);
+            return Ok(result);
         }
 
-        // GET: api/meetings/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
@@ -72,13 +65,11 @@ namespace TeamTrack.API.Controllers
             if (meeting == null)
                 return NotFound();
 
-            var dto = await MapMeetingToDTO(meeting);
-            return Ok(dto);
+            return Ok(await MapMeetingToDTO(meeting));
         }
 
-        // POST: api/meetings
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] MeetingPostModel meetingModel)
+        public async Task<ActionResult> Post([FromBody] MeetingPostModel model)
         {
             try
             {
@@ -91,17 +82,17 @@ namespace TeamTrack.API.Controllers
 
                 var meeting = new Meeting
                 {
-                    MeetingName = meetingModel.MeetingName,
+                    MeetingName = model.MeetingName,
                     CreatedByUserId = userId,
-                    TranscriptionLink = meetingModel.TranscriptionLink,
-                    SummaryLink = meetingModel.SummaryLink,
+                    SummaryLink = model.SummaryLink,
+                    TranscriptionLink = model.TranscriptionLink,
                     CreatedAt = DateTime.UtcNow
                 };
 
-                if (meetingModel.ParticipantIds?.Any() == true)
+                if (model.ParticipantIds?.Any() == true)
                 {
                     var participants = new List<User>();
-                    foreach (var id in meetingModel.ParticipantIds)
+                    foreach (var id in model.ParticipantIds)
                     {
                         var participant = await _userService.GetById(id);
                         if (participant != null)
@@ -120,7 +111,6 @@ namespace TeamTrack.API.Controllers
             }
         }
 
-        // PUT: api/meetings/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Meeting meeting)
         {
@@ -134,7 +124,6 @@ namespace TeamTrack.API.Controllers
             return Ok(await MapMeetingToDTO(updated));
         }
 
-        // DELETE: api/meetings/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -145,7 +134,7 @@ namespace TeamTrack.API.Controllers
             return Ok();
         }
 
-        // ------------------- מתודות עזר -------------------
+        // ----------------- Private Helpers -----------------
 
         private async Task<MeetingDTO> MapMeetingToDTO(Meeting meeting)
         {
@@ -165,8 +154,7 @@ namespace TeamTrack.API.Controllers
                     Company = u.Company,
                     Role = u.Role,
                     Email = u.Email
-                })
-                .ToList();
+                }).ToList();
 
             return dto;
         }

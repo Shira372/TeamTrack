@@ -77,7 +77,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["JWT:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])
-            )
+            ),
+
+            // חשוב לקרוא נכון את מזהה המשתמש מתוך הטוקן
+            NameClaimType = "sub"
         };
 
         options.Events = new JwtBearerEvents
@@ -101,7 +104,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("https://teamtrack-userclient.onrender.com")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); // חשוב מאוד!
+              .AllowCredentials();
     });
 });
 
@@ -114,7 +117,7 @@ builder.Services.AddScoped<IS3Service, S3Service>();
 
 builder.Services.AddHttpClient();
 
-// --- הגדרת AWS S3 Client עם Credentials מפורשים ---
+// AWS S3 Client
 var awsAccessKey = builder.Configuration["AWS:AccessKey"];
 var awsSecretKey = builder.Configuration["AWS:SecretKey"];
 var awsRegion = builder.Configuration["AWS:Region"];
@@ -130,7 +133,7 @@ builder.Services.AddSingleton<IAmazonS3>(s3Client);
 
 var app = builder.Build();
 
-// טיפול ידני בבקשות OPTIONS
+// טיפול בבקשות OPTIONS ידנית (ל-CORS)
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
@@ -146,7 +149,7 @@ app.Use(async (context, next) =>
     await next();
 });
 
-// סדר Middleware נכון
+// סדר שימוש ב-Middleware
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();
