@@ -60,20 +60,7 @@ const NewMeeting = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  useEffect(() => {
-    const interceptor = axios.interceptors.request.use((config) => {
-      const token = localStorage.getItem("tt_token");
-      const apiPrefix = process.env.REACT_APP_API_URL;
-      if (token && config.url?.startsWith(apiPrefix || "")) {
-        config.headers = config.headers || {};
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    });
-    return () => {
-      axios.interceptors.request.eject(interceptor);
-    };
-  }, []);
+  // הורדתי את ה-interceptor כי לא חיוני כאן, ומבטיחים Authorization ישירות בבקשה
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -102,6 +89,13 @@ const NewMeeting = () => {
         return;
       }
 
+      const token = localStorage.getItem("tt_token");
+      if (!token) {
+        alert("אנא התחבר מחדש");
+        navigate("/login");
+        return;
+      }
+
       setLoading(true);
 
       const payload = {
@@ -111,7 +105,14 @@ const NewMeeting = () => {
         participantIds: data.participantIds || [],
       };
 
-      const response = await axios.post(`${apiUrl}/api/meetings`, payload);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(`${apiUrl}/api/meetings`, payload, config);
       const meetingId = response.data.id || response.data.Id;
       navigate(meetingId ? `/meetings/${meetingId}` : "/meetings");
     } catch (error) {

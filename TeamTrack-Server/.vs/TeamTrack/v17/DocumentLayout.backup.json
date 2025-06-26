@@ -3,16 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\controllers\\keypointscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\controllers\\keypointscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\controllers\\meetingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\controllers\\meetingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\repositories\\meetingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\repositories\\meetingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\iservices\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\iservices\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|solutionrelative:teamtrack.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\iservices\\imeetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\iservices\\imeetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.service\\services\\meetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|solutionrelative:teamtrack.service\\services\\meetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\repositories\\meetingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\repositories\\meetingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\models\\meetingpostmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,28 +63,12 @@
       "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\dtos\\meetingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\entities\\meeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\entities\\meeting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\repositories\\repositorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,16 +79,8 @@
       "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\irepositories\\imeetingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|solutionrelative:teamtrack.service\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.service\\services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B271E5DA-3319-440B-824E-5A31A0EF3CAF}|TeamTrack.Service\\TeamTrack.Service.csproj|solutionrelative:teamtrack.service\\services\\openaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\iservices\\imeetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\iservices\\imeetingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\models\\userpostmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -107,20 +123,12 @@
       "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\teamtrack.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\controllers\\keypointscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\controllers\\keypointscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\teamtrack.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\teamtrack.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8C48F7DF-2D8A-4622-B82F-EA7D6F08B433}|TeamTrack.API\\TeamTrack.API.csproj|solutionrelative:teamtrack.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user1\\AppData\\Roaming\\Microsoft\\UserSecrets\\56a8a6b8-e8a9-4b6a-8e75-97551edf33b2\\secrets.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
@@ -140,14 +148,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.data\\migrations\\20250506134656_migrationafterchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8BDBE2BB-BBBA-446E-A955-EDCA823A053F}|TeamTrack.Data\\TeamTrack.Data.csproj|solutionrelative:teamtrack.data\\migrations\\20250506134656_migrationafterchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\iservices\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\iservices\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|c:\\users\\user1\\desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 fullstack\\teamtrack\\teamtrack-server\\teamtrack.core\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{553C5A49-8E09-48C7-B0FD-728B4C23CA49}|TeamTrack.Core\\TeamTrack.Core.csproj|solutionrelative:teamtrack.core\\irepositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -157,7 +157,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -165,176 +165,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MeetingService.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\MeetingService.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\MeetingService.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\MeetingService.cs",
-              "RelativeToolTip": "TeamTrack.Service\\Services\\MeetingService.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAuwGQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T13:51:15.493Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MeetingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\MeetingRepository.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\MeetingRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\MeetingRepository.cs",
-              "RelativeToolTip": "TeamTrack.Data\\Repositories\\MeetingRepository.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAuwE4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T14:45:13.494Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DataContext.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\DataContext.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Data\\DataContext.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\DataContext.cs",
-              "RelativeToolTip": "TeamTrack.Data\\DataContext.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAA+wCMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T09:50:14.25Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\MappingProfile.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\MappingProfile.cs",
-              "RelativeToolTip": "TeamTrack.Core\\MappingProfile.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T15:13:28.169Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "MeetingController.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\MeetingController.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\MeetingController.cs",
               "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\MeetingController.cs",
               "RelativeToolTip": "TeamTrack.API\\Controllers\\MeetingController.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAAHoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAAAKgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-06T17:18:57.555Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MeetingDTO.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\MeetingDTO.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\DTOs\\MeetingDTO.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\MeetingDTO.cs",
-              "RelativeToolTip": "TeamTrack.Core\\DTOs\\MeetingDTO.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAywBoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T15:10:03.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "Meeting.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\Meeting.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\Entities\\Meeting.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\Meeting.cs",
-              "RelativeToolTip": "TeamTrack.Core\\Entities\\Meeting.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAywBoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T15:28:08.572Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\User.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\Entities\\User.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\User.cs",
-              "RelativeToolTip": "TeamTrack.Core\\Entities\\User.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAIwCMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T20:08:42.775Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UserDTO.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\UserDTO.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\DTOs\\UserDTO.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\UserDTO.cs",
-              "RelativeToolTip": "TeamTrack.Core\\DTOs\\UserDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T01:14:22.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MeetingPostModel.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\MeetingPostModel.cs",
-              "RelativeDocumentMoniker": "TeamTrack.API\\Models\\MeetingPostModel.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\MeetingPostModel.cs",
-              "RelativeToolTip": "TeamTrack.API\\Models\\MeetingPostModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T13:40:35.5Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\UserRepository.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "TeamTrack.Data\\Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAqwFwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T01:11:21.481Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "RepositoryManager.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\RepositoryManager.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\RepositoryManager.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\RepositoryManager.cs",
-              "RelativeToolTip": "TeamTrack.Data\\Repositories\\RepositoryManager.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAiwBwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T18:23:38.543Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IMeetingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
-              "RelativeToolTip": "TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T15:22:21.383Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\UserService.cs",
@@ -347,20 +191,98 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "OpenAiService.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\OpenAiService.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\OpenAiService.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\OpenAiService.cs",
-              "RelativeToolTip": "TeamTrack.Service\\Services\\OpenAiService.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAAAGcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IUserService.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\IServices\\IUserService.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IUserService.cs",
+              "RelativeToolTip": "TeamTrack.Core\\IServices\\IUserService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T10:41:53.145Z",
+              "WhenOpened": "2025-05-06T18:16:28.321Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 7,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "TeamTrack.API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAqwMEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T14:26:34.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\IRepositories\\IUserRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IUserRepository.cs",
+              "RelativeToolTip": "TeamTrack.Core\\IRepositories\\IUserRepository.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAwwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T18:15:11.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "TeamTrack.Data\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAqwFwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T01:11:21.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\MappingProfile.cs",
+              "RelativeToolTip": "TeamTrack.Core\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T15:13:28.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DataContext.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\DataContext.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Data\\DataContext.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\DataContext.cs",
+              "RelativeToolTip": "TeamTrack.Data\\DataContext.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA+wCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T09:50:14.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KeyPointsController.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\KeyPointsController.cs",
+              "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\KeyPointsController.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\KeyPointsController.cs",
+              "RelativeToolTip": "TeamTrack.API\\Controllers\\KeyPointsController.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAuwGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T16:00:56.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "IMeetingService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IMeetingService.cs",
               "RelativeDocumentMoniker": "TeamTrack.Core\\IServices\\IMeetingService.cs",
@@ -373,7 +295,137 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\UserDTO.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\DTOs\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\UserDTO.cs",
+              "RelativeToolTip": "TeamTrack.Core\\DTOs\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T01:14:22.682Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MeetingService.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\MeetingService.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\MeetingService.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\MeetingService.cs",
+              "RelativeToolTip": "TeamTrack.Service\\Services\\MeetingService.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAuwGQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T13:51:15.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MeetingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\MeetingRepository.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\MeetingRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\MeetingRepository.cs",
+              "RelativeToolTip": "TeamTrack.Data\\Repositories\\MeetingRepository.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAuwE4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T14:45:13.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MeetingPostModel.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\MeetingPostModel.cs",
+              "RelativeDocumentMoniker": "TeamTrack.API\\Models\\MeetingPostModel.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\MeetingPostModel.cs",
+              "RelativeToolTip": "TeamTrack.API\\Models\\MeetingPostModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T13:40:35.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MeetingDTO.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\MeetingDTO.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\DTOs\\MeetingDTO.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\DTOs\\MeetingDTO.cs",
+              "RelativeToolTip": "TeamTrack.Core\\DTOs\\MeetingDTO.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAywBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T15:10:03.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\Entities\\User.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\User.cs",
+              "RelativeToolTip": "TeamTrack.Core\\Entities\\User.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAIwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T20:08:42.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 16,
+              "Title": "Meeting.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\Meeting.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\Entities\\Meeting.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\Entities\\Meeting.cs",
+              "RelativeToolTip": "TeamTrack.Core\\Entities\\Meeting.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAywBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T15:28:08.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "RepositoryManager.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\RepositoryManager.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Data\\Repositories\\RepositoryManager.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Repositories\\RepositoryManager.cs",
+              "RelativeToolTip": "TeamTrack.Data\\Repositories\\RepositoryManager.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAiwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T18:23:38.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IMeetingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
+              "RelativeToolTip": "TeamTrack.Core\\IRepositories\\IMeetingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T15:22:21.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "OpenAiService.cs",
+              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\OpenAiService.cs",
+              "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\OpenAiService.cs",
+              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\OpenAiService.cs",
+              "RelativeToolTip": "TeamTrack.Service\\Services\\OpenAiService.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAAGcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T10:41:53.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
               "Title": "UserPostModel.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\UserPostModel.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Models\\UserPostModel.cs",
@@ -386,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "20250625125925_Final.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Migrations\\20250625125925_Final.cs",
               "RelativeDocumentMoniker": "TeamTrack.Data\\Migrations\\20250625125925_Final.cs",
@@ -399,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "TeamTrack.Data.csproj",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\TeamTrack.Data.csproj",
               "RelativeDocumentMoniker": "TeamTrack.Data\\TeamTrack.Data.csproj",
@@ -412,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "TeamTrack.Service.csproj",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\TeamTrack.Service.csproj",
               "RelativeDocumentMoniker": "TeamTrack.Service\\TeamTrack.Service.csproj",
@@ -429,7 +481,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Program.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Program.cs",
@@ -442,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "S3Service.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Service\\Services\\S3Service.cs",
               "RelativeDocumentMoniker": "TeamTrack.Service\\Services\\S3Service.cs",
@@ -455,7 +507,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "FileUploadController.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\FileUploadController.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\FileUploadController.cs",
@@ -468,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "IS3Service.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IS3Service.cs",
               "RelativeDocumentMoniker": "TeamTrack.Core\\IServices\\IS3Service.cs",
@@ -481,7 +533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "FileUploadRequest.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\FileUploadRequest.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Models\\FileUploadRequest.cs",
@@ -494,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "TeamTrack.Core.csproj",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\TeamTrack.Core.csproj",
               "RelativeDocumentMoniker": "TeamTrack.Core\\TeamTrack.Core.csproj",
@@ -507,20 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "KeyPointsController.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\KeyPointsController.cs",
-              "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\KeyPointsController.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\KeyPointsController.cs",
-              "RelativeToolTip": "TeamTrack.API\\Controllers\\KeyPointsController.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAuwGkAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T16:00:56.571Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "TeamTrack.API.csproj",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\TeamTrack.API.csproj",
               "RelativeDocumentMoniker": "TeamTrack.API\\TeamTrack.API.csproj",
@@ -533,7 +572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "LoginModel.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Models\\LoginModel.cs",
               "RelativeDocumentMoniker": "TeamTrack.API\\Models\\LoginModel.cs",
@@ -546,20 +585,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "TeamTrack.API\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\Controllers\\UserController.cs",
-              "RelativeToolTip": "TeamTrack.API\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAKsAAAAAAAAAAAAqwMEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T14:26:34.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "secrets.json",
               "DocumentMoniker": "C:\\Users\\user1\\AppData\\Roaming\\Microsoft\\UserSecrets\\56a8a6b8-e8a9-4b6a-8e75-97551edf33b2\\secrets.json",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\UserSecrets\\56a8a6b8-e8a9-4b6a-8e75-97551edf33b2\\secrets.json",
@@ -571,7 +597,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.API\\appsettings.json",
               "RelativeDocumentMoniker": "TeamTrack.API\\appsettings.json",
@@ -583,7 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "IOpenAiService.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IOpenAiService.cs",
               "RelativeDocumentMoniker": "TeamTrack.Core\\IServices\\IOpenAiService.cs",
@@ -595,31 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IUserService.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\IServices\\IUserService.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IServices\\IUserService.cs",
-              "RelativeToolTip": "TeamTrack.Core\\IServices\\IUserService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAswBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T18:16:28.321Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 36,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "TeamTrack.Core\\IRepositories\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Core\\IRepositories\\IUserRepository.cs",
-              "RelativeToolTip": "TeamTrack.Core\\IRepositories\\IUserRepository.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAswBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T18:15:11.061Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
               "Title": "20250506134656_MigrationAfterChanges.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Migrations\\20250506134656_MigrationAfterChanges.cs",
               "RelativeDocumentMoniker": "TeamTrack.Data\\Migrations\\20250506134656_MigrationAfterChanges.cs",
@@ -631,7 +633,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "20250501102939_MigrationToMySQL.cs",
               "DocumentMoniker": "C:\\Users\\user1\\Desktop\\\u05E9\u05E0\u05D4 \u05D1-\u05EA\u05E9\u05E4\u05D4\\\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 Fullstack\\TeamTrack\\TeamTrack-Server\\TeamTrack.Data\\Migrations\\20250501102939_MigrationToMySQL.cs",
               "RelativeDocumentMoniker": "TeamTrack.Data\\Migrations\\20250501102939_MigrationToMySQL.cs",
