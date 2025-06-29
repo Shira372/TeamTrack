@@ -5,6 +5,7 @@ using TeamTrack.Core.IServices;
 using TeamTrack.Core.DTOs;
 using AutoMapper;
 using TeamTrack.API.Models;
+using System.Security.Claims;
 
 namespace TeamTrack.API.Controllers
 {
@@ -162,8 +163,13 @@ namespace TeamTrack.API.Controllers
         private bool TryGetUserId(out int userId)
         {
             userId = 0;
-            var claim = User.FindFirst("sub") ?? User.FindFirst("id") ?? User.FindFirst("UserId");
-            return claim != null && int.TryParse(claim.Value, out userId);
+
+            var claim = User.FindFirst(ClaimTypes.NameIdentifier); 
+
+            if (claim == null)
+                return false;
+
+            return int.TryParse(claim.Value, out userId);
         }
     }
 }
