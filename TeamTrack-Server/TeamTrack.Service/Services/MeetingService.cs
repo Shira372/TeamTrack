@@ -36,22 +36,8 @@ public class MeetingService : IMeetingService
         if (creator == null)
             throw new ArgumentException("המשתמש היוצר לא קיים במסד הנתונים.");
 
-        // טיפול במשתתפים - לוודא שכל המשתתפים קיימים במסד
-        if (meeting.Users != null && meeting.Users.Any())
-        {
-            var validatedUsers = new List<User>();
-            foreach (var userToAdd in meeting.Users)
-            {
-                var existingUser = await _userService.GetById(userToAdd.Id);
-                if (existingUser != null)
-                    validatedUsers.Add(existingUser);
-            }
-            meeting.Users = validatedUsers;
-        }
-        else
-        {
-            meeting.Users = new List<User>();
-        }
+        // המשתתפים כבר נטענו בקונטרולר
+        meeting.Users ??= new List<User>();
 
         // הוספת הישיבה למסד ושמירת שינויים
         var added = await _repositoryManager.MeetingRepository.AddAsync(meeting);
@@ -70,7 +56,7 @@ public class MeetingService : IMeetingService
         existing.TranscriptionLink = meeting.TranscriptionLink;
         existing.UpdatedAt = DateTime.UtcNow;
 
-        // אפשרות לעדכן משתתפים (כאן אפשר להרחיב בעתיד)
+        // אפשרות לעדכן משתתפים (נשאר פה, כדי להבטיח יציבות)
         if (meeting.Users != null)
         {
             var validatedUsers = new List<User>();

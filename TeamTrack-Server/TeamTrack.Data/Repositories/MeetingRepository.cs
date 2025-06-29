@@ -35,6 +35,22 @@ public class MeetingRepository : IMeetingRepository
 
     public async Task<Meeting> AddAsync(Meeting meeting)
     {
+        if (meeting.Users != null && meeting.Users.Count > 0)
+        {
+            var trackedUsers = new List<User>();
+            foreach (var user in meeting.Users)
+            {
+                var userFromDb = await _context.Users.FindAsync(user.Id);
+                if (userFromDb != null)
+                    trackedUsers.Add(userFromDb);
+            }
+            meeting.Users = trackedUsers;
+        }
+        else
+        {
+            meeting.Users = new List<User>();
+        }
+
         await _context.Meetings.AddAsync(meeting);
         return meeting;
     }

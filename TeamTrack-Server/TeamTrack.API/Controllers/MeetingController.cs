@@ -11,7 +11,7 @@ namespace TeamTrack.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // כל הפונקציות דורשות התחברות
+    [Authorize]
     public class MeetingsController : ControllerBase
     {
         private readonly IMeetingService _meetingService;
@@ -92,15 +92,12 @@ namespace TeamTrack.API.Controllers
 
                 if (model.ParticipantIds?.Any() == true)
                 {
-                    // בוא נטען את המשתתפים הקיימים ממסד הנתונים כדי להימנע מהוספה כפולה
                     var participants = new List<User>();
                     foreach (var id in model.ParticipantIds)
                     {
                         var participant = await _userService.GetById(id);
                         if (participant != null)
-                        {
                             participants.Add(participant);
-                        }
                     }
                     meeting.Users = participants;
                 }
@@ -116,15 +113,34 @@ namespace TeamTrack.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] Meeting meeting)
+        public async Task<ActionResult> Put(int id, [FromBody] MeetingPostModel model)
         {
-            if (id != meeting.Id)
-                return BadRequest("ה־ID בפנייה שונה מה־ID של הפגישה");
-
-            var updated = await _meetingService.UpdateAsync(meeting);
-            if (updated == null)
+            var existing = await _meetingService.GetById(id);
+            if (existing == null)
                 return NotFound("הפגישה לא נמצאה");
 
+            existing.MeetingName = model.MeetingName;
+            existing.TranscriptionLink = model.TranscriptionLink;
+            existing.SummaryLink = model.SummaryLink;
+            existing.UpdatedAt = DateTime.UtcNow;
+
+            if (model.ParticipantIds?.Any() == true)
+            {
+                var participants = new List<User>();
+                foreach (var userId in model.ParticipantIds)
+                {
+                    var participant = await _userService.GetById(userId);
+                    if (participant != null)
+                        participants.Add(participant);
+                }
+                existing.Users = participants;
+            }
+            else
+            {
+                existing.Users = new List<User>();
+            }
+
+            var updated = await _meetingService.UpdateAsync(existing);
             return Ok(await MapMeetingToDTO(updated));
         }
 
@@ -168,7 +184,6 @@ namespace TeamTrack.API.Controllers
             userId = 0;
 
             var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-
             if (claim == null)
                 return false;
 
