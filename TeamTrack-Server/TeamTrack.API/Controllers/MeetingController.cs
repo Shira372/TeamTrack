@@ -92,12 +92,15 @@ namespace TeamTrack.API.Controllers
 
                 if (model.ParticipantIds?.Any() == true)
                 {
+                    // בוא נטען את המשתתפים הקיימים ממסד הנתונים כדי להימנע מהוספה כפולה
                     var participants = new List<User>();
                     foreach (var id in model.ParticipantIds)
                     {
                         var participant = await _userService.GetById(id);
                         if (participant != null)
+                        {
                             participants.Add(participant);
+                        }
                     }
                     meeting.Users = participants;
                 }
@@ -164,7 +167,7 @@ namespace TeamTrack.API.Controllers
         {
             userId = 0;
 
-            var claim = User.FindFirst(ClaimTypes.NameIdentifier); 
+            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (claim == null)
                 return false;
