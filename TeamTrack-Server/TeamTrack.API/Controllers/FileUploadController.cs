@@ -33,9 +33,14 @@ namespace TeamTrack.API.Controllers
 
             try
             {
-                var fileUrl = await _s3Service.UploadFileAsync(request.File);
+                // נשלח לקובץ השירות לקבל גם את הקישור וגם את השם ב־S3
+                var (fileUrl, s3Key) = await _s3Service.UploadFileWithKeyAsync(request.File);
 
-                return Ok(new { fileUrl }); // מחזיר רק קישור זמני חתום מראש
+                return Ok(new
+                {
+                    fileUrl,
+                    s3Key
+                });
             }
             catch (Exception ex)
             {

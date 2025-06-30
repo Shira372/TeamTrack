@@ -348,6 +348,13 @@ const UploadFile = () => {
                 {uploadResponse.message}
               </Alert>
 
+              {/* הודעת UX נוספת – מופיעה רק כשיש הצלחה */}
+              {uploadResponse.success && (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  הקובץ האחרון שהועלה ישמש לעיבוד בהמשך.
+                </Typography>
+              )}
+
               {/* כפתור העתקת קישור */}
               {uploadResponse.success && uploadResponse.fileUrl && (
                 <Button
