@@ -20,18 +20,24 @@ namespace TeamTrack.Service
 
         public S3Service(IConfiguration configuration)
         {
-            _accessKey = configuration["AWS:AccessKey"];
-            _secretKey = configuration["AWS:SecretKey"];
-            _bucketName = configuration["AWS:BucketName"];
-            _region = configuration["AWS:Region"];
+            _accessKey = configuration["AWS:AccessKey"] ?? throw new ArgumentNullException("AWS:AccessKey");
+            _secretKey = configuration["AWS:SecretKey"] ?? throw new ArgumentNullException("AWS:SecretKey");
+            _bucketName = configuration["AWS:BucketName"] ?? throw new ArgumentNullException("AWS:BucketName");
+            _region = configuration["AWS:Region"] ?? throw new ArgumentNullException("AWS:Region");
         }
 
         public async Task<string> UploadFileAsync(IFormFile file)
         {
+            var (url, _) = await UploadFileWithKeyAsync(file);
+            return url;
+        }
+
+        public async Task<(string fileUrl, string s3Key)> UploadFileWithKeyAsync(IFormFile file)
+        {
             if (file == null || file.Length == 0)
                 throw new ArgumentException("Invalid file");
 
-            var key = $"uploads/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var s3Key = $"uploads/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
             using var stream = file.OpenReadStream();
             var client = new AmazonS3Client(_accessKey, _secretKey, Amazon.RegionEndpoint.GetBySystemName(_region));
@@ -39,7 +45,7 @@ namespace TeamTrack.Service
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = stream,
-                Key = key,
+                Key = s3Key,
                 BucketName = _bucketName,
                 ContentType = file.ContentType
             };
@@ -50,11 +56,12 @@ namespace TeamTrack.Service
             var urlRequest = new GetPreSignedUrlRequest
             {
                 BucketName = _bucketName,
-                Key = key,
+                Key = s3Key,
                 Expires = DateTime.UtcNow.AddHours(1)
             };
 
-            return client.GetPreSignedURL(urlRequest);
+            var fileUrl = client.GetPreSignedURL(urlRequest);
+            return (fileUrl, s3Key);
         }
 
         public async Task<List<string>> ListFilesAsync()
