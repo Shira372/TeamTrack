@@ -30,34 +30,34 @@ export class HomeComponent implements OnInit {
   currentUser: User | null = null
   isLoaded = false
   activeFeature: number | null = null
-  
+
   private authService = inject(AuthService)
 
   features = [
     {
-      icon: "event_note",
-      title: "תיעוד ישיבות",
-      description: "תעד את כל הישיבות במקום אחד עם אפשרות לחיפוש וסינון מהיר",
-      bullets: ["ארגון אוטומטי", "תיוג משתתפים", "חיפוש מהיר"],
-    },
-    {
-      icon: "assignment",
-      title: "דוחות וסיכומים",
-      description: "הפק דוחות מותאמים אישית וקבל תובנות על פעילות הצוות",
-      bullets: ["ניתוח מגמות", "מעקב החלטות", "יצוא לפורמטים שונים"],
-    },
-    {
       icon: "people",
       title: "ניהול משתמשים",
-      description: "נהל את חברי הצוות, הרשאות וגישה למערכת",
-      bullets: ["הגדרת הרשאות", "מעקב פעילות", "ניהול קבוצות"],
+      description: "נהל משתמשים, עדכן והרשאות דרך ממשק נוח ואינטואיטיבי",
+      bullets: ["הוספת משתמשים", "שינוי תפקידים", "מחיקה וניהול הרשאות"],
+    },
+    {
+      icon: "bar_chart",
+      title: "דוחות גרפיים",
+      description: "נתח פעילות משתמשים ודוחות מותאמים אישית",
+      bullets: ["נתונים סטטיסטיים", "השוואות משתמשים", "פילוחים לפי תפקיד"],
+    },
+    {
+      icon: "vpn_key",
+      title: "גישה מאובטחת",
+      description: "כניסה עם JWT, פרטיות וניהול גישה",
+      bullets: ["אימות עם Token", "גישה לפי הרשאות", "שמירה על אבטחת מידע"],
     },
   ]
 
   metrics = [
-    { value: "87%", label: "חיסכון בזמן", icon: "access_time" },
-    { value: "1000+", label: "לקוחות מרוצים", icon: "emoji_people" },
-    { value: "3X", label: "שיפור בתפוקה", icon: "speed" },
+    { value: "99%", label: "אבטחת מידע", icon: "security" },
+    { value: "120+", label: "משתמשים פעילים", icon: "groups" },
+    { value: "5", label: "דוחות פעילים", icon: "insert_chart" },
   ]
 
   ngOnInit(): void {

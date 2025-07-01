@@ -1,78 +1,50 @@
-import { Component, inject } from "@angular/core"
-import { CommonModule } from "@angular/common"
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from "@angular/forms"
-import { Router, RouterModule } from "@angular/router"
-import { MatCardModule } from "@angular/material/card"
-import { MatFormFieldModule } from "@angular/material/form-field"
-import { MatInputModule } from "@angular/material/input"
-import { MatButtonModule } from "@angular/material/button"
-import { MatIconModule } from "@angular/material/icon"
-import { ToastrService } from "ngx-toastr"
-import { AuthService } from "../../services/auth.service"
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-signup",
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
-  templateUrl: "./signup.component.html",
-  styleUrls: ["./signup.component.css"],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  private fb = inject(FormBuilder)
-  private authService = inject(AuthService)
-  private router = inject(Router)
-  private toastr = inject(ToastrService)
-  
-  signupForm = this.fb.group(
-    {
-      name: ["", [Validators.required, Validators.minLength(2)]],
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ["", [Validators.required]],
-    },
-    { validators: this.passwordMatchValidator }
-  )
-  
-  isLoading = false
-  hidePassword = true
-  hideConfirmPassword = true
+  userForm: FormGroup;
+  error: string | null = null;
+  loading = false;
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get("password")
-    const confirmPassword = form.get("confirmPassword")
-    return password && confirmPassword && password.value === confirmPassword.value ? null : { passwordMismatch: true }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.userForm = this.fb.group({
+      userName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      passwordHash: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['user', Validators.required],
+      company: ['']
+    });
   }
 
-  onSubmit(): void {
-    if (this.signupForm.valid) {
-      this.isLoading = true
-      this.authService.signup(this.signupForm.value as any).subscribe({
-        next: () => {
-          this.toastr.success("נרשמת בהצלחה!")
-          this.router.navigate(["/dashboard"])
-        },
-        error: () => {
-          this.toastr.error("שגיאה בהרשמה. אנא נסה שוב.")
-          this.isLoading = false
-        },
-      })
+  submit(): void {
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched();  
+      return;
     }
-  }
 
-  togglePasswordVisibility(): void {
-    this.hidePassword = !this.hidePassword
-  }
+    this.error = null;
+    this.loading = true;
 
-  toggleConfirmPasswordVisibility(): void {
-    this.hideConfirmPassword = !this.hideConfirmPassword
+    this.authService.signup(this.userForm.value).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/login']);
+      },
+      error: (err: any) => {
+        this.loading = false;
+        this.error = err.error?.message || 'שגיאה ברישום המשתמש';
+      }
+    });
   }
 }

@@ -1,0 +1,80 @@
+form {
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #b22222; /* אדום כהה */
+  }
+  
+  form div {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #800000; /* אדום כהה */
+  }
+  
+  input,
+  select {
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 2px solid #b22222;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: #a52a2a;
+    box-shadow: 0 0 6px #a52a2a88;
+  }
+  
+  /* סטייל לשגיאות ולמסרים */
+  div[ng-reflect-ng-if] {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #b22222;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:disabled {
+    background-color: #f4a1a1;
+    cursor: not-allowed;
+  }
+  
+  button:not(:disabled):hover {
+    background-color: #800000;
+  }
+  
+  /* הודעת שגיאה כללית */
+  div[style*="color: red"] {
+    margin-top: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+  

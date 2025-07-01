@@ -1,53 +1,82 @@
 .signup-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #ffebee 0%, #ffffff 100%);
-    padding: 20px;
-  }
-  
-  .signup-card {
-    width: 100%;
-    max-width: 400px;
-    padding: 32px;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  }
-  
-  .signup-header {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  
-  .signup-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  
-  .signup-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .full-width {
-    width: 100%;
-  }
-  
-  .signup-actions {
-    text-align: center;
-    margin-top: 24px;
-  }
-  
-  .login-link {
-    color: #d32f2f;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  
-  .login-link:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffebee 0%, #ffffff 100%);
+  padding: 20px;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(211, 47, 47, 0.2);
+  background: white;
+}
+
+.signup-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #d32f2f;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #d32f2f;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline {
+  border-color: #b71c1c;
+}
+
+.mat-form-field-label {
+  color: #b71c1c;
+  font-weight: 600;
+}
+
+.mat-input-element {
+  color: #333;
+}
+
+.mat-error {
+  color: #b71c1c;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.primary-button {
+  background-color: #d32f2f;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
+
+.primary-button:disabled {
+  background-color: #f8bbd0;
+  color: #fff0f0;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin-top: 12px;
+  color: #b71c1c;
+  font-weight: 600;
+  text-align: center;
+}

@@ -1,75 +1,66 @@
 <div class="signup-container">
-    <mat-card class="signup-card">
-      <mat-card-header class="signup-header">
-        <mat-card-title class="signup-title gradient-text">הרשמה</mat-card-title>
-        <mat-card-subtitle>צור חשבון חדש</mat-card-subtitle>
-      </mat-card-header>
-  
-      <mat-card-content>
-        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>שם מלא</mat-label>
-            <input matInput type="text" formControlName="name" required>
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
-              שם נדרש
-            </mat-error>
-            <mat-error *ngIf="signupForm.get('name')?.hasError('minlength')">
-              שם חייב להכיל לפחות 2 תווים
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>אימייל</mat-label>
-            <input matInput type="email" formControlName="email" required>
-            <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
-              אימייל נדרש
-            </mat-error>
-            <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
-              אימייל לא תקין
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>סיסמה</mat-label>
-            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
-            <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
-              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
-              סיסמה נדרשת
-            </mat-error>
-            <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
-              סיסמה חייבת להכיל לפחות 6 תווים
-            </mat-error>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>אישור סיסמה</mat-label>
-            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required>
-            <button mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()" type="button">
-              <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">
-              אישור סיסמה נדרש
-            </mat-error>
-            <mat-error *ngIf="signupForm.hasError('passwordMismatch')">
-              הסיסמאות אינן תואמות
-            </mat-error>
-          </mat-form-field>
-  
-          <button mat-raised-button type="submit" class="primary-button full-width" [disabled]="!signupForm.valid || isLoading">
-            <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
-            <mat-icon *ngIf="!isLoading">person_add</mat-icon>
-            {{isLoading ? 'נרשם...' : 'הירשם'}}
-          </button>
-        </form>
-      </mat-card-content>
-  
-      <mat-card-actions class="signup-actions">
-        <p>יש לך כבר חשבון? <a routerLink="/login" class="login-link">התחבר כאן</a></p>
-      </mat-card-actions>
-    </mat-card>
+  <div class="signup-card">
+    <h2 class="signup-title">הוספת משתמש חדש</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="submit()" class="signup-form" novalidate>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>שם משתמש</mat-label>
+        <input matInput type="text" formControlName="userName" required />
+        <mat-error *ngIf="userForm.get('userName')?.hasError('required') && userForm.get('userName')?.touched">
+          חובה להזין שם משתמש
+        </mat-error>
+        <mat-error *ngIf="userForm.get('userName')?.hasError('minlength') && userForm.get('userName')?.touched">
+          שם משתמש חייב להכיל לפחות 2 תווים
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>אימייל</mat-label>
+        <input matInput type="email" formControlName="email" required />
+        <mat-error *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
+          חובה להזין אימייל
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email')?.hasError('email') && userForm.get('email')?.touched">
+          פורמט אימייל לא תקין
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>סיסמה</mat-label>
+        <input matInput type="password" formControlName="passwordHash" required />
+        <mat-error *ngIf="userForm.get('passwordHash')?.hasError('required') && userForm.get('passwordHash')?.touched">
+          חובה להזין סיסמה
+        </mat-error>
+        <mat-error *ngIf="userForm.get('passwordHash')?.hasError('minlength') && userForm.get('passwordHash')?.touched">
+          הסיסמה חייבת להכיל לפחות 6 תווים
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>תפקיד</mat-label>
+        <mat-select formControlName="role" required>
+          <mat-option value="user">משתמש</mat-option>
+          <mat-option value="admin">מנהל</mat-option>
+        </mat-select>
+        <mat-error *ngIf="userForm.get('role')?.hasError('required') && userForm.get('role')?.touched">
+          חובה לבחור תפקיד
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>חברה (אופציונלי)</mat-label>
+        <input matInput type="text" formControlName="company" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="primary-button" type="submit" [disabled]="userForm.invalid || loading">
+        <mat-icon *ngIf="loading">hourglass_empty</mat-icon>
+        <mat-icon *ngIf="!loading">save</mat-icon>
+        {{ loading ? 'שומר...' : 'שמור' }}
+      </button>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+    </form>
   </div>
-  
+</div>

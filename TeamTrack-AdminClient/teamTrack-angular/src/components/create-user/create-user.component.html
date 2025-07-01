@@ -1,8 +1,9 @@
 <h2>הוספת משתמש חדש</h2>
+
 <form [formGroup]="userForm" (ngSubmit)="submit()">
   <div>
-    <label>שם מלא</label>
-    <input type="text" formControlName="name" />
+    <label>שם משתמש</label>
+    <input type="text" formControlName="userName" />
   </div>
 
   <div>
@@ -12,7 +13,7 @@
 
   <div>
     <label>סיסמה</label>
-    <input type="password" formControlName="password" />
+    <input type="password" formControlName="passwordHash" />
   </div>
 
   <div>
@@ -21,6 +22,11 @@
       <option value="user">משתמש</option>
       <option value="admin">מנהל</option>
     </select>
+  </div>
+
+  <div>
+    <label>חברה</label>
+    <input type="text" formControlName="company" />
   </div>
 
   <button type="submit" [disabled]="userForm.invalid">שמור</button>

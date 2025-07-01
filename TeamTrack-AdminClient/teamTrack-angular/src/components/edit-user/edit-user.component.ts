@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-edit-user',
-  templateUrl: './edit-user.component.html',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './edit-user.component.html',
 })
 export class EditUserComponent implements OnInit {
+  form!: FormGroup;
   userId!: number;
   isLoading = false;
   error: string | null = null;
-
-  form!: ReturnType<FormBuilder['group']>;
 
   constructor(
     private fb: FormBuilder,
@@ -27,9 +26,10 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(2)]],
+      userName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required],
+      company: [''],
     });
 
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
@@ -38,14 +38,15 @@ export class EditUserComponent implements OnInit {
       this.userService.getUser(this.userId).subscribe({
         next: (user: User) => {
           this.form.patchValue({
-            fullName: user.name ?? '',
+            userName: user.userName ?? '',
             email: user.email ?? '',
             role: user.role ?? '',
+            company: user.company ?? '',
           });
           this.isLoading = false;
         },
         error: () => {
-          this.error = 'שגיאה בטעינת משתמש';
+          this.error = 'שגיאה בטעינת המשתמש';
           this.isLoading = false;
         },
       });
@@ -55,7 +56,14 @@ export class EditUserComponent implements OnInit {
   onSubmit(): void {
     if (this.form.invalid) return;
 
-    this.userService.updateUser(this.userId, this.form.value).subscribe({
+    const updatedUser: Partial<User> = {
+      userName: this.form.value.userName ?? '',
+      email: this.form.value.email ?? '',
+      role: this.form.value.role ?? '',
+      company: this.form.value.company ?? '',
+    };
+
+    this.userService.updateUser(this.userId, updatedUser).subscribe({
       next: () => this.router.navigate(['/users']),
       error: () => (this.error = 'שגיאה בעדכון המשתמש'),
     });

@@ -2,16 +2,16 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div>
-    <label>שם מלא:</label>
-    <input formControlName="fullName" />
-    <div *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched">
-      חובה להזין שם מלא (לפחות 2 תווים).
+    <label>שם משתמש:</label>
+    <input formControlName="userName" />
+    <div *ngIf="form.get('userName')?.invalid && form.get('userName')?.touched">
+      חובה להזין שם משתמש (לפחות 2 תווים).
     </div>
   </div>
 
   <div>
     <label>אימייל:</label>
-    <input formControlName="email" />
+    <input formControlName="email" type="email" />
     <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
       אימייל לא תקין.
     </div>
@@ -27,6 +27,11 @@
     <div *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
       חובה לבחור תפקיד.
     </div>
+  </div>
+
+  <div>
+    <label>חברה:</label>
+    <input formControlName="company" />
   </div>
 
   <button type="submit" [disabled]="form.invalid">עדכן</button>

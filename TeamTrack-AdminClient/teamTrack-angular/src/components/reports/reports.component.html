@@ -10,7 +10,6 @@
   </mat-toolbar>
 
   <div class="content-container">
-    <!-- Select Report Type -->
     <mat-card class="selection-card">
       <mat-card-content>
         <mat-form-field appearance="outline" class="report-select">
@@ -24,19 +23,16 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Loading Spinner -->
-    <ng-container [if]="isLoading">
+    <ng-container *ngIf="isLoading">
       <div class="loading-container">
         <mat-icon class="loading-icon">hourglass_empty</mat-icon>
         <p>טוען נתוני דוח...</p>
       </div>
     </ng-container>
 
-    <!-- Chart Display -->
-    <ng-container [if]="!isLoading">
+    <ng-container *ngIf="!isLoading">
       <div class="charts-container">
-        <!-- Users Chart -->
-        <ng-container [if]="selectedReportType === 'users'">
+        <ng-container *ngIf="selectedReportType === 'users'">
           <mat-card class="chart-card">
             <mat-card-header>
               <mat-card-title>
@@ -57,8 +53,7 @@
           </mat-card>
         </ng-container>
 
-        <!-- Meetings Chart -->
-        <ng-container [if]="selectedReportType === 'meetings'">
+        <ng-container *ngIf="selectedReportType === 'meetings'">
           <mat-card class="chart-card">
             <mat-card-header>
               <mat-card-title>
@@ -79,8 +74,7 @@
           </mat-card>
         </ng-container>
 
-        <!-- Activity Chart -->
-        <ng-container [if]="selectedReportType === 'activity'">
+        <ng-container *ngIf="selectedReportType === 'activity'">
           <mat-card class="chart-card">
             <mat-card-header>
               <mat-card-title>
@@ -102,7 +96,6 @@
         </ng-container>
       </div>
 
-      <!-- Statistics Cards -->
       <div class="stats-container">
         <mat-card class="stat-card">
           <mat-card-content>

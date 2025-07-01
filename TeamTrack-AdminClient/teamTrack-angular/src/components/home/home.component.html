@@ -1,132 +1,37 @@
-<div class="home-container">
-    <!-- Header/Navigation Bar -->
-    <mat-toolbar class="header-toolbar">
-      <div class="toolbar-content">
-        <div class="logo-section">
-          <mat-icon class="logo-icon">groups</mat-icon>
-          <span class="logo-text gradient-text">TeamTrack</span>
-        </div>
-  
-        <div class="nav-buttons" *ngIf="!currentUser">
-          <button mat-stroked-button routerLink="/login" class="nav-button">
-            <mat-icon>login</mat-icon>
-            התחברות
-          </button>
-          <button mat-stroked-button routerLink="/signup" class="nav-button">
-            <mat-icon>person_add</mat-icon>
-            הרשמה
-          </button>
-        </div>
-  
-        <div class="user-menu" *ngIf="currentUser">
-          <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-            <mat-icon>account_circle</mat-icon>
-            {{currentUser.name}}
-          </button>
-          <mat-menu #userMenu="matMenu">
-            <button mat-menu-item routerLink="/dashboard">
-              <mat-icon>dashboard</mat-icon>
-              לוח בקרה
-            </button>
-            <button mat-menu-item routerLink="/users">
-              <mat-icon>people</mat-icon>
-              ניהול משתמשים
-            </button>
-            <button mat-menu-item routerLink="/reports">
-              <mat-icon>bar_chart</mat-icon>
-              דוחות
-            </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon color="warn">logout</mat-icon>
-              התנתק
-            </button>
-          </mat-menu>
-        </div>
-      </div>
-    </mat-toolbar>
-  
-    <!-- Hero Section -->
-    <div class="hero-section">
-      <mat-card class="hero-card hero-container">
-        <!-- Floating background elements -->
-        <div class="floating-element" 
-             *ngFor="let bubble of [1,2,3,4,5,6]; let i = index"
-             [style.width.px]="100 + (i * 25)"
-             [style.height.px]="100 + (i * 25)"
-             [style.top.%]="(i * 15) % 80"
-             [style.left.%]="(i * 20) % 80"
-             [style.animation-delay.s]="i * 0.5">
-        </div>
-  
-        <mat-card-content class="hero-content">
-          <h1 class="hero-title gradient-text">TeamTrack</h1>
-          <h2 class="hero-subtitle">ניהול וסיכום ישיבות צוות בקליק</h2>
-          <p class="hero-description">
-            האפליקציה המתקדמת לתיעוד, ניהול ומעקב אחר ישיבות צוות. 
-            חסכו זמן יקר, שפרו את התקשורת הפנים-ארגונית וקבלו החלטות טובות יותר.
-          </p>
-          
-          <button *ngIf="!currentUser" 
-                  mat-raised-button 
-                  routerLink="/signup" 
-                  class="primary-button hero-cta">
-            הירשם עכשיו חינם
-          </button>
-  
-          <div *ngIf="currentUser" class="logged-in-actions">
-            <button mat-raised-button routerLink="/dashboard" class="primary-button">
-              לוח הבקרה שלי
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  
-    <!-- Metrics Section -->
-    <div class="metrics-section">
-      <div class="metrics-container">
-        <mat-card *ngFor="let metric of metrics; let i = index" 
-                  class="metric-card"
-                  [style.animation-delay.ms]="i * 100 + 300">
-          <mat-card-content class="metric-content">
-            <mat-icon class="metric-icon">{{metric.icon}}</mat-icon>
-            <div class="metric-value">{{metric.value}}</div>
-            <div class="metric-label">{{metric.label}}</div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  
-    <!-- Features Section -->
-    <div class="features-section">
-      <div class="features-container">
-        <h2 class="section-title">יתרונות המערכת</h2>
-        <mat-divider class="section-divider"></mat-divider>
-  
-        <div class="features-grid">
-          <mat-card *ngFor="let feature of features; let i = index"
-                    class="feature-card"
-                    (mouseenter)="onFeatureHover(i)"
-                    (mouseleave)="onFeatureLeave()"
-                    [class.active]="activeFeature === i">
-            <mat-card-content class="feature-content">
-              <div class="feature-icon-container" [class.active]="activeFeature === i">
-                <mat-icon class="feature-icon">{{feature.icon}}</mat-icon>
-              </div>
-              <h3 class="feature-title">{{feature.title}}</h3>
-              <p class="feature-description">{{feature.description}}</p>
-              
-              <div class="feature-bullets" *ngIf="activeFeature === i">
-                <div class="bullet-item" *ngFor="let bullet of feature.bullets">
-                  <mat-icon class="bullet-icon">check_circle</mat-icon>
-                  <span>{{bullet}}</span>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
-    </div>
+<mat-toolbar color="primary">
+  <span>מערכת ניהול</span>
+  <span class="spacer"></span>
+  <span *ngIf="currentUser">שלום, {{ currentUser.userName }}</span>
+  <button mat-button (click)="logout()">התנתקות</button>
+</mat-toolbar>
+
+<div class="container" *ngIf="isLoaded">
+  <div class="metrics">
+    <mat-card *ngFor="let metric of metrics" class="metric-card">
+      <mat-icon>{{ metric.icon }}</mat-icon>
+      <h2>{{ metric.value }}</h2>
+      <p>{{ metric.label }}</p>
+    </mat-card>
   </div>
-  
+
+  <mat-divider></mat-divider>
+
+  <h2 class="section-title">יכולות המערכת</h2>
+
+  <div class="features">
+    <mat-card
+      *ngFor="let feature of features; let i = index"
+      class="feature-card"
+      [class.active]="activeFeature === i"
+      (mouseenter)="onFeatureHover(i)"
+      (mouseleave)="onFeatureLeave()"
+    >
+      <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+      <h3>{{ feature.title }}</h3>
+      <p>{{ feature.description }}</p>
+      <ul>
+        <li *ngFor="let bullet of feature.bullets">• {{ bullet }}</li>
+      </ul>
+    </mat-card>
+  </div>
+</div>

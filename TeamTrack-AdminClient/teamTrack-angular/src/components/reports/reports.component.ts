@@ -13,7 +13,6 @@ import {
   type ChartType,
   registerables,
 } from "chart.js";
-import { ReportService } from "../../services/report.service";
 import { ToastrService } from "ngx-toastr";
 
 Chart.register(...registerables);
@@ -39,27 +38,15 @@ export class ReportsComponent implements OnInit {
   isLoading = false;
   errorMessage = "";
 
-  private reportService = inject(ReportService);
   private toastr = inject(ToastrService);
 
   public barChartType: ChartType = "bar";
   public pieChartType: ChartType = "pie";
   public lineChartType: ChartType = "line";
 
-  public usersChartData: ChartConfiguration["data"] = {
-    labels: [],
-    datasets: [],
-  };
-
-  public meetingsChartData: ChartConfiguration["data"] = {
-    labels: [],
-    datasets: [],
-  };
-
-  public activityChartData: ChartConfiguration["data"] = {
-    labels: [],
-    datasets: [],
-  };
+  public usersChartData: ChartConfiguration["data"] = { labels: [], datasets: [] };
+  public meetingsChartData: ChartConfiguration["data"] = { labels: [], datasets: [] };
+  public activityChartData: ChartConfiguration["data"] = { labels: [], datasets: [] };
 
   public chartOptions: ChartConfiguration["options"] = {
     responsive: true,
@@ -67,29 +54,16 @@ export class ReportsComponent implements OnInit {
     plugins: {
       legend: {
         position: "top",
-        labels: {
-          font: {
-            family: "Roboto",
-            size: 14,
-          },
-        },
+        labels: { font: { family: "Roboto", size: 14 } },
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-        ticks: {
-          font: {
-            family: "Roboto",
-          },
-        },
+        ticks: { font: { family: "Roboto" } },
       },
       x: {
-        ticks: {
-          font: {
-            family: "Roboto",
-          },
-        },
+        ticks: { font: { family: "Roboto" } },
       },
     },
   };
@@ -102,63 +76,56 @@ export class ReportsComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = "";
 
-    this.reportService.getReportData(this.selectedReportType).subscribe({
-      next: (data) => {
-        switch (this.selectedReportType) {
-          case "users":
-            this.usersChartData = {
-              labels: data.labels,
-              datasets: [
-                {
-                  label: data.label,
-                  data: data.values,
-                  backgroundColor: ["#d32f2f", "#ff5722", "#ff9800"],
-                  borderColor: ["#b71c1c", "#d84315", "#f57c00"],
-                  borderWidth: 2,
-                },
-              ],
-            };
-            break;
+    // דוגמה לנתונים סטטיים במקום לקרוא ל-getReportData
+    switch (this.selectedReportType) {
+      case "users":
+        this.usersChartData = {
+          labels: ["Admin", "User", "Guest"],
+          datasets: [
+            {
+              label: "מספר משתמשים",
+              data: [10, 20, 8],
+              backgroundColor: ["#d32f2f", "#ff5722", "#ff9800"],
+              borderColor: ["#b71c1c", "#d84315", "#f57c00"],
+              borderWidth: 2,
+            },
+          ],
+        };
+        break;
 
-          case "meetings":
-            this.meetingsChartData = {
-              labels: data.labels,
-              datasets: [
-                {
-                  label: data.label,
-                  data: data.values,
-                  backgroundColor: "rgba(211, 47, 47, 0.2)",
-                  borderColor: "#d32f2f",
-                  borderWidth: 3,
-                  fill: true,
-                },
-              ],
-            };
-            break;
+      case "meetings":
+        this.meetingsChartData = {
+          labels: ["ינואר", "פברואר", "מרץ"],
+          datasets: [
+            {
+              label: "מספר ישיבות",
+              data: [5, 10, 7],
+              backgroundColor: "rgba(211, 47, 47, 0.2)",
+              borderColor: "#d32f2f",
+              borderWidth: 3,
+              fill: true,
+            },
+          ],
+        };
+        break;
 
-          case "activity":
-            this.activityChartData = {
-              labels: data.labels,
-              datasets: [
-                {
-                  label: data.label,
-                  data: data.values,
-                  backgroundColor: ["#4caf50", "#f44336", "#ff9800"],
-                  borderColor: ["#388e3c", "#d32f2f", "#f57c00"],
-                  borderWidth: 2,
-                },
-              ],
-            };
-            break;
-        }
-        this.isLoading = false;
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = "שגיאה בטעינת הדוח";
-        this.toastr.error(this.errorMessage);
-      },
-    });
+      case "activity":
+        this.activityChartData = {
+          labels: ["פעיל", "לא פעיל", "בינוני"],
+          datasets: [
+            {
+              label: "סטטוס פעילות",
+              data: [15, 5, 8],
+              backgroundColor: ["#4caf50", "#f44336", "#ff9800"],
+              borderColor: ["#388e3c", "#d32f2f", "#f57c00"],
+              borderWidth: 2,
+            },
+          ],
+        };
+        break;
+    }
+
+    this.isLoading = false;
   }
 
   onReportTypeChange(): void {

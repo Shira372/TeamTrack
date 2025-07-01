@@ -1,27 +1,27 @@
 export interface User {
-    id: number
-    name: string
-    email: string
-    role: string
-    isActive: boolean
-    createdAt: Date
-  }
-  
-  export interface LoginRequest {
-    email: string
-    password: string
-  }
-  
-  // export interface SignupRequest {
-  //   name: string
-  //   email: string
-  //   password: string
-  //   confirmPassword: string
-  // }
-  
-  export interface AuthResponse {
-    token: string
-    user: User
-    expiresIn: number
-  }
-  
+  id: number;
+  userName: string;
+  passwordHash?: string;  // רק לשליחה ב-POST/PUT, לא לקבלה מהשרת
+  email: string;
+  company?: string;
+  role?: string;
+}
+
+export interface LoginRequest {
+  userName: string;
+  passwordHash: string;
+}
+
+export interface SignupRequest {
+  userName: string;
+  passwordHash: string;
+  email: string;
+  company?: string;
+  role?: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+  expiresIn?: number;
+}

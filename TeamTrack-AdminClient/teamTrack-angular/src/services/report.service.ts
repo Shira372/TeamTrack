@@ -15,10 +15,6 @@ export class ReportService {
     return this.http.get<ChartData>(`${this.apiUrl}/users`);
   }
 
-  getMeetingsReport(): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/meetings`);
-  }
-
   getActivityReport(): Observable<ChartData> {
     return this.http.get<ChartData>(`${this.apiUrl}/activity`);
   }

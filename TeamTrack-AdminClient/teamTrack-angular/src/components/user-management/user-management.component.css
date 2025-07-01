@@ -38,7 +38,7 @@
   padding-bottom: 8px;
 }
 
-/* שדרוג לטעינה */
+/* Loading State */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@
 
 .loading-icon {
   font-size: 48px;
-  color: #1976d2;
+  color: #d32f2f;
   margin-bottom: 12px;
   animation: spin 1.5s linear infinite;
 }
@@ -69,7 +69,7 @@
   }
 }
 
-/* הודעת שגיאה */
+/* Error message */
 .error-message {
   text-align: center;
   color: #d32f2f;
@@ -98,7 +98,7 @@
   font-weight: 500;
 }
 
-/* רספונסיביות */
+/* Responsive */
 @media (max-width: 768px) {
   .users-table {
     font-size: 0.9rem;

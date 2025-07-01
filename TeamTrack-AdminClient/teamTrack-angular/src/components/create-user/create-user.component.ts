@@ -21,17 +21,20 @@ export class CreateUserComponent {
     private router: Router
   ) {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
+      userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       role: ['user', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      company: [''],
+      passwordHash: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   submit() {
     if (this.userForm.invalid) return;
 
-    this.userService.createUser(this.userForm.value).subscribe({
+    const newUser = this.userForm.value;
+
+    this.userService.createUser(newUser).subscribe({
       next: () => {
         this.toastr.success('המשתמש נוצר בהצלחה');
         this.router.navigate(['/users']);
