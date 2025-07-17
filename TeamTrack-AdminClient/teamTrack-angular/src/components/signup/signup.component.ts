@@ -1,5 +1,5 @@
-import { Component, type OnInit, inject } from "@angular/core"
-import { FormBuilder, type FormGroup, Validators, ReactiveFormsModule } from "@angular/forms"
+import { Component,OnInit, inject } from "@angular/core"
+import { FormBuilder,FormGroup, Validators, ReactiveFormsModule } from "@angular/forms"
 import { Router } from "@angular/router"
 import { CommonModule } from "@angular/common"
 import { MatCardModule } from "@angular/material/card"
@@ -8,7 +8,7 @@ import { MatInputModule } from "@angular/material/input"
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
 import { AuthService } from "../../services/auth.service"
-import type { SignupRequest } from "../../models/user.model"
+import { SignupRequest } from "../../models/user.model"
 
 @Component({
   selector: "app-signup",

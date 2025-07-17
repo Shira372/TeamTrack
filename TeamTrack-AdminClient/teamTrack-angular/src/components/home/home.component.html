@@ -1,47 +1,3 @@
-<mat-toolbar color="primary" class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
-  <div class="logo">
-    <mat-icon>admin_panel_settings</mat-icon>
-    <span class="title">TeamTrack Admin</span>
-  </div>
-  
-  <!-- סרגל ניווט קישורים, רק כשהמנהל מחובר -->
-  <nav class="nav-links" *ngIf="currentUser">
-    <button mat-button routerLink="/">
-      <mat-icon>dashboard</mat-icon>
-      פאנל ניהול
-    </button>
-    <button mat-button routerLink="/users">
-      <mat-icon>people</mat-icon>
-      ניהול משתמשים
-    </button>
-    <button mat-button routerLink="/reports">
-      <mat-icon>analytics</mat-icon>
-      דוחות ניהוליים
-    </button>
-  </nav>
-  
-  <div class="actions" *ngIf="currentUser; else guestActions">
-    <span class="user-greeting">
-      <mat-icon class="admin-icon">admin_panel_settings</mat-icon>
-      מנהל: <span class="user-name">{{ currentUser.userName }}</span>
-    </span>
-    <button mat-raised-button class="custom-red-button" (click)="logout()">
-      <mat-icon>logout</mat-icon> התנתק
-    </button>
-  </div>
-  
-  <ng-template #guestActions>
-    <div class="auth-buttons">
-      <button mat-raised-button class="custom-red-button" (click)="goToLogin()">
-        <mat-icon>admin_panel_settings</mat-icon> כניסת מנהלים
-      </button>
-      <button mat-raised-button class="custom-red-button" (click)="goToSignup()">
-        <mat-icon>person_add</mat-icon> רישום מנהל
-      </button>
-    </div>
-  </ng-template>
-</mat-toolbar>
-
 <div class="container" *ngIf="isLoaded">
   <div class="admin-header">
     <mat-icon class="admin-main-icon">admin_panel_settings</mat-icon>
@@ -81,8 +37,8 @@
           {{ bullet }}
         </li>
       </ul>
-     
+      
     </mat-card>
   </div>
 
-  
+</div>

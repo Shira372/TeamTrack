@@ -1,21 +1,21 @@
-import { Injectable, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable, inject } from "@angular/core"
+import { HttpClient } from "@angular/common/http"
+import type { Observable } from "rxjs"
 import { environment } from "../environments/environment";
-import type { ChartData } from "../models/report.model";
+import type { User, Meeting } from "../models/report.model"
 
 @Injectable({
   providedIn: "root",
 })
 export class ReportService {
-  private apiUrl = `${environment.apiUrl}/api/reports`;
-  private http = inject(HttpClient);
+  private readonly API_BASE_URL = `${environment.apiUrl}/api`; 
+  private http = inject(HttpClient)
 
-  getUsersReport(): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/users`);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.API_BASE_URL}/Users`)
   }
 
-  getActivityReport(): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/activity`);
+  getMeetings(): Observable<Meeting[]> {
+    return this.http.get<Meeting[]>(`${this.API_BASE_URL}/Meetings`)
   }
 }

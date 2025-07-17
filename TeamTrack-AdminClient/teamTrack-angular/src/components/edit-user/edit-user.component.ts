@@ -10,6 +10,7 @@ import { User } from "../../models/user.model";
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: "./edit-user.component.html",
+  styleUrls: ["./edit-user.component.css"]
 })
 export class EditUserComponent implements OnInit {
   form!: FormGroup;
@@ -34,7 +35,7 @@ export class EditUserComponent implements OnInit {
 
     this.userId = Number(this.route.snapshot.paramMap.get("id"));
     console.log("userId =", this.userId); 
-    
+
     if (this.userId) {
       this.isLoading = true;
       this.userService.getUser(this.userId).subscribe({

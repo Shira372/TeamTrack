@@ -12,11 +12,12 @@
   .logo {
     display: flex;
     align-items: center;
-    gap: 8px; /* רווח בין האייקון לטקסט TeamTrack */
+    gap: 8px;
   }
   
   .logo mat-icon {
     color: #b71c1c;
+    font-size: 28px;
   }
   
   .title {
@@ -28,17 +29,35 @@
     margin-inline-start: 8px;
   }
   
+  /* 🔥 תג מנהלים חדש */
+  .admin-badge {
+    background: #b71c1c;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-inline-start: 8px;
+  }
+  
   /* === Nav links === */
   .nav-links {
     display: flex;
     gap: 12px;
     align-items: center;
-    margin-inline-start: 24px; /* רווח משמאל ללוגו */
+    margin-inline-start: 24px;
   }
   
   .nav-links button {
     color: #b71c1c;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .nav-links button mat-icon {
+    font-size: 18px;
   }
   
   /* === Actions === */
@@ -49,12 +68,40 @@
   
   .user-greeting {
     font-weight: 600;
-    margin-inline-end: 16px; /* רווח בין "שלום, שם" לכפתור התנתקות */
-    white-space: nowrap; /* למנוע שבירת שורה */
+    margin-inline-end: 16px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .admin-icon {
+    color: #b71c1c;
+    font-size: 20px;
   }
   
   .user-name {
     font-weight: 700;
+    color: #b71c1c;
+  }
+  
+  /* 🔥 הודעה למנהלים בלבד */
+  .admin-only-notice {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff3e0;
+    padding: 6px 12px;
+    border-radius: 16px;
+    color: #e65100;
+    font-size: 12px;
+    font-weight: 600;
+    margin-inline-end: 12px;
+  }
+  
+  .admin-only-notice mat-icon {
+    font-size: 16px;
+    color: #ff9800;
   }
   
   button[mat-raised-button] {
@@ -63,7 +110,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   }
   
-  /* אדום אחיד מותאם אישית */
   .custom-red-button {
     background-color: #b71c1c !important;
     color: white !important;
@@ -75,8 +121,9 @@
     transform: translateY(-1px);
   }
   
-  /* === Auth buttons for guests === */
-  .auth-buttons button {
-    margin-inline-start: 12px;
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   

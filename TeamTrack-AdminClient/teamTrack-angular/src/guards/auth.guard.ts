@@ -17,7 +17,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const currentUser = authService.getCurrentUser()
   if (!currentUser || currentUser.role !== "ADMIN") {
     console.log("❌ משתמש לא מורשה - רק מנהלים יכולים להכנס")
-    // אפשר להפנות לעמוד "אין הרשאה" או להתנתק
     authService.logout()
     router.navigate(["/login"])
     return false

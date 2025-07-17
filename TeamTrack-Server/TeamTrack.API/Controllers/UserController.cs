@@ -162,8 +162,14 @@ namespace TeamTrack.Web.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Put(int id, [FromBody] User user)
         {
+            if (id != user.Id)
+            {
+                user.Id = id;
+            }
+
             var existing = await _userService.GetById(id);
             if (existing == null)
                 return NotFound("המשתמש לא קיים.");
@@ -174,6 +180,7 @@ namespace TeamTrack.Web.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Delete(int id)
         {
             var existing = await _userService.GetById(id);
