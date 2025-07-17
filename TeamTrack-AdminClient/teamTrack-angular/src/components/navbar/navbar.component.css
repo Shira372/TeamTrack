@@ -1,0 +1,82 @@
+/* === Toolbar === */
+.toolbar {
+    background: white;
+    color: #b71c1c;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding-inline: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* רווח בין האייקון לטקסט TeamTrack */
+  }
+  
+  .logo mat-icon {
+    color: #b71c1c;
+  }
+  
+  .title {
+    background: linear-gradient(45deg, #b71c1c, #f44336);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+    font-weight: bold;
+    margin-inline-start: 8px;
+  }
+  
+  /* === Nav links === */
+  .nav-links {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-inline-start: 24px; /* רווח משמאל ללוגו */
+  }
+  
+  .nav-links button {
+    color: #b71c1c;
+    font-weight: 600;
+  }
+  
+  /* === Actions === */
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-greeting {
+    font-weight: 600;
+    margin-inline-end: 16px; /* רווח בין "שלום, שם" לכפתור התנתקות */
+    white-space: nowrap; /* למנוע שבירת שורה */
+  }
+  
+  .user-name {
+    font-weight: 700;
+  }
+  
+  button[mat-raised-button] {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* אדום אחיד מותאם אישית */
+  .custom-red-button {
+    background-color: #b71c1c !important;
+    color: white !important;
+  }
+  
+  .custom-red-button:hover {
+    background-color: #a31818 !important;
+    box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+    transform: translateY(-1px);
+  }
+  
+  /* === Auth buttons for guests === */
+  .auth-buttons button {
+    margin-inline-start: 12px;
+  }
+  

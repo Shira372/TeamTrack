@@ -1,58 +1,306 @@
+/* === Toolbar === */
+.toolbar {
+  background: white;
+  color: #b71c1c;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding-inline: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo mat-icon {
+  color: #b71c1c;
+  font-size: 28px;
+}
+
+.title {
+  background: linear-gradient(45deg, #b71c1c, #f44336);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-weight: bold;
+  margin-inline-start: 8px;
+}
+
+/* 🔥 תג מנהלים חדש */
+.admin-badge {
+  background: #b71c1c;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-inline-start: 8px;
+}
+
+/* === Nav links === */
+.nav-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-inline-start: 24px;
+}
+
+.nav-links button {
+  color: #b71c1c;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-links button mat-icon {
+  font-size: 18px;
+}
+
+/* === Actions === */
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.user-greeting {
+  font-weight: 600;
+  margin-inline-end: 16px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-icon {
+  color: #b71c1c;
+  font-size: 20px;
+}
+
+.user-name {
+  font-weight: 700;
+  color: #b71c1c;
+}
+
+/* 🔥 הודעה למנהלים בלבד */
+.admin-only-notice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #fff3e0;
+  padding: 6px 12px;
+  border-radius: 16px;
+  color: #e65100;
+  font-size: 12px;
+  font-weight: 600;
+  margin-inline-end: 12px;
+}
+
+.admin-only-notice mat-icon {
+  font-size: 16px;
+  color: #ff9800;
+}
+
+button[mat-raised-button] {
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.custom-red-button {
+  background-color: #b71c1c !important;
+  color: white !important;
+}
+
+.custom-red-button:hover {
+  background-color: #a31818 !important;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+  transform: translateY(-1px);
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* === Container === */
 .container {
-  padding: 24px;
+  padding: 32px;
+  direction: rtl;
 }
 
-.spacer {
-  flex: 1 1 auto;
+/* 🔥 כותרת מנהלים חדשה */
+.admin-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 32px;
+  background: linear-gradient(135deg, #b71c1c, #f44336);
+  border-radius: 16px;
+  color: white;
 }
 
+.admin-main-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 16px 0;
+}
+
+.admin-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* === Metrics === */
 .metrics {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
 .metric-card {
-  width: 180px;
+  width: 200px;
   text-align: center;
-  padding: 16px;
+  padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.15);
+  transition: all 0.3s ease;
+}
+
+.admin-metric {
+  border: 2px solid #b71c1c;
 }
 
 .metric-card mat-icon {
   font-size: 48px;
-  color: #b71c1c; 
-  margin-bottom: 8px;
+  color: #b71c1c;
+  margin-bottom: 12px;
 }
 
+/* === Section Title === */
 .section-title {
-  margin: 24px 0 12px;
-  font-size: 1.4rem;
+  margin: 16px 0 12px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #b71c1c;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+.section-title mat-icon {
+  font-size: 32px;
+}
+
+/* === Features === */
 .features {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
 .feature-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 16px;
+  background: white;
+  padding: 24px;
   border-radius: 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(183, 28, 28, 0.08);
+  position: relative;
+}
+
+.admin-feature {
+  border: 1px solid #b71c1c;
 }
 
 .feature-card.active {
   transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(183, 28, 28, 0.3); 
+  box-shadow: 0 8px 20px rgba(183, 28, 28, 0.3);
 }
 
 .feature-icon {
-  font-size: 36px;
-  color: #b71c1c; 
+  font-size: 48px;
+  color: #b71c1c;
+  margin-bottom: 16px;
+}
+
+.feature-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-card li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
+}
+
+.bullet-icon {
+  font-size: 16px;
+  color: #4caf50;
+}
+
+/* 🔥 תג מנהלים בלבד בכרטיסים */
+.admin-only-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #b71c1c;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-only-tag mat-icon {
+  font-size: 12px;
+}
+
+/* 🔥 הודעת אזהרה */
+.admin-warning {
+  background: #fff3e0;
+  border: 2px solid #ff9800;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.admin-warning mat-icon {
+  font-size: 48px;
+  color: #ff9800;
+}
+
+.warning-content h3 {
+  color: #e65100;
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+}
+
+.warning-content p {
+  color: #bf360c;
+  margin: 0;
+  font-weight: 500;
 }

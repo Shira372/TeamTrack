@@ -3,28 +3,50 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ffebee 0%, #ffffff 100%);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 20px;
 }
 
 .login-card {
   width: 100%;
   max-width: 400px;
-  padding: 32px;
-  border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 24px;
+  padding: 24px 24px 16px;
 }
 
 .login-title {
-  font-size: 2rem;
+  font-size: 28px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: #b22222;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #b71c1c, #f44336);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🔥 סטיילים חדשים להודעת מנהלים */
+.admin-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff3e0;
+  border: 1px solid #ffb74d;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  color: #e65100;
+  font-weight: 500;
+}
+
+.admin-notice mat-icon {
+  color: #ff9800;
 }
 
 .login-form {
@@ -37,26 +59,48 @@
   width: 100%;
 }
 
+.primary-button {
+  background-color: #b71c1c !important;
+  color: white !important;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.primary-button:hover {
+  background-color: #a31818 !important;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+}
+
+.primary-button:disabled {
+  background-color: #ccc !important;
+  color: #666 !important;
+}
+
+.error-message {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+  padding: 12px;
+  color: #c62828;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 16px;
+}
+
 .login-actions {
   text-align: center;
-  margin-top: 24px;
+  padding: 16px 24px 24px;
 }
 
 .signup-link {
-  color: #d32f2f;
+  color: #b71c1c;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .signup-link:hover {
   text-decoration: underline;
-}
-
-.primary-button {
-  background-color: #b22222;
-  color: white;
-}
-
-.primary-button:hover {
-  background-color: #800000;
 }

@@ -1,10 +1,9 @@
-import { Component, OnInit, inject } from "@angular/core"
+import { Component, type OnInit, inject } from "@angular/core"
 import { CommonModule } from "@angular/common"
-import { RouterModule } from "@angular/router"
+import { RouterModule, Router } from "@angular/router"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
-import { MatMenuModule } from "@angular/material/menu"
 import { MatCardModule } from "@angular/material/card"
 import { MatDividerModule } from "@angular/material/divider"
 import { AuthService } from "../../services/auth.service"
@@ -19,7 +18,6 @@ import type { User } from "../../models/user.model"
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule,
     MatCardModule,
     MatDividerModule,
   ],
@@ -32,25 +30,38 @@ export class HomeComponent implements OnInit {
   activeFeature: number | null = null
 
   private authService = inject(AuthService)
+  private router = inject(Router)
 
   features = [
     {
-      icon: "people",
-      title: "ניהול משתמשים",
+      icon: "groups",
+      title: "משתמשים",
       description: "נהל משתמשים, עדכן והרשאות דרך ממשק נוח ואינטואיטיבי",
-      bullets: ["הוספת משתמשים", "שינוי תפקידים", "מחיקה וניהול הרשאות"],
+      bullets: [
+        "הוספת משתמשים",
+        "שינוי תפקידים",
+        "מחיקה וניהול הרשאות",
+      ],
     },
     {
       icon: "bar_chart",
       title: "דוחות גרפיים",
       description: "נתח פעילות משתמשים ודוחות מותאמים אישית",
-      bullets: ["נתונים סטטיסטיים", "השוואות משתמשים", "פילוחים לפי תפקיד"],
+      bullets: [
+        "נתונים סטטיסטיים",
+        "השוואות משתמשים",
+        "פילוחים לפי תפקיד",
+      ],
     },
     {
       icon: "vpn_key",
       title: "גישה מאובטחת",
       description: "כניסה עם JWT, פרטיות וניהול גישה",
-      bullets: ["אימות עם Token", "גישה לפי הרשאות", "שמירה על אבטחת מידע"],
+      bullets: [
+        "אימות עם Token",
+        "גישה לפי הרשאות",
+        "שמירה על אבטחת מידע",
+      ],
     },
   ]
 
@@ -64,10 +75,9 @@ export class HomeComponent implements OnInit {
     this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user
     })
-
     setTimeout(() => {
       this.isLoaded = true
-    }, 100)
+    }, 300)
   }
 
   onFeatureHover(index: number): void {
@@ -80,5 +90,14 @@ export class HomeComponent implements OnInit {
 
   logout(): void {
     this.authService.logout()
+    this.router.navigateByUrl("/login")
+  }
+
+  goToLogin(): void {
+    this.router.navigateByUrl("/login")
+  }
+
+  goToSignup(): void {
+    this.router.navigateByUrl("/signup")
   }
 }

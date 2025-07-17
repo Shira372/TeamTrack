@@ -1,21 +1,21 @@
 <div class="login-container">
   <mat-card class="login-card">
     <mat-card-header class="login-header">
-      <mat-card-title class="login-title gradient-text">התחברות</mat-card-title>
-      <mat-card-subtitle>היכנס לחשבון שלך</mat-card-subtitle>
+      <mat-card-title class="login-title gradient-text">התחברות מנהלים</mat-card-title>
     </mat-card-header>
-
+    
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>שם משתמש</mat-label>
           <input matInput type="text" formControlName="userName" required />
           <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="loginForm.get('userName')?.hasError('required')">
+          <mat-error *ngIf="loginForm.get('userName')?.hasError('required') && loginForm.get('userName')?.touched">
             שם משתמש נדרש
           </mat-error>
         </mat-form-field>
-
+        
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>סיסמה</mat-label>
           <input
@@ -29,19 +29,18 @@
             matSuffix
             (click)="togglePasswordVisibility()"
             type="button"
+            tabindex="-1"
           >
-            <mat-icon>{{
-              hidePassword ? "visibility_off" : "visibility"
-            }}</mat-icon>
+            <mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
-          <mat-error *ngIf="loginForm.get('passwordHash')?.hasError('required')">
+          <mat-error *ngIf="loginForm.get('passwordHash')?.hasError('required') && loginForm.get('passwordHash')?.touched">
             סיסמה נדרשת
           </mat-error>
-          <mat-error *ngIf="loginForm.get('passwordHash')?.hasError('minlength')">
+          <mat-error *ngIf="loginForm.get('passwordHash')?.hasError('minlength') && loginForm.get('passwordHash')?.touched">
             סיסמה חייבת להכיל לפחות 6 תווים
           </mat-error>
         </mat-form-field>
-
+        
         <button
           mat-raised-button
           type="submit"
@@ -49,16 +48,21 @@
           [disabled]="!loginForm.valid || isLoading"
         >
           <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
-          <mat-icon *ngIf="!isLoading">login</mat-icon>
+          <mat-icon *ngIf="!isLoading">admin_panel_settings</mat-icon>
           {{ isLoading ? "מתחבר..." : "התחבר" }}
         </button>
+        
+        <!-- הצגת הודעת שגיאה בתוך הטופס -->
+        <div *ngIf="errorMessage" class="error-message" role="alert" aria-live="assertive">
+          {{ errorMessage }}
+        </div>
       </form>
     </mat-card-content>
-
+    
     <mat-card-actions class="login-actions">
       <p>
-        אין לך חשבון?
-        <a routerLink="/signup" class="signup-link">הירשם כאן</a>
+        צריך ליצור חשבון מנהל?
+        <a routerLink="/signup" class="signup-link">הירשם</a>
       </p>
     </mat-card-actions>
   </mat-card>

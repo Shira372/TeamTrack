@@ -31,12 +31,14 @@ namespace TeamTrack.Web.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<ActionResult> Signup([FromBody] UserPostModel user)
         {
             try
             {
                 _logger.LogInformation($"Signup: {user.UserName}, {user.Email}, {user.Company}");
+                _logger.LogInformation($"Received Role in Signup: {user.Role}");
 
                 if (await _userService.GetByUserName(user.UserName) != null)
                     return BadRequest("שם המשתמש כבר קיים.");
@@ -50,7 +52,7 @@ namespace TeamTrack.Web.Controllers
                     PasswordHash = user.PasswordHash,
                     Company = user.Company,
                     Email = user.Email,
-                    Role = "User"
+                    Role = string.IsNullOrEmpty(user.Role) ? "User" : user.Role
                 };
 
                 var createdUser = await _userService.Add(newUser);
@@ -71,6 +73,7 @@ namespace TeamTrack.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginModel login)
         {

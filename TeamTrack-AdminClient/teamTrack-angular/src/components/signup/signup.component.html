@@ -1,7 +1,7 @@
 <div class="signup-container">
   <div class="signup-card">
-    <h2 class="signup-title">הוספת משתמש חדש</h2>
-
+    <h2 class="signup-title">הוספת מנהל</h2>
+    
     <form [formGroup]="userForm" (ngSubmit)="submit()" class="signup-form" novalidate>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>שם משתמש</mat-label>
@@ -37,25 +37,20 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>תפקיד</mat-label>
-        <mat-select formControlName="role" required>
-          <mat-option value="user">משתמש</mat-option>
-          <mat-option value="admin">מנהל</mat-option>
-        </mat-select>
-        <mat-error *ngIf="userForm.get('role')?.hasError('required') && userForm.get('role')?.touched">
-          חובה לבחור תפקיד
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
         <mat-label>חברה (אופציונלי)</mat-label>
         <input matInput type="text" formControlName="company" />
       </mat-form-field>
 
+      <!-- 🔥 הודעה שהמשתמש יירשם כמנהל -->
+      <div class="role-info">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>המשתמש יירשם כמנהל מערכת</span>
+      </div>
+
       <button mat-raised-button color="primary" class="primary-button" type="submit" [disabled]="userForm.invalid || loading">
         <mat-icon *ngIf="loading">hourglass_empty</mat-icon>
-        <mat-icon *ngIf="!loading">save</mat-icon>
-        {{ loading ? 'שומר...' : 'שמור' }}
+        <mat-icon *ngIf="!loading">admin_panel_settings</mat-icon>
+        {{ loading ? 'יוצר מנהל...' : 'צור מנהל חדש' }}
       </button>
 
       <div *ngIf="error" class="error-message">

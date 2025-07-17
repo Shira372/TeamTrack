@@ -1,4 +1,5 @@
-﻿using Amazon;
+﻿using System.Linq;  // חשוב עבור Contains
+using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +13,13 @@ using TeamTrack.Core.IRepositories;
 using TeamTrack.Core.IServices;
 using TeamTrack.Data;
 using TeamTrack.Service;
+
+var allowedOrigins = new[]
+{
+    "https://teamtrack-userclient.onrender.com",
+    "https://teamtrack-adminclient.onrender.com",
+    "http://localhost:4200"
+};
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,8 +86,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])
             ),
-
-            // חשוב לקרוא נכון את מזהה המשתמש מתוך הטוקן
             NameClaimType = "sub"
         };
 
@@ -101,7 +107,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("https://teamtrack-userclient.onrender.com")
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -114,7 +120,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IS3Service, S3Service>();
-
 builder.Services.AddHttpClient();
 
 // AWS S3 Client
@@ -127,29 +132,32 @@ var awsConfig = new AmazonS3Config
 {
     RegionEndpoint = RegionEndpoint.GetBySystemName(awsRegion)
 };
-
 var s3Client = new AmazonS3Client(awsCredentials, awsConfig);
 builder.Services.AddSingleton<IAmazonS3>(s3Client);
 
 var app = builder.Build();
 
-// טיפול בבקשות OPTIONS ידנית (ל-CORS)
+// טיפול ידני ב־OPTIONS עבור CORS
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
     {
+        var origin = context.Request.Headers["Origin"].ToString();
+        if (allowedOrigins.Contains(origin))
+        {
+            context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Content-Type");
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+        }
         context.Response.StatusCode = 200;
-        context.Response.Headers.Add("Access-Control-Allow-Origin", "https://teamtrack-userclient.onrender.com");
-        context.Response.Headers.Add("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
         await context.Response.CompleteAsync();
         return;
     }
     await next();
 });
 
-// סדר שימוש ב-Middleware
+// Middleware
 app.UseCors("AllowSpecificOrigin");
 app.UseHttpsRedirection();
 app.UseRouting();

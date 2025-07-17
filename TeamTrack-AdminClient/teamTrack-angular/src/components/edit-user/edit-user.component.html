@@ -21,8 +21,8 @@
     <label>תפקיד:</label>
     <select formControlName="role">
       <option value="">בחר תפקיד</option>
-      <option value="admin">Admin</option>
-      <option value="user">User</option>
+      <option value="ADMIN">ADMIN</option>
+      <option value="User">User</option>
     </select>
     <div *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
       חובה לבחור תפקיד.

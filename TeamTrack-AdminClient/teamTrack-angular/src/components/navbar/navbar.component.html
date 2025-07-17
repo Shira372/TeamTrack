@@ -1,0 +1,36 @@
+<mat-toolbar color="primary" class="toolbar" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <div class="logo">
+      <mat-icon>groups</mat-icon>
+      <span class="title">TeamTrack</span>
+    </div>
+  
+    <!-- סרגל ניווט קישורים, רק כשהמשתמש מחובר -->
+    <nav class="nav-links" *ngIf="currentUser">
+      <button mat-button routerLink="/">בית</button>
+      <button mat-button routerLink="/users">ניהול משתמשים</button>
+      <button mat-button routerLink="/reports">דוחות</button>
+    </nav>
+  
+    <div class="actions" *ngIf="currentUser; else guestActions">
+      <span class="user-greeting">
+        שלום, <span class="user-name">{{ currentUser.userName }}</span>
+      </span>
+      <button mat-raised-button class="custom-red-button" (click)="logout()">
+        <mat-icon>logout</mat-icon> התנתקות
+      </button>
+    </div>
+  
+    <ng-template #guestActions>
+      <div class="auth-buttons">
+        <button mat-raised-button class="custom-red-button" (click)="goToLogin()">
+          <mat-icon>login</mat-icon> התחברות
+        </button>
+        <button mat-raised-button class="custom-red-button" (click)="goToSignup()">
+          <mat-icon>person_add</mat-icon> הרשמה
+        </button>
+      </div>
+    </ng-template>
+  
+  </mat-toolbar>
+  
