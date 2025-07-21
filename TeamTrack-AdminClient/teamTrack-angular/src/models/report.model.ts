@@ -3,8 +3,8 @@ export interface User {
   id: number
   userName: string
   email: string
-  company?: string | null
-  role: string 
+  company?: string 
+  role: string
 }
 
 export interface Meeting {
@@ -14,7 +14,7 @@ export interface Meeting {
   createdByUserFullName?: string | null
   summaryLink?: string | null
   transcriptionLink?: string | null
-  createdAt: string 
+  createdAt: string
   updatedAt?: string | null
-  participants?: User[] | null 
+  participants?: User[] | null
 }
